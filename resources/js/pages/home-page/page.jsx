@@ -1,42 +1,37 @@
 import React from 'react';
-import { Head, Link } from '@inertiajs/react';
-import GuestLayout from '@/Layouts/GuestLayout';
-import PrimaryButton from '@/components/PrimaryButton';
-import Button from '@/components/Button';
+import { Head } from '@inertiajs/react';
+import LandingLayout from '@/components/layout/LandingLayout';
+import Hero from './_sections/Hero';
+import Services from './_sections/Services';
+import Contact from './_sections/Contact';
 
-export default function Home({ canLogin, canRegister, laravelVersion, phpVersion }) {
+export default function Home(props) {
 	return (
 		<>
 			<Head title="Home" />
 
-			<div className="min-h-screen flex items-center justify-center">
-				<div className="max-w-2xl text-center p-8">
-					<h1 className="text-4xl font-extrabold">Welcome to AsuraTech</h1>
+			{/* Full-bleed premium hero */}
+			<Hero />
 
-					<p className="mt-4 text-gray-600">A Laravel + Inertia + React starter template with RTK Query.</p>
-
-					<div className="mt-6 flex justify-center gap-3">
-						{canLogin && (
-							<Link href={route('login')}>
-								<PrimaryButton>Log in</PrimaryButton>
-							</Link>
-						)}
-
-						{canRegister && (
-							<Link href={route('register')}>
-								<Button variant="secondary">Register</Button>
-							</Link>
-						)}
+			{/* Services grouped by category */}
+			<section id="services" aria-labelledby="services-heading" className="py-16 md:py-24 bg-gray-50 dark:bg-slate-950">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="text-center max-w-2xl mx-auto mb-12">
+						<h2 id="services-heading" className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100">
+							Everything your business needs
+						</h2>
+						<p className="mt-3 text-lg text-gray-500 dark:text-gray-400">
+							Comprehensive IT services grouped by specialty — choose what fits your business.
+						</p>
 					</div>
-
-					<div className="mt-8 text-sm text-gray-500">
-						<div>Laravel {laravelVersion}</div>
-						<div>PHP {phpVersion}</div>
-					</div>
+					<Services />
 				</div>
-			</div>
+			</section>
+
+			{/* Contact CTA */}
+			<Contact />
 		</>
 	);
 }
 
-Home.layout = (page) => <GuestLayout>{page}</GuestLayout>;
+Home.layout = (page) => <LandingLayout {...page.props}>{page}</LandingLayout>;

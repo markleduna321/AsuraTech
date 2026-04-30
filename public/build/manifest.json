@@ -1,95 +1,195 @@
 {
-  "_PrimaryButton-CqCpGCZN.js": {
-    "file": "assets/PrimaryButton-CqCpGCZN.js",
+  "_PrimaryButton-FCXpIf0E.js": {
+    "file": "assets/PrimaryButton-FCXpIf0E.js",
     "name": "PrimaryButton",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_Services-C8X2-9wH.js": {
-    "file": "assets/Services-C8X2-9wH.js",
+  "_Services-C6i2IwAk.js": {
+    "file": "assets/Services-C6i2IwAk.js",
     "name": "Services",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_arrow-right-BJg0Ux_O.js"
+      "_createLucideIcon-B52NuW0J.js",
+      "_arrow-right-C3gVprr_.js"
     ]
   },
-  "_arrow-right-BJg0Ux_O.js": {
-    "file": "assets/arrow-right-BJg0Ux_O.js",
+  "_arrow-right-C3gVprr_.js": {
+    "file": "assets/arrow-right-C3gVprr_.js",
     "name": "arrow-right",
+    "imports": [
+      "_createLucideIcon-B52NuW0J.js"
+    ]
+  },
+  "_createLucideIcon-B52NuW0J.js": {
+    "file": "assets/createLucideIcon-B52NuW0J.js",
+    "name": "createLucideIcon",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
+  "_phone-BXxDhCYl.js": {
+    "file": "assets/phone-BXxDhCYl.js",
+    "name": "phone",
+    "imports": [
+      "_createLucideIcon-B52NuW0J.js"
+    ]
+  },
+  "_shield-check-DAI4DSs_.js": {
+    "file": "assets/shield-check-DAI4DSs_.js",
+    "name": "shield-check",
+    "imports": [
+      "_createLucideIcon-B52NuW0J.js"
+    ]
+  },
+  "_users-BDg_tukK.js": {
+    "file": "assets/users-BDg_tukK.js",
+    "name": "users",
+    "imports": [
+      "_createLucideIcon-B52NuW0J.js"
+    ]
+  },
+  "_zap-Dtb_1MpC.js": {
+    "file": "assets/zap-Dtb_1MpC.js",
+    "name": "zap",
+    "imports": [
+      "_createLucideIcon-B52NuW0J.js"
+    ]
+  },
   "resources/js/app.jsx": {
-    "file": "assets/app-DWPS2Hfb.js",
+    "file": "assets/app-B8ZhXFoT.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
     "dynamicImports": [
       "resources/js/pages/Welcome.jsx",
       "resources/js/pages/home-page/_sections/Contact.jsx",
+      "resources/js/pages/home-page/_sections/FeaturedProject.jsx",
+      "resources/js/pages/home-page/_sections/Footer.jsx",
       "resources/js/pages/home-page/_sections/Hero.jsx",
-      "_Services-C8X2-9wH.js",
+      "_Services-C6i2IwAk.js",
+      "resources/js/pages/home-page/_sections/Stats.jsx",
+      "resources/js/pages/home-page/_sections/TechStack.jsx",
       "resources/js/pages/home-page/page.jsx",
       "resources/js/pages/profile/Edit.jsx"
     ],
     "css": [
-      "assets/app-DSYPdSdw.css"
+      "assets/app-BNi4EdVY.css"
     ]
   },
   "resources/js/pages/Welcome.jsx": {
-    "file": "assets/Welcome-BSDPahAn.js",
+    "file": "assets/Welcome-4QRGUoxp.js",
     "name": "Welcome",
     "src": "resources/js/pages/Welcome.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PrimaryButton-CqCpGCZN.js"
+      "_PrimaryButton-FCXpIf0E.js"
     ]
   },
   "resources/js/pages/home-page/_sections/Contact.jsx": {
-    "file": "assets/Contact-DhautVI6.js",
+    "file": "assets/Contact-DOd3R8NO.js",
     "name": "Contact",
     "src": "resources/js/pages/home-page/_sections/Contact.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_arrow-right-BJg0Ux_O.js"
+      "_createLucideIcon-B52NuW0J.js",
+      "_phone-BXxDhCYl.js",
+      "_arrow-right-C3gVprr_.js"
+    ]
+  },
+  "resources/js/pages/home-page/_sections/FeaturedProject.jsx": {
+    "file": "assets/FeaturedProject-QNaZ-Ys5.js",
+    "name": "FeaturedProject",
+    "src": "resources/js/pages/home-page/_sections/FeaturedProject.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_arrow-right-C3gVprr_.js",
+      "_createLucideIcon-B52NuW0J.js"
+    ]
+  },
+  "resources/js/pages/home-page/_sections/Footer.jsx": {
+    "file": "assets/Footer-DtB0BgLp.js",
+    "name": "Footer",
+    "src": "resources/js/pages/home-page/_sections/Footer.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_zap-Dtb_1MpC.js",
+      "_phone-BXxDhCYl.js",
+      "_createLucideIcon-B52NuW0J.js",
+      "_users-BDg_tukK.js"
     ]
   },
   "resources/js/pages/home-page/_sections/Hero.jsx": {
-    "file": "assets/Hero-iC4eoQGn.js",
+    "file": "assets/Hero-BtI0Ckfm.js",
     "name": "Hero",
     "src": "resources/js/pages/home-page/_sections/Hero.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_arrow-right-BJg0Ux_O.js"
+      "_arrow-right-C3gVprr_.js",
+      "_users-BDg_tukK.js",
+      "_shield-check-DAI4DSs_.js",
+      "_createLucideIcon-B52NuW0J.js"
+    ]
+  },
+  "resources/js/pages/home-page/_sections/Stats.jsx": {
+    "file": "assets/Stats-BNqt05Ij.js",
+    "name": "Stats",
+    "src": "resources/js/pages/home-page/_sections/Stats.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_createLucideIcon-B52NuW0J.js",
+      "_shield-check-DAI4DSs_.js",
+      "_users-BDg_tukK.js",
+      "_zap-Dtb_1MpC.js"
+    ]
+  },
+  "resources/js/pages/home-page/_sections/TechStack.jsx": {
+    "file": "assets/TechStack-151dKcB6.js",
+    "name": "TechStack",
+    "src": "resources/js/pages/home-page/_sections/TechStack.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
     ]
   },
   "resources/js/pages/home-page/page.jsx": {
-    "file": "assets/page-Bsq4aWgn.js",
+    "file": "assets/page-B0Z2F5yE.js",
     "name": "page",
     "src": "resources/js/pages/home-page/page.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_arrow-right-BJg0Ux_O.js",
-      "_Services-C8X2-9wH.js",
+      "_zap-Dtb_1MpC.js",
+      "_Services-C6i2IwAk.js",
+      "_createLucideIcon-B52NuW0J.js",
       "resources/js/pages/home-page/_sections/Hero.jsx",
-      "resources/js/pages/home-page/_sections/Contact.jsx"
+      "resources/js/pages/home-page/_sections/Stats.jsx",
+      "resources/js/pages/home-page/_sections/TechStack.jsx",
+      "resources/js/pages/home-page/_sections/FeaturedProject.jsx",
+      "resources/js/pages/home-page/_sections/Contact.jsx",
+      "resources/js/pages/home-page/_sections/Footer.jsx",
+      "_arrow-right-C3gVprr_.js",
+      "_users-BDg_tukK.js",
+      "_shield-check-DAI4DSs_.js",
+      "_phone-BXxDhCYl.js"
     ]
   },
   "resources/js/pages/profile/Edit.jsx": {
-    "file": "assets/Edit-DTD0v4uO.js",
+    "file": "assets/Edit-XCmeG5kl.js",
     "name": "Edit",
     "src": "resources/js/pages/profile/Edit.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PrimaryButton-CqCpGCZN.js"
+      "_PrimaryButton-FCXpIf0E.js"
     ]
   }
 }

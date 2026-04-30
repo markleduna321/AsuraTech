@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from '@inertiajs/react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight, ShieldCheck, Clock, Users } from 'lucide-react';
 
 const STATS = [
@@ -9,12 +8,35 @@ const STATS = [
 ];
 
 export default function Hero() {
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        let ticking = false;
+        const onScroll = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    setScrollY(window.scrollY);
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
     return (
         <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900">
-            {/* Background decoration */}
+            {/* Parallax background blobs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-                <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-indigo-500/10 blur-3xl" />
-                <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-purple-500/10 blur-3xl" />
+                <div
+                    className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-indigo-500/10 blur-3xl"
+                    style={{ transform: `translateY(${scrollY * 0.15}px)` }}
+                />
+                <div
+                    className="absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-purple-500/10 blur-3xl"
+                    style={{ transform: `translateY(${scrollY * -0.1}px)` }}
+                />
             </div>
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
@@ -39,12 +61,17 @@ export default function Hero() {
                         </p>
 
                         <div className="flex flex-wrap gap-3">
+                            {/* Shimmer CTA */}
                             <a
                                 href="#contact"
-                                className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-6 py-3 rounded-xl transition-colors shadow-lg shadow-indigo-500/30"
+                                className="relative overflow-hidden inline-flex items-center gap-2 bg-indigo-600 text-white text-sm font-semibold px-6 py-3 rounded-xl shadow-lg shadow-indigo-500/30 hover:scale-105 transition-transform duration-200 group"
                             >
+                                <span
+                                    aria-hidden="true"
+                                    className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 skew-x-12 pointer-events-none"
+                                />
                                 Get Started Free
-                                <ArrowRight className="w-4 h-4" />
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </a>
                             <a
                                 href="#services"
@@ -79,28 +106,27 @@ export default function Hero() {
                                 className="w-full h-96 object-cover"
                                 loading="eager"
                             />
-                            {/* Gradient overlay */}
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent" />
                         </div>
 
-                        {/* Floating badge — bottom-left */}
-                        <div className="absolute -bottom-5 -left-5 bg-white dark:bg-slate-800 rounded-2xl px-4 py-3 shadow-xl border border-gray-100 flex items-center gap-3">
-                            <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-green-100 text-green-600">
+                        {/* Glassmorphism badge — bottom-left */}
+                        <div className="absolute -bottom-5 -left-5 backdrop-blur-md bg-slate-900/60 ring-1 ring-white/20 rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3">
+                            <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-green-500/20 text-green-400">
                                 <ShieldCheck className="w-5 h-5" />
                             </span>
                             <span>
-                                <span className="block text-sm font-semibold text-gray-900">Secure by Design</span>
-                                <span className="block text-xs text-gray-500">Firewall · VPN · VLAN</span>
+                                <span className="block text-sm font-semibold text-white">Secure by Design</span>
+                                <span className="block text-xs text-slate-400">Firewall · VPN · VLAN</span>
                             </span>
                         </div>
 
-                        {/* Floating badge — top-right */}
-                        <div className="absolute -top-4 -right-4 bg-indigo-600 text-white rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3">
-                            <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-500">
-                                <Clock className="w-5 h-5" />
+                        {/* Glassmorphism badge — top-right */}
+                        <div className="absolute -top-4 -right-4 backdrop-blur-md bg-indigo-600/70 ring-1 ring-white/20 rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3">
+                            <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-500/50">
+                                <Clock className="w-5 h-5 text-white" />
                             </span>
                             <span>
-                                <span className="block text-sm font-semibold">24 / 7</span>
+                                <span className="block text-sm font-semibold text-white">24 / 7</span>
                                 <span className="block text-xs text-indigo-200">Always On Support</span>
                             </span>
                         </div>

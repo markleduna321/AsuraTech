@@ -2,8 +2,12 @@ import React from 'react';
 import { Head } from '@inertiajs/react';
 import LandingLayout from '@/components/layout/LandingLayout';
 import Hero from './_sections/Hero';
+import Stats from './_sections/Stats';
+import TechStack from './_sections/TechStack';
 import Services from './_sections/Services';
+import FeaturedProject from './_sections/FeaturedProject';
 import Contact from './_sections/Contact';
+import Footer from './_sections/Footer';
 
 export default function Home(props) {
 	return (
@@ -12,6 +16,12 @@ export default function Home(props) {
 
 			{/* Full-bleed premium hero */}
 			<Hero />
+
+			{/* Proven Results — 4 metric cards */}
+			<Stats />
+
+			{/* Tech expertise ribbon */}
+			<TechStack />
 
 			{/* Services grouped by category */}
 			<section id="services" aria-labelledby="services-heading" className="py-16 md:py-24 bg-gray-50 dark:bg-slate-950">
@@ -28,8 +38,14 @@ export default function Home(props) {
 				</div>
 			</section>
 
+			{/* Featured case study */}
+			<FeaturedProject />
+
 			{/* Contact CTA */}
 			<Contact />
+
+			{/* Footer */}
+			<Footer />
 		</>
 	);
 }

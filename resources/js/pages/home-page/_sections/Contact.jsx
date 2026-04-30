@@ -13,7 +13,7 @@ export default function Contact() {
                 <div className="absolute -bottom-24 -left-24 w-[400px] h-[400px] rounded-full bg-white/5" />
             </div>
 
-            <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+            <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                     {/* Left */}
                     <div className="space-y-5">
@@ -47,7 +47,7 @@ export default function Contact() {
                         </a>
 
                         <a
-                            href="tel:+00000000000"
+                            href="tel:+639959822419"
                             className="flex items-center gap-3 bg-white/15 hover:bg-white/25 text-white font-semibold text-sm px-6 py-4 rounded-xl border border-white/20 transition-colors group"
                             aria-label="Call us"
                         >

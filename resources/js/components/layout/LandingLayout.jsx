@@ -14,6 +14,7 @@ const NAV_LINKS = [
             { label: 'Connectivity', href: '#services', icon: Network, desc: 'Starlink, SD-WAN, routing' },
         ],
     },
+    { label: 'Products', href: '#products' },
     { label: 'Contact', href: '#contact' },
 ];
 

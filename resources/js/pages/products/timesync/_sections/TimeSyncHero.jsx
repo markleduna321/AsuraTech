@@ -101,6 +101,7 @@ export default function TimeSyncHero() {
                     </a>
                     <a
                         href="#contact"
+                        onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent('open-chat')); }}
                         className="inline-flex items-center justify-center gap-2 border border-slate-700 hover:border-violet-500 text-slate-300 hover:text-white text-sm font-medium px-7 py-3.5 rounded-xl transition-colors"
                     >
                         Request a Demo

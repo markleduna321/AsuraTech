@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 import { Disclosure } from '@headlessui/react';
 import { Menu, X, ChevronDown, Globe, Server, Network, Cpu, Zap, LogIn, Clock, Activity } from 'lucide-react';
+import ChatWidget from '@/components/ui/ChatWidget';
 
 const NAV_LINKS = [
     { label: 'Home', href: '/' },
@@ -278,6 +279,8 @@ export default function LandingLayout({ children, canLogin, canRegister }) {
             </header>
 
             <main>{children}</main>
+
+            <ChatWidget />
         </div>
     );
 }

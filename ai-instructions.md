@@ -17,7 +17,6 @@
 > At every phase, the relevant persona(s) take the lead. The Tech Lead always opens and closes a phase. Personas collaborate — they do not override each other's domain.
 
 ---
-
 ## 1. 🏗️ Project Identity & Stack
 
 * **Backend:** Laravel (PHP) with Inertia.js as the glue layer.

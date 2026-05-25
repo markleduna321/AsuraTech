@@ -43,7 +43,8 @@ function ServicesDropdown({ items }) {
             </button>
 
             {open && (
-                <div className="absolute left-0 top-full mt-1 w-72 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+                <div className="absolute left-0 top-full w-72 pt-2 z-50">
+                <div className="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
                     {items.map((item) => (
                         <a
                             key={item.label}
@@ -59,6 +60,7 @@ function ServicesDropdown({ items }) {
                             </span>
                         </a>
                     ))}
+                </div>
                 </div>
             )}
         </div>
@@ -79,7 +81,8 @@ function ProductsDropdown({ groups }) {
             </button>
 
             {open && (
-                <div className="absolute left-0 top-full mt-1 w-72 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+                <div className="absolute left-0 top-full w-72 pt-2 z-50">
+                <div className="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
                     {groups.map((group) => (
                         <div key={group.category}>
                             <p className="px-4 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
@@ -102,6 +105,7 @@ function ProductsDropdown({ groups }) {
                             ))}
                         </div>
                     ))}
+                </div>
                 </div>
             )}
         </div>

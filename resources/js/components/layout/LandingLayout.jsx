@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 import { Disclosure } from '@headlessui/react';
-import { Menu, X, ChevronDown, Globe, Server, Network, Cpu, Zap, LogIn } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe, Server, Network, Cpu, Zap, LogIn, Clock } from 'lucide-react';
 
 const NAV_LINKS = [
     { label: 'Home', href: '/' },
@@ -14,7 +14,17 @@ const NAV_LINKS = [
             { label: 'Connectivity', href: '#services', icon: Network, desc: 'Starlink, SD-WAN, routing' },
         ],
     },
-    { label: 'Products', href: '#products' },
+    {
+        label: 'Products',
+        groups: [
+            {
+                category: 'SaaS',
+                items: [
+                    { label: 'TimeSync', href: '/products/timesync', icon: Clock, desc: 'Smart scheduling & time management' },
+                ],
+            },
+        ],
+    },
     { label: 'Contact', href: '#contact' },
 ];
 
@@ -47,6 +57,49 @@ function ServicesDropdown({ items }) {
                                 <span className="block text-xs text-gray-500 mt-0.5">{item.desc}</span>
                             </span>
                         </a>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
+function ProductsDropdown({ groups }) {
+    const [open, setOpen] = useState(false);
+    return (
+        <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+            <button
+                className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-indigo-600 py-2 focus:outline-none"
+                aria-expanded={open}
+                aria-haspopup="true"
+            >
+                Products
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+            </button>
+
+            {open && (
+                <div className="absolute left-0 top-full mt-1 w-72 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+                    {groups.map((group) => (
+                        <div key={group.category}>
+                            <p className="px-4 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                                {group.category}
+                            </p>
+                            {group.items.map((item) => (
+                                <Link
+                                    key={item.label}
+                                    href={item.href}
+                                    className="flex items-start gap-3 px-4 py-3 hover:bg-indigo-50 group"
+                                >
+                                    <span className="mt-0.5 flex-shrink-0 w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                        <item.icon className="w-4 h-4" />
+                                    </span>
+                                    <span>
+                                        <span className="block text-sm font-medium text-gray-900 group-hover:text-indigo-600">{item.label}</span>
+                                        <span className="block text-xs text-gray-500 mt-0.5">{item.desc}</span>
+                                    </span>
+                                </Link>
+                            ))}
+                        </div>
                     ))}
                 </div>
             )}
@@ -90,6 +143,8 @@ export default function LandingLayout({ children, canLogin, canRegister }) {
                             {NAV_LINKS.map((link) =>
                                 link.children ? (
                                     <ServicesDropdown key={link.label} items={link.children} />
+                                ) : link.groups ? (
+                                    <ProductsDropdown key={link.label} groups={link.groups} />
                                 ) : (
                                     <Link
                                         key={link.label}
@@ -142,7 +197,7 @@ export default function LandingLayout({ children, canLogin, canRegister }) {
                                             link.children ? (
                                                 <div key={link.label}>
                                                     <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                                                        Services
+                                                        {link.label}
                                                     </p>
                                                     {link.children.map((child) => (
                                                         <a
@@ -154,6 +209,28 @@ export default function LandingLayout({ children, canLogin, canRegister }) {
                                                             <child.icon className="w-4 h-4 text-indigo-500" />
                                                             {child.label}
                                                         </a>
+                                                    ))}
+                                                </div>
+                                            ) : link.groups ? (
+                                                <div key={link.label}>
+                                                    <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                                                        {link.label}
+                                                    </p>
+                                                    {link.groups.map((group) => (
+                                                        <div key={group.category}>
+                                                            <p className="px-3 pt-1 pb-0.5 text-xs text-gray-400 italic">{group.category}</p>
+                                                            {group.items.map((child) => (
+                                                                <Link
+                                                                    key={child.label}
+                                                                    href={child.href}
+                                                                    onClick={() => close()}
+                                                                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+                                                                >
+                                                                    <child.icon className="w-4 h-4 text-indigo-500" />
+                                                                    {child.label}
+                                                                </Link>
+                                                            ))}
+                                                        </div>
                                                     ))}
                                                 </div>
                                             ) : (

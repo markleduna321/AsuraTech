@@ -12,7 +12,7 @@ import Footer from './_sections/Footer';
 export default function Home(props) {
 	return (
 		<>
-			<Head title="Home" />
+			<Head title="asuraTECH Solutions — Digital Solutions & Web Development" />
 
 			{/* Full-bleed premium hero */}
 			<Hero />

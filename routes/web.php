@@ -21,6 +21,13 @@ Route::get('/products/timesync', function () {
     ]);
 })->name('products.timesync');
 
+Route::get('/products/gymasura', function () {
+    return Inertia::render('products/gymasura/page', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name('products.gymasura');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

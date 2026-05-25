@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 import { Disclosure } from '@headlessui/react';
-import { Menu, X, ChevronDown, Globe, Server, Network, Cpu, Zap, LogIn, Clock } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe, Server, Network, Cpu, Zap, LogIn, Clock, Activity } from 'lucide-react';
 
 const NAV_LINKS = [
     { label: 'Home', href: '/' },
@@ -21,6 +21,7 @@ const NAV_LINKS = [
                 category: 'SaaS',
                 items: [
                     { label: 'TimeSync', href: '/products/timesync', icon: Clock, desc: 'Smart scheduling & time management' },
+                    { label: 'GymAsura', href: '/products/gymasura', icon: Activity, desc: 'Gym management & member tracking' },
                 ],
             },
         ],

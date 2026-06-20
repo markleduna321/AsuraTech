@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query/react';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { chatApi } from '@/features/chat/chatApi';
+import { leadApi } from '@/features/chat/leadApi';
 
 // Base RTK Query API - extend this from `features/*` later.
 export const api = createApi({
@@ -22,11 +23,13 @@ const store = configureStore({
 	reducer: {
 		[api.reducerPath]: api.reducer,
 		[chatApi.reducerPath]: chatApi.reducer,
+		[leadApi.reducerPath]: leadApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
 			.concat(api.middleware)
-			.concat(chatApi.middleware),
+			.concat(chatApi.middleware)
+			.concat(leadApi.middleware),
 });
 
 setupListeners(store.dispatch);

@@ -1,6 +1,27 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Send, Activity, ChevronDown, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Activity, ChevronDown, Loader2, CheckCircle } from 'lucide-react';
 import { useSendMessageMutation } from '@/features/chat/chatApi';
+import { useSubmitLeadMutation } from '@/features/chat/leadApi';
+
+const SERVICE_LABELS = {
+    network: 'Network Infrastructure',
+    web: 'Web & App Development',
+    cctv: 'CCTV & Hardware',
+    starlink: 'Starlink / Connectivity',
+    timesync: 'TimeSync',
+    gymasura: 'GymAsura',
+    general: 'General Inquiry',
+};
+
+// Extracts [COLLECT_INFO:service] token — returns { clean, service } or null
+function extractCollectToken(text) {
+    const match = text.match(/\[COLLECT_INFO:([a-z]+)\]/i);
+    if (!match) return { clean: text, service: null };
+    return {
+        clean: text.replace(match[0], '').trim(),
+        service: match[1].toLowerCase(),
+    };
+}
 
 const INITIAL_MESSAGES = [
     {
@@ -46,9 +67,15 @@ export default function ChatWidget() {
     const [input, setInput] = useState('');
     const [showDot, setShowDot] = useState(false);
     const [quickRepliesUsed, setQuickRepliesUsed] = useState(false);
+    const [showLeadForm, setShowLeadForm] = useState(false);
+    const [leadService, setLeadService] = useState('general');
+    const [leadSubmitted, setLeadSubmitted] = useState(false);
+    const [leadForm, setLeadForm] = useState({ name: '', email: '', phone: '', company: '' });
+    const [leadErrors, setLeadErrors] = useState({});
     const messagesEndRef = useRef(null);
 
     const [sendMessage, { isLoading }] = useSendMessageMutation();
+    const [submitLead, { isLoading: isSubmittingLead }] = useSubmitLeadMutation();
 
     // Listen for 'open-chat' event fired by CTA buttons
     useEffect(() => {
@@ -85,9 +112,16 @@ export default function ChatWidget() {
 
         try {
             const result = await sendMessage(buildHistory(nextMessages)).unwrap();
+            const { clean, service } = extractCollectToken(result.reply);
+
+            if (service) {
+                setLeadService(service);
+                setShowLeadForm(true);
+            }
+
             setMessages((prev) => [
                 ...prev,
-                { id: Date.now() + 1, role: 'assistant', content: result.reply },
+                { id: Date.now() + 1, role: 'assistant', content: clean },
             ]);
         } catch {
             setMessages((prev) => [
@@ -98,6 +132,50 @@ export default function ChatWidget() {
                     content: "Sorry, I'm having trouble connecting right now. Please try again or email us at hello@asuratechsolutions.com.",
                 },
             ]);
+        }
+    };
+
+    const validateLead = () => {
+        const errs = {};
+        if (!leadForm.name.trim()) errs.name = 'Name is required.';
+        if (!leadForm.email.trim()) errs.email = 'Email is required.';
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(leadForm.email)) errs.email = 'Enter a valid email.';
+        return errs;
+    };
+
+    const handleLeadSubmit = async () => {
+        const errs = validateLead();
+        if (Object.keys(errs).length > 0) { setLeadErrors(errs); return; }
+        setLeadErrors({});
+
+        const requirements = buildHistory(messages)
+            .map((m) => `${m.role === 'user' ? 'Customer' : 'Assistant'}: ${m.content}`)
+            .slice(-6)
+            .join('\n');
+
+        try {
+            await submitLead({
+                name: leadForm.name.trim(),
+                email: leadForm.email.trim(),
+                phone: leadForm.phone.trim() || undefined,
+                company: leadForm.company.trim() || undefined,
+                service_interest: leadService,
+                requirements,
+                conversation: buildHistory(messages),
+            }).unwrap();
+
+            setLeadSubmitted(true);
+            setShowLeadForm(false);
+            setMessages((prev) => [
+                ...prev,
+                {
+                    id: Date.now() + 2,
+                    role: 'assistant',
+                    content: `✅ **Thank you, ${leadForm.name}!** Your request has been received. We'll get back to you at **${leadForm.email}** within 24 hours. Check your inbox for a confirmation email!`,
+                },
+            ]);
+        } catch {
+            setLeadErrors({ submit: 'Submission failed. Please try again or email us at hello@asuratechsolutions.com.' });
         }
     };
 
@@ -199,30 +277,91 @@ export default function ChatWidget() {
                         <div ref={messagesEndRef} />
                     </div>
 
+                    {/* Lead capture form */}
+                    {showLeadForm && !leadSubmitted && (
+                        <div className="bg-white border-t border-gray-100 px-4 py-4 flex-shrink-0">
+                            <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wide mb-3">
+                                {SERVICE_LABELS[leadService] || 'Your Request'} — Contact Details
+                            </p>
+                            <div className="space-y-2">
+                                <div>
+                                    <input
+                                        type="text"
+                                        placeholder="Full name *"
+                                        value={leadForm.name}
+                                        onChange={(e) => setLeadForm((f) => ({ ...f, name: e.target.value }))}
+                                        className={`w-full text-sm bg-gray-50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow ${leadErrors.name ? 'border-red-400' : 'border-gray-200'}`}
+                                    />
+                                    {leadErrors.name && <p className="text-xs text-red-500 mt-1">{leadErrors.name}</p>}
+                                </div>
+                                <div>
+                                    <input
+                                        type="email"
+                                        placeholder="Email address *"
+                                        value={leadForm.email}
+                                        onChange={(e) => setLeadForm((f) => ({ ...f, email: e.target.value }))}
+                                        className={`w-full text-sm bg-gray-50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow ${leadErrors.email ? 'border-red-400' : 'border-gray-200'}`}
+                                    />
+                                    {leadErrors.email && <p className="text-xs text-red-500 mt-1">{leadErrors.email}</p>}
+                                </div>
+                                <div className="flex gap-2">
+                                    <input
+                                        type="tel"
+                                        placeholder="Phone (optional)"
+                                        value={leadForm.phone}
+                                        onChange={(e) => setLeadForm((f) => ({ ...f, phone: e.target.value }))}
+                                        className="flex-1 text-sm bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow"
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Company (optional)"
+                                        value={leadForm.company}
+                                        onChange={(e) => setLeadForm((f) => ({ ...f, company: e.target.value }))}
+                                        className="flex-1 text-sm bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow"
+                                    />
+                                </div>
+                                {leadErrors.submit && <p className="text-xs text-red-500">{leadErrors.submit}</p>}
+                                <button
+                                    onClick={handleLeadSubmit}
+                                    disabled={isSubmittingLead}
+                                    className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:opacity-90 text-white text-sm font-semibold py-2.5 rounded-lg transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
+                                >
+                                    {isSubmittingLead ? (
+                                        <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</>
+                                    ) : (
+                                        <><CheckCircle className="w-4 h-4" /> Submit Request</>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Input */}
-                    <div className="bg-white border-t border-gray-100 px-3 py-3 flex items-center gap-2 flex-shrink-0">
-                        <input
-                            type="text"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && !isLoading && submitMessage(input)}
-                            placeholder="Type a message..."
-                            disabled={isLoading}
-                            className="flex-1 min-w-0 text-sm bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow disabled:opacity-50"
-                        />
-                        <button
-                            onClick={() => submitMessage(input)}
-                            disabled={!input.trim() || isLoading}
-                            className="w-9 h-9 flex-shrink-0 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white disabled:opacity-40 hover:opacity-90 transition-opacity"
-                            aria-label="Send message"
-                        >
-                            {isLoading ? (
-                                <Loader2 className="w-4 h-4 animate-spin" />
-                            ) : (
-                                <Send className="w-4 h-4" />
-                            )}
-                        </button>
-                    </div>
+                    {!showLeadForm && !leadSubmitted && (
+                        <div className="bg-white border-t border-gray-100 px-3 py-3 flex items-center gap-2 flex-shrink-0">
+                            <input
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && !isLoading && submitMessage(input)}
+                                placeholder="Type a message..."
+                                disabled={isLoading}
+                                className="flex-1 min-w-0 text-sm bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow disabled:opacity-50"
+                            />
+                            <button
+                                onClick={() => submitMessage(input)}
+                                disabled={!input.trim() || isLoading}
+                                className="w-9 h-9 flex-shrink-0 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white disabled:opacity-40 hover:opacity-90 transition-opacity"
+                                aria-label="Send message"
+                            >
+                                {isLoading ? (
+                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                ) : (
+                                    <Send className="w-4 h-4" />
+                                )}
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
 

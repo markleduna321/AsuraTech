@@ -35,4 +35,8 @@ return [
         'key' => env('OPENAI_API_KEY'),
     ],
 
+    'mail' => [
+        'team_address' => env('MAIL_TEAM_ADDRESS', 'harvey@asuratechsolutions.com'),
+    ],
+
 ];

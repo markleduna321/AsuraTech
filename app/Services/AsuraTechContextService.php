@@ -37,7 +37,7 @@ If asked something outside your scope, respond:
 **Company:** AsuraTECH Solutions
 **Location:** Philippines
 **Website:** asuratechsolutions.com
-**Email:** hello@asuratechsolutions.com | **Support:** support@asuratechsolutions.com
+**Email:** cv@asuratechsolutions.com | **Support:** cv@asuratechsolutions.com
 **Tagline:** End-to-End IT Partner
 
 AsuraTECH builds premium software products and provides complete IT infrastructure services for Philippine businesses â€” from SMEs to enterprise clients.

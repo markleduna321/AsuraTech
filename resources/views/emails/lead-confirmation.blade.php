@@ -111,7 +111,7 @@
                             <div style="background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;padding:20px 24px;text-align:center;">
                                 <p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#1e293b;">Need to reach us sooner?</p>
                                 <p style="margin:0;font-size:13px;color:#64748b;">
-                                    &#9993;&nbsp;<a href="mailto:hello@asuratechsolutions.com" style="color:#4f46e5;text-decoration:none;font-weight:600;">hello@asuratechsolutions.com</a>
+                                    &#9993;&nbsp;<a href="mailto:cv@asuratechsolutions.com" style="color:#4f46e5;text-decoration:none;font-weight:600;">cv@asuratechsolutions.com</a>
                                     &nbsp;&nbsp;&#128222;&nbsp;<a href="tel:+639959822419" style="color:#4f46e5;text-decoration:none;font-weight:600;">+63 995 982 2419</a>
                                 </p>
                             </div>

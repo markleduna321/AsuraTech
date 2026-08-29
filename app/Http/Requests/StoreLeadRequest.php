@@ -21,9 +21,9 @@ class StoreLeadRequest extends FormRequest
             'email'                  => ['required', 'email', 'max:255'],
             'phone'                  => ['nullable', 'string', 'max:30'],
             'company'                => ['nullable', 'string', 'max:255'],
-            'service_interest'       => ['required', 'string', 'in:network,web,cctv,starlink,timesync,gymasura,general'],
+            'service_interest'       => ['required', 'string', 'in:automation,network,web,cctv,starlink,timesync,gymasura,general'],
             'requirements'           => ['nullable', 'string', 'max:5000'],
-            'conversation'           => ['nullable', 'array', 'max:30'],
+            'conversation'           => ['nullable', 'array', 'max:60'],
             'conversation.*.role'    => ['required_with:conversation', 'in:user,assistant'],
             'conversation.*.content' => ['required_with:conversation', 'string', 'max:2000'],
         ];

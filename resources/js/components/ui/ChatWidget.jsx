@@ -4,8 +4,9 @@ import { useSendMessageMutation } from '@/features/chat/chatApi';
 import { useSubmitLeadMutation } from '@/features/chat/leadApi';
 
 const SERVICE_LABELS = {
-    network: 'Network Infrastructure',
+    automation: 'Business Automation',
     web: 'Web & App Development',
+    network: 'Network Infrastructure',
     cctv: 'CCTV & Hardware',
     starlink: 'Starlink / Connectivity',
     timesync: 'TimeSync',
@@ -23,20 +24,30 @@ function extractCollectToken(text) {
     };
 }
 
+// Extracts [SUGGEST:A|B|C] token — returns { clean, suggestions }
+function extractSuggestToken(text) {
+    const match = text.match(/\[SUGGEST:([^\]]+)\]/i);
+    if (!match) return { clean: text, suggestions: [] };
+    return {
+        clean: text.replace(match[0], '').trim(),
+        suggestions: match[1].split('|').map((s) => s.trim()).filter(Boolean).slice(0, 3),
+    };
+}
+
 const INITIAL_MESSAGES = [
     {
         id: 1,
         role: 'assistant',
-        content: "Hi there! 👋 Welcome to AsuraTECH Solutions. I'm here to help you explore our products and services.",
+        content: "Hi there! 👋 Welcome to AsuraTECH Solutions. We build **websites that convert** and **automations that follow up** — so you never lose a lead.",
     },
     {
         id: 2,
         role: 'assistant',
-        content: 'What can I help you with today?',
+        content: 'What would you like to explore today?',
     },
 ];
 
-const QUICK_REPLIES = ['Book a Demo', 'Product Inquiry', 'Technical Support', 'Pricing'];
+const QUICK_REPLIES = ['Automate my follow-ups', 'Build my website', 'Book a Demo', 'Pricing'];
 
 function parseBold(text) {
     const parts = text.split(/\*\*(.*?)\*\*/);
@@ -66,7 +77,8 @@ export default function ChatWidget() {
     const [messages, setMessages] = useState(INITIAL_MESSAGES);
     const [input, setInput] = useState('');
     const [showDot, setShowDot] = useState(false);
-    const [quickRepliesUsed, setQuickRepliesUsed] = useState(false);
+    const [suggestions, setSuggestions] = useState(QUICK_REPLIES);
+    const [staging, setStaging] = useState(false);
     const [showLeadForm, setShowLeadForm] = useState(false);
     const [leadService, setLeadService] = useState('general');
     const [leadSubmitted, setLeadSubmitted] = useState(false);
@@ -93,7 +105,7 @@ export default function ChatWidget() {
     // Scroll to latest message
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages, isLoading]);
+    }, [messages, isLoading, staging]);
 
     // Build the conversation history to send (role + content only, no ids)
     const buildHistory = (currentMessages) =>
@@ -101,28 +113,40 @@ export default function ChatWidget() {
             .filter((m) => m.role === 'user' || m.role === 'assistant')
             .map(({ role, content }) => ({ role, content }));
 
+    // Reveal reply chunks sequentially for a natural conversation rhythm
+    const deliverReply = (text, nextSuggestions, service) => {
+        const parts = text.split(/\n\s*---\s*\n/).map((p) => p.trim()).filter(Boolean);
+        if (parts.length === 0) parts.push(text.trim());
+        setStaging(true);
+        parts.forEach((part, i) => {
+            setTimeout(() => {
+                setMessages((prev) => [...prev, { id: Date.now() + i, role: 'assistant', content: part }]);
+                if (i === parts.length - 1) {
+                    setStaging(false);
+                    setSuggestions(service ? [] : nextSuggestions);
+                    if (service) {
+                        setLeadService(service);
+                        setShowLeadForm(true);
+                    }
+                }
+            }, i * 700);
+        });
+    };
+
     const submitMessage = async (text) => {
-        if (!text.trim() || isLoading) return;
+        if (!text.trim() || isLoading || staging) return;
 
         const userMsg = { id: Date.now(), role: 'user', content: text.trim() };
         const nextMessages = [...messages, userMsg];
         setMessages(nextMessages);
         setInput('');
-        setQuickRepliesUsed(true);
+        setSuggestions([]);
 
         try {
             const result = await sendMessage(buildHistory(nextMessages)).unwrap();
             const { clean, service } = extractCollectToken(result.reply);
-
-            if (service) {
-                setLeadService(service);
-                setShowLeadForm(true);
-            }
-
-            setMessages((prev) => [
-                ...prev,
-                { id: Date.now() + 1, role: 'assistant', content: clean },
-            ]);
+            const { clean: finalText, suggestions: nextSuggestions } = extractSuggestToken(clean);
+            deliverReply(finalText, nextSuggestions, service);
         } catch {
             setMessages((prev) => [
                 ...prev,
@@ -207,7 +231,7 @@ export default function ChatWidget() {
                             <p className="text-sm font-bold text-white leading-none">AsuraTECH Support</p>
                             <p className="flex items-center gap-1.5 text-xs text-indigo-200 mt-0.5">
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
-                                Online · AI-powered assistant
+                                Online · AI Automation Assistant
                             </p>
                         </div>
                         <button
@@ -243,8 +267,8 @@ export default function ChatWidget() {
                             </div>
                         ))}
 
-                        {/* Typing indicator while waiting for reply */}
-                        {isLoading && (
+                        {/* Typing indicator while waiting for reply or between staged bubbles */}
+                        {(isLoading || staging) && (
                             <div className="flex items-end gap-2 justify-start">
                                 <span className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center flex-shrink-0 mb-0.5">
                                     <Activity className="w-3 h-3 text-white" />
@@ -259,10 +283,10 @@ export default function ChatWidget() {
                             </div>
                         )}
 
-                        {/* Quick reply chips â€” shown once after welcome */}
-                        {!quickRepliesUsed && !isLoading && messages[messages.length - 1]?.role === 'assistant' && messages.length <= 2 && (
+                        {/* Contextual quick-reply chips — refreshed every assistant turn */}
+                        {suggestions.length > 0 && !isLoading && !staging && !showLeadForm && messages[messages.length - 1]?.role === 'assistant' && (
                             <div className="flex flex-wrap gap-2 pl-8">
-                                {QUICK_REPLIES.map((qr) => (
+                                {suggestions.map((qr) => (
                                     <button
                                         key={qr}
                                         onClick={() => submitMessage(qr)}
@@ -337,20 +361,20 @@ export default function ChatWidget() {
                     )}
 
                     {/* Input */}
-                    {!showLeadForm && !leadSubmitted && (
+                    {!showLeadForm && (
                         <div className="bg-white border-t border-gray-100 px-3 py-3 flex items-center gap-2 flex-shrink-0">
                             <input
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                onKeyDown={(e) => e.key === 'Enter' && !isLoading && submitMessage(input)}
+                                onKeyDown={(e) => e.key === 'Enter' && !isLoading && !staging && submitMessage(input)}
                                 placeholder="Type a message..."
-                                disabled={isLoading}
+                                disabled={isLoading || staging}
                                 className="flex-1 min-w-0 text-sm bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow disabled:opacity-50"
                             />
                             <button
                                 onClick={() => submitMessage(input)}
-                                disabled={!input.trim() || isLoading}
+                                disabled={!input.trim() || isLoading || staging}
                                 className="w-9 h-9 flex-shrink-0 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white disabled:opacity-40 hover:opacity-90 transition-opacity"
                                 aria-label="Send message"
                             >

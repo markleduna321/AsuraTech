@@ -1,20 +1,20 @@
 import React from 'react';
-import { Monitor, ShieldCheck, Users, Zap } from 'lucide-react';
+import { Monitor, Workflow, Users, Zap } from 'lucide-react';
 
 const RESULTS = [
     {
         icon: Monitor,
         value: '50+',
-        label: 'Scalable Systems',
+        label: 'Websites & Apps Shipped',
         desc: 'Deployed across multiple industries',
         iconClass: 'text-indigo-500 bg-indigo-50 dark:bg-indigo-500/20',
         borderClass: 'border-indigo-100 dark:border-indigo-800/50',
     },
     {
-        icon: ShieldCheck,
+        icon: Workflow,
         value: '30+',
-        label: 'Secure Networks',
-        desc: 'Hardened and actively monitored',
+        label: 'Workflows Automated',
+        desc: 'Lead follow-up & CRM automations',
         iconClass: 'text-violet-500 bg-violet-50 dark:bg-violet-500/20',
         borderClass: 'border-violet-100 dark:border-violet-800/50',
     },

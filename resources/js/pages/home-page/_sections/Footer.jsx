@@ -5,12 +5,10 @@ import { Zap, Mail, Phone, MapPin, Users, MessageCircle, Briefcase, Code2 } from
 const SERVICES = [
     { label: 'Web Development', href: '#services' },
     { label: 'SaaS Platforms', href: '#services' },
-    { label: 'Mobile & Desktop Apps', href: '#services' },
-    { label: 'Network Infrastructure', href: '#services' },
-    { label: 'Firewall & Security', href: '#services' },
-    { label: 'CCTV & Cabling', href: '#services' },
-    { label: 'VLAN & SD-WAN', href: '#services' },
-    { label: 'Starlink Deployments', href: '#services' },
+    { label: 'E-commerce & Booking Sites', href: '#services' },
+    { label: 'Workflow & CRM Automation', href: '#services' },
+    { label: 'Email & SMS Automation', href: '#services' },
+    { label: 'API & Systems Integration', href: '#services' },
 ];
 
 const COMPANY = [

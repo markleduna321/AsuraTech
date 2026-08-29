@@ -2,13 +2,13 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
 const PROJECT = {
-    category: 'Enterprise SaaS',
+    category: 'Web Platform + Automation',
     title: 'Medical Records Management Platform',
     description:
-        'A secure, multi-tenant SaaS platform built for a regional healthcare network — digitising patient records, appointment scheduling, and billing across 12 clinic branches.',
+        'A secure, multi-tenant web platform built for a regional healthcare network — automating patient record intake, appointment scheduling, and billing follow-ups across 12 clinic branches.',
     image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80',
     imageAlt: 'Healthcare staff using a digital management system',
-    outcome: '40% reduction in administrative overhead within the first quarter of deployment.',
+    outcome: '40% reduction in administrative overhead after automating scheduling and billing workflows.',
     tags: ['Laravel', 'React', 'RTK Query', 'MySQL', 'Inertia.js', 'Tailwind CSS'],
 };
 

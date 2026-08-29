@@ -12,7 +12,7 @@ import Footer from './_sections/Footer';
 export default function Home(props) {
 	return (
 		<>
-			<Head title="asuraTECH Solutions — Digital Solutions & Web Development" />
+			<Head title="asuraTECH Solutions — Web Development & Business Automation" />
 
 			{/* Full-bleed premium hero */}
 			<Hero />
@@ -28,10 +28,10 @@ export default function Home(props) {
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="text-center max-w-2xl mx-auto mb-12">
 						<h2 id="services-heading" className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100">
-							Everything your business needs
+							Websites that work — automation that never sleeps
 						</h2>
 						<p className="mt-3 text-lg text-gray-500 dark:text-gray-400">
-							Comprehensive IT services grouped by specialty — choose what fits your business.
+							We build fast, modern websites and connect them to automated workflows that capture leads and follow up for you.
 						</p>
 					</div>
 					<Services />

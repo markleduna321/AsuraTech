@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query/react';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { chatApi } from '@/features/chat/chatApi';
 import { leadApi } from '@/features/chat/leadApi';
+import { certificateApi } from '@/features/certificate/certificateApi';
 
 // Base RTK Query API - extend this from `features/*` later.
 export const api = createApi({
@@ -24,14 +25,17 @@ const store = configureStore({
 		[api.reducerPath]: api.reducer,
 		[chatApi.reducerPath]: chatApi.reducer,
 		[leadApi.reducerPath]: leadApi.reducer,
+		[certificateApi.reducerPath]: certificateApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
 			.concat(api.middleware)
 			.concat(chatApi.middleware)
-			.concat(leadApi.middleware),
+			.concat(leadApi.middleware)
+			.concat(certificateApi.middleware),
 });
 
 setupListeners(store.dispatch);
 
 export default store;
+

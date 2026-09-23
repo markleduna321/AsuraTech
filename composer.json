@@ -10,6 +10,8 @@
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "simplesoftwareio/simple-qrcode": "^4.2",
+        "spatie/browsershot": "^5.4",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {

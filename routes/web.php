@@ -29,8 +29,20 @@ Route::get('/products/gymasura', function () {
 })->name('products.gymasura');
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return redirect()->route('certificates.admin');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Public certificate verification — accessible via QR code scan (no auth)
+Route::get('/certificates/{uuid}', function (string $uuid) {
+    return Inertia::render('certificates/view/page', [
+        'uuid' => $uuid,
+    ]);
+})->name('certificates.view');
+
+// Admin certificate management (requires auth)
+Route::get('/admin/certificates', function () {
+    return Inertia::render('certificates/admin/page');
+})->middleware(['auth', 'verified'])->name('certificates.admin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -102,8 +102,9 @@ class CertificateService
             return ['created' => 0, 'errors' => ['CSV file is empty.']];
         }
 
-        // Normalize headers (trim whitespace, lowercase)
+        // Normalize headers (trim whitespace, lowercase, remove UTF-8 BOM)
         $header = array_map(function ($col) {
+            $col = preg_replace('/[\xef\xbb\xbf]/', '', $col);
             return strtolower(trim($col));
         }, $header);
 

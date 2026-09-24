@@ -10,7 +10,6 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Spatie\Browsershot\Browsershot;
 use Illuminate\Support\Facades\View;
 
@@ -31,11 +30,8 @@ class CertificateIssued extends Mailable implements ShouldQueue
         
         $verificationUrl = url("/certificates/{$this->certificate->uuid}");
         
-        // Generate SVG string
-        $this->qrCodeSvg = QrCode::size(150)->generate($verificationUrl);
-        
-        // Data URI for Browsershot
-        $this->qrCodeDataUri = 'data:image/svg+xml;base64,' . base64_encode($this->qrCodeSvg);
+        // External API URL for Browsershot
+        $this->qrCodeDataUri = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' . urlencode($verificationUrl);
     }
 
     /**

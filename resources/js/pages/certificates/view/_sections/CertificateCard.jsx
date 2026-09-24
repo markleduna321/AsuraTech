@@ -123,7 +123,7 @@ export default function CertificateCard({ certificate, innerRef }) {
 				{/* Recipient Name */}
 				<div className="mt-4 w-full max-w-lg text-center">
 					<div className="border-b-2 border-yellow-500/60 pb-2">
-						<p className="text-4xl font-bold text-gray-800 truncate px-4"
+						<p className="text-4xl font-bold text-gray-800 leading-tight px-4"
 							style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 						>
 							{certificate.recipient_name}

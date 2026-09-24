@@ -99,7 +99,7 @@
             <!-- Recipient Name -->
             <div class="mt-6 w-full max-w-2xl text-center">
                 <div class="border-b-4 border-yellow-500/60 pb-2">
-                    <p class="text-6xl font-bold text-gray-800 truncate" style="font-family: 'Georgia', serif;">
+                    <p class="text-6xl font-bold text-gray-800 leading-tight" style="font-family: 'Georgia', serif;">
                         {{ $certificate->recipient_name }}
                     </p>
                 </div>
@@ -132,10 +132,10 @@
                         <img 
                             src="{{ asset('storage/' . $certificate->speaker_signature_path) }}" 
                             alt="Speaker Signature" 
-                            class="w-auto h-24 object-contain absolute bottom-full mix-blend-multiply"
+                            class="w-auto h-24 object-contain absolute bottom-[90%] -mb-4 mix-blend-multiply"
                         />
                     @endif
-                    <div class="border-t-2 border-gray-300 pt-4 mx-12 w-full mt-auto">
+                    <div class="border-t-2 border-gray-300 pt-4 mx-12 w-full mt-auto relative z-10">
                         <p class="text-2xl font-bold text-gray-800" style="font-family: 'Georgia', serif;">
                             {{ $certificate->speaker_name }}
                         </p>
@@ -162,10 +162,10 @@
                         <img 
                             src="{{ asset('storage/' . $certificate->coordinator_signature_path) }}" 
                             alt="Coordinator Signature" 
-                            class="w-auto h-24 object-contain absolute bottom-full mix-blend-multiply"
+                            class="w-auto h-24 object-contain absolute bottom-[90%] -mb-4 mix-blend-multiply"
                         />
                     @endif
-                    <div class="border-t-2 border-gray-300 pt-4 mx-12 w-full mt-auto">
+                    <div class="border-t-2 border-gray-300 pt-4 mx-12 w-full mt-auto relative z-10">
                         <p class="text-2xl font-bold text-gray-800" style="font-family: 'Georgia', serif;">
                             {{ $certificate->coordinator_name }}
                         </p>

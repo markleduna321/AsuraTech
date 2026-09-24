@@ -150,7 +150,7 @@ class CertificateService
                     continue;
                 }
 
-                $recipientName = trim($row[$nameIndex]);
+                $recipientName = Str::title(trim($row[$nameIndex]));
                 $email = ($emailIndex !== false && isset($row[$emailIndex])) ? trim($row[$emailIndex]) : null;
 
                 // Validate name length

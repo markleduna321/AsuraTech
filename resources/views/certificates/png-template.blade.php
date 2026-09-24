@@ -93,7 +93,7 @@
 
             <!-- Subtitle -->
             <p class="text-2xl text-gray-500 mt-6" style="font-family: 'Georgia', serif;">
-                This certificate is proudly present to :
+                This certificate is proudly presented to :
             </p>
 
             <!-- Recipient Name -->

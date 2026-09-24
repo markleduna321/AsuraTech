@@ -117,7 +117,7 @@ export default function CertificateCard({ certificate, innerRef }) {
 				<p className="text-base text-gray-500 mt-4"
 					style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 				>
-					This certificate is proudly present to :
+					This certificate is proudly presented to :
 				</p>
 
 				{/* Recipient Name */}

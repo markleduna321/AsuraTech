@@ -23,8 +23,7 @@ export default function CertificateCard({ certificate, innerRef }) {
 	return (
 		<div
 			ref={innerRef}
-			className="relative w-full max-w-[820px] mx-auto bg-white rounded-2xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
-			style={{ aspectRatio: '1.414 / 1' }}
+			className="relative w-[820px] h-[580px] shrink-0 mx-auto bg-white rounded-2xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
 		>
 			{/* ═══════════════ BACKGROUND DECORATIONS ═══════════════ */}
 
@@ -94,19 +93,19 @@ export default function CertificateCard({ certificate, innerRef }) {
 			/>
 
 			{/* ═══════════════ CERTIFICATE CONTENT ═══════════════ */}
-			<div className="relative z-10 flex flex-col items-center justify-between h-full px-8 sm:px-12 md:px-16 py-8 sm:py-10 md:py-12">
+			<div className="relative z-10 flex flex-col items-center justify-between h-full px-16 py-12">
 
 				{/* Top section: Title */}
 				<div className="flex flex-col items-center justify-center w-full mb-2">
 					<div className="text-center w-full">
 						<h1
-							className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-[0.2em] text-gray-800 leading-tight"
+							className="text-6xl font-black tracking-[0.2em] text-gray-800 leading-tight"
 							style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 						>
 							CERTIFICATE
 						</h1>
 						<p
-							className="text-lg sm:text-xl lg:text-2xl font-semibold tracking-[0.35em] text-gray-600 mt-1"
+							className="text-2xl font-semibold tracking-[0.35em] text-gray-600 mt-1"
 							style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 						>
 							OF PARTICIPATION
@@ -115,16 +114,16 @@ export default function CertificateCard({ certificate, innerRef }) {
 				</div>
 
 				{/* Subtitle */}
-				<p className="text-sm sm:text-base text-gray-500 mt-2 sm:mt-4"
+				<p className="text-base text-gray-500 mt-4"
 					style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 				>
 					This certificate is proudly present to :
 				</p>
 
 				{/* Recipient Name */}
-				<div className="mt-2 sm:mt-4 w-full max-w-md text-center">
-					<div className="border-b-2 border-yellow-500/60 pb-1 sm:pb-2">
-						<p className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 truncate"
+				<div className="mt-4 w-full max-w-lg text-center">
+					<div className="border-b-2 border-yellow-500/60 pb-2">
+						<p className="text-4xl font-bold text-gray-800 truncate px-4"
 							style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 						>
 							{certificate.recipient_name}
@@ -133,16 +132,16 @@ export default function CertificateCard({ certificate, innerRef }) {
 				</div>
 
 				{/* Webinar Details */}
-				<div className="mt-2 sm:mt-4 text-center space-y-0.5 sm:space-y-1">
-					<p className="text-xs sm:text-sm text-gray-500"
+				<div className="mt-4 text-center space-y-1">
+					<p className="text-sm text-gray-500"
 						style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 					>
 						for actively participating in the
 					</p>
-					<h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-800 tracking-wide uppercase">
+					<h2 className="text-xl font-bold text-gray-800 tracking-wide uppercase px-4">
 						{certificate.webinar_title}
 					</h2>
-					<p className="text-xs sm:text-sm text-gray-600"
+					<p className="text-sm text-gray-600"
 						style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 					>
 						held on {formattedDate}.
@@ -150,7 +149,7 @@ export default function CertificateCard({ certificate, innerRef }) {
 				</div>
 
 				{/* Appreciation text */}
-				<p className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-500 text-center max-w-lg leading-relaxed"
+				<p className="mt-3 text-sm text-gray-500 text-center max-w-lg leading-relaxed"
 					style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 				>
 					We extend our sincere appreciation for your participation, enthusiasm,
@@ -158,23 +157,23 @@ export default function CertificateCard({ certificate, innerRef }) {
 				</p>
 
 				{/* Signatures + QR Code row */}
-				<div className="mt-auto w-full flex items-end justify-between gap-4 relative z-20 pb-4">
+				<div className="mt-auto w-full flex items-end justify-between gap-4 relative z-20 pb-2">
 					{/* Speaker signature */}
 					<div className="flex-1 text-center relative flex flex-col items-center justify-end min-h-[4rem]">
 						{certificate.speaker_signature_url && (
 							<img 
 								src={certificate.speaker_signature_url} 
 								alt="Speaker Signature" 
-								className="w-auto h-16 object-contain absolute bottom-full -mb-1 mix-blend-multiply"
+								className="w-auto h-16 object-contain absolute bottom-[90%] -mb-2 mix-blend-multiply"
 							/>
 						)}
-						<div className="border-t border-gray-300 pt-2 mx-4 sm:mx-8 w-full">
-							<p className="text-sm sm:text-base font-bold text-gray-800"
+						<div className="border-t border-gray-300 pt-2 mx-8 w-full relative z-10">
+							<p className="text-base font-bold text-gray-800"
 								style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 							>
 								{certificate.speaker_name}
 							</p>
-							<p className="text-xs sm:text-sm font-medium text-yellow-600 italic">
+							<p className="text-sm font-medium text-yellow-600 italic">
 								{certificate.speaker_role}
 							</p>
 						</div>
@@ -203,16 +202,16 @@ export default function CertificateCard({ certificate, innerRef }) {
 							<img 
 								src={certificate.coordinator_signature_url} 
 								alt="Coordinator Signature" 
-								className="w-auto h-16 object-contain absolute bottom-full -mb-1 mix-blend-multiply" 
+								className="w-auto h-16 object-contain absolute bottom-[90%] -mb-2 mix-blend-multiply" 
 							/>
 						)}
-						<div className="border-t border-gray-300 pt-2 mx-4 sm:mx-8 w-full">
-							<p className="text-sm sm:text-base font-bold text-gray-800"
+						<div className="border-t border-gray-300 pt-2 mx-8 w-full relative z-10">
+							<p className="text-base font-bold text-gray-800"
 								style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
 							>
 								{certificate.coordinator_name}
 							</p>
-							<p className="text-xs sm:text-sm font-medium text-yellow-600 italic">
+							<p className="text-sm font-medium text-yellow-600 italic">
 								{certificate.coordinator_role}
 							</p>
 						</div>

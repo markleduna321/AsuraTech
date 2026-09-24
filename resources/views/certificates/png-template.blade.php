@@ -130,7 +130,7 @@
                 <div class="flex-1 text-center relative flex flex-col items-center justify-end h-24">
                     @if ($certificate->speaker_signature_path)
                         <img 
-                            src="{{ public_path('storage/' . $certificate->speaker_signature_path) }}" 
+                            src="{{ asset('storage/' . $certificate->speaker_signature_path) }}" 
                             alt="Speaker Signature" 
                             class="w-auto h-24 object-contain absolute bottom-full mix-blend-multiply"
                         />
@@ -160,7 +160,7 @@
                 <div class="flex-1 text-center relative flex flex-col items-center justify-end h-24">
                     @if ($certificate->coordinator_signature_path)
                         <img 
-                            src="{{ public_path('storage/' . $certificate->coordinator_signature_path) }}" 
+                            src="{{ asset('storage/' . $certificate->coordinator_signature_path) }}" 
                             alt="Coordinator Signature" 
                             class="w-auto h-24 object-contain absolute bottom-full mix-blend-multiply"
                         />

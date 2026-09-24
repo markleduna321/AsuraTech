@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { toPng } from 'html-to-image';
@@ -31,6 +31,26 @@ const staggerContainer = {
 export default function CertificateViewPage() {
 	const { uuid } = usePage().props;
 	const certRef = useRef(null);
+	const wrapperRef = useRef(null);
+	const [scale, setScale] = useState(1);
+
+	useEffect(() => {
+		const updateScale = () => {
+			if (wrapperRef.current) {
+				const availableWidth = wrapperRef.current.offsetWidth;
+				// 820 is the fixed width of the certificate
+				if (availableWidth < 820) {
+					setScale(availableWidth / 820);
+				} else {
+					setScale(1);
+				}
+			}
+		};
+
+		updateScale();
+		window.addEventListener('resize', updateScale);
+		return () => window.removeEventListener('resize', updateScale);
+	}, []);
 
 	const {
 		data: certificateResponse,
@@ -186,15 +206,22 @@ export default function CertificateViewPage() {
 							{/* Certificate Card */}
 							<motion.div
 								variants={fadeUp}
-								className="relative"
+								className="relative w-full flex justify-center"
+								ref={wrapperRef}
 							>
 								{/* Ambient glow behind certificate */}
 								<div className="absolute -inset-4 rounded-3xl bg-blue-500/[0.04] blur-2xl pointer-events-none" />
-								<div className="relative rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-4 sm:p-6 md:p-8 overflow-hidden">
-									<CertificateCard
-										certificate={certificate}
-										innerRef={certRef}
-									/>
+								
+								<div className="relative rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-4 sm:p-6 md:p-8 overflow-hidden w-full flex justify-center" style={{ height: 580 * scale + 64 }}>
+									<div 
+										className="origin-top" 
+										style={{ transform: `scale(${scale})` }}
+									>
+										<CertificateCard
+											certificate={certificate}
+											innerRef={certRef}
+										/>
+									</div>
 								</div>
 							</motion.div>
 

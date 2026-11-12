@@ -16,9 +16,9 @@ use App\Http\Controllers\Api\CertificateController;
 |
 */
 
-// Public — rate limited to 10 requests/min per IP
+// Public — chat: 10 requests/min per IP; leads: 5/min and 30/day per IP (see AppServiceProvider)
 Route::post('/chat', [ChatController::class, 'send'])->middleware('throttle:chat');
-Route::post('/leads', [LeadController::class, 'store'])->middleware('throttle:chat');
+Route::post('/leads', [LeadController::class, 'store'])->middleware('throttle:leads');
 
 // Public certificate verification — no auth (QR code scans)
 Route::get('/certificates/{certificate}', [CertificateController::class, 'show']);

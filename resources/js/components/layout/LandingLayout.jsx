@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 import { Disclosure } from '@headlessui/react';
-import { Menu, X, ChevronDown, Globe, Server, Network, Cpu, Zap, LogIn, Clock, Activity } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe, Zap, LogIn, Clock, Activity, Workflow, LayoutGrid, CodeXml } from 'lucide-react';
 import ChatWidget from '@/components/ui/ChatWidget';
+import SectionLink from '@/components/ui/SectionLink';
 
+// Root-relative anchors so the menu also works from product and legal pages.
 const NAV_LINKS = [
     { label: 'Home', href: '/' },
     {
         label: 'Services',
         children: [
-            { label: 'Web & Applications', href: '#services', icon: Globe, desc: 'Websites, SaaS, apps' },
-            { label: 'Infrastructure & Security', href: '#services', icon: Server, desc: 'Firewall, VLANs, SD-WAN' },
-            { label: 'Hardware & Installation', href: '#services', icon: Cpu, desc: 'Servers, cabling, CCTV' },
-            { label: 'Connectivity', href: '#services', icon: Network, desc: 'Starlink, SD-WAN, routing' },
+            { label: 'Business Automation', href: '/#platform', icon: Workflow, desc: 'Funnels, CRM, inbox, AI chat' },
+            { label: 'Turnkey Industry Systems', href: '/#demos', icon: LayoutGrid, desc: 'HRIS, Gym and Clinic' },
+            { label: 'Cloud & Lead Platforms', href: '/#ecosystem', icon: Globe, desc: 'Diskobre.com, Caleho.cloud' },
+            { label: 'Custom Engineering', href: '/#engineering', icon: CodeXml, desc: 'ERPs, apps, AI integration' },
         ],
     },
     {
@@ -47,7 +49,7 @@ function ServicesDropdown({ items }) {
                 <div className="absolute left-0 top-full w-72 pt-2 z-50">
                 <div className="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
                     {items.map((item) => (
-                        <a
+                        <SectionLink
                             key={item.label}
                             href={item.href}
                             className="flex items-start gap-3 px-4 py-3 hover:bg-indigo-50 group"
@@ -59,7 +61,7 @@ function ServicesDropdown({ items }) {
                                 <span className="block text-sm font-medium text-gray-900 group-hover:text-indigo-600">{item.label}</span>
                                 <span className="block text-xs text-gray-500 mt-0.5">{item.desc}</span>
                             </span>
-                        </a>
+                        </SectionLink>
                     ))}
                 </div>
                 </div>
@@ -206,7 +208,7 @@ export default function LandingLayout({ children, canLogin, canRegister }) {
                                                         {link.label}
                                                     </p>
                                                     {link.children.map((child) => (
-                                                        <a
+                                                        <SectionLink
                                                             key={child.label}
                                                             href={child.href}
                                                             onClick={() => close()}
@@ -214,7 +216,7 @@ export default function LandingLayout({ children, canLogin, canRegister }) {
                                                         >
                                                             <child.icon className="w-4 h-4 text-indigo-500" />
                                                             {child.label}
-                                                        </a>
+                                                        </SectionLink>
                                                     ))}
                                                 </div>
                                             ) : link.groups ? (

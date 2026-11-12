@@ -2,12 +2,15 @@ import React from 'react';
 import { Head } from '@inertiajs/react';
 import LandingLayout from '@/components/layout/LandingLayout';
 import Hero from './_sections/Hero';
-import Stats from './_sections/Stats';
-import TechStack from './_sections/TechStack';
-import Services from './_sections/Services';
-import FeaturedProject from './_sections/FeaturedProject';
-import Contact from './_sections/Contact';
-import Footer from './_sections/Footer';
+import ChoosePath from './_sections/ChoosePath';
+import PlatformSection from './_sections/platform/PlatformSection';
+import DemoShowcase from './_sections/demos/DemoShowcase';
+import EcosystemSection from './_sections/ecosystem/EcosystemSection';
+import EngineeringSection from './_sections/engineering/EngineeringSection';
+import ConnectSection from './_sections/connect/ConnectSection';
+import FinalCtaSection from './_sections/final-cta/FinalCtaSection';
+import SiteFooter from '@/components/layout/SiteFooter';
+import StickyCta from './_sections/final-cta/StickyCta';
 
 export default function Home(props) {
 	return (
@@ -17,35 +20,31 @@ export default function Home(props) {
 			{/* Full-bleed premium hero */}
 			<Hero />
 
-			{/* Proven Results — 4 metric cards */}
-			<Stats />
+			{/* Choose Your Path — bento grid right below the fold */}
+			<ChoosePath />
 
-			{/* Tech expertise ribbon */}
-			<TechStack />
+			{/* All-in-one automation deep dive: stack collapse, feature showcase, value strip */}
+			<PlatformSection />
 
-			{/* Services grouped by category */}
-			<section id="services" aria-labelledby="services-heading" className="py-16 md:py-24 bg-gray-50 dark:bg-slate-950">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="text-center max-w-2xl mx-auto mb-12">
-						<h2 id="services-heading" className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100">
-							Websites that work — automation that never sleeps
-						</h2>
-						<p className="mt-3 text-lg text-gray-500 dark:text-gray-400">
-							We build fast, modern websites and connect them to automated workflows that capture leads and follow up for you.
-						</p>
-					</div>
-					<Services />
-				</div>
-			</section>
+			{/* Live demo showcase: tabbed product launcher with a device stage */}
+			<DemoShowcase />
 
-			{/* Featured case study */}
-			<FeaturedProject />
+			{/* Ecosystem spotlight: Diskobre.com + Caleho.cloud (CSS-only, no WebGL) */}
+			<EcosystemSection />
 
-			{/* Contact CTA */}
-			<Contact />
+			{/* Custom engineering: explorable 3D system architecture (ERP, apps, AI, consultancy) */}
+			<EngineeringSection />
 
-			{/* Footer */}
-			<Footer />
+			{/* How everything connects: four-step pipeline, agencies vs one partner, closing CTAs */}
+			<ConnectSection />
+
+			{/* Final CTA: free Systems Audit (lead capture) + instant Demo Portal */}
+			<FinalCtaSection />
+
+			<SiteFooter />
+
+			{/* Book Free Audit pill: visible after Section 2, hidden near the final CTA */}
+			<StickyCta />
 		</>
 	);
 }

@@ -58,6 +58,20 @@
                                     <td style="padding:12px 16px;font-size:14px;color:#1e293b;font-weight:500;">{{ $lead->company }}</td>
                                 </tr>
                                 @endif
+                                @if($lead->business_type)
+                                <tr>
+                                    <td style="padding:12px 16px;font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;border-top:1px solid #e2e8f0;">Business</td>
+                                    <td style="padding:12px 16px;font-size:14px;color:#1e293b;font-weight:500;border-top:1px solid #e2e8f0;">{{ ucfirst($lead->business_type) }}</td>
+                                </tr>
+                                @endif
+                                @if($lead->source || $lead->utm_source || $lead->utm_campaign)
+                                <tr style="background:#f8fafc;">
+                                    <td style="padding:12px 16px;font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;border-top:1px solid #e2e8f0;">Source</td>
+                                    <td style="padding:12px 16px;font-size:13px;color:#475569;border-top:1px solid #e2e8f0;">
+                                        {{ $lead->source ?? '—' }}@if($lead->utm_source) · {{ $lead->utm_source }}@endif @if($lead->utm_medium) / {{ $lead->utm_medium }}@endif @if($lead->utm_campaign) / {{ $lead->utm_campaign }}@endif
+                                    </td>
+                                </tr>
+                                @endif
                             </table>
                         </td>
                     </tr>
@@ -103,7 +117,7 @@
                     <tr>
                         <td style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:20px 40px;text-align:center;">
                             <p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.6;">
-                                This notification was generated automatically by the AsuraTECH Solutions website chatbot.<br />
+                                This notification was generated automatically by the AsuraTECH Solutions {{ $lead->service_interest === 'audit' ? 'website audit form' : 'website chatbot' }}.<br />
                                 &copy; {{ date('Y') }} AsuraTECH Solutions &mdash; Philippines
                             </p>
                         </td>

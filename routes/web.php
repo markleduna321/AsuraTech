@@ -28,6 +28,27 @@ Route::get('/products/gymasura', function () {
     ]);
 })->name('products.gymasura');
 
+Route::get('/demos', function () {
+    return Inertia::render('demo-portal/page', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name('demos');
+
+Route::get('/privacy', function () {
+    return Inertia::render('legal/privacy/page', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name('legal.privacy');
+
+Route::get('/terms', function () {
+    return Inertia::render('legal/terms/page', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name('legal.terms');
+
 Route::get('/dashboard', function () {
     return redirect()->route('certificates.admin');
 })->middleware(['auth', 'verified'])->name('dashboard');

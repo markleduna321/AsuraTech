@@ -11,13 +11,22 @@ class Lead extends Model
         'email',
         'phone',
         'company',
+        'business_type',
         'service_interest',
+        'source',
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_term',
+        'utm_content',
         'requirements',
         'conversation',
         'status',
+        'consented_at',
     ];
 
     protected $casts = [
         'conversation' => 'array',
+        'consented_at' => 'datetime',
     ];
 }

@@ -89,8 +89,13 @@
                                         <div style="width:28px;height:28px;background:#4f46e5;border-radius:50%;text-align:center;line-height:28px;color:#fff;font-size:12px;font-weight:700;">2</div>
                                     </td>
                                     <td style="padding:0 0 14px 12px;vertical-align:top;">
+                                        @if($lead->service_interest === 'audit')
+                                        <p style="margin:0;font-size:14px;font-weight:600;color:#1e293b;">We pick a time for your 15-minute audit</p>
+                                        <p style="margin:4px 0 0;font-size:13px;color:#64748b;">We&rsquo;ll email you a few slots so you can choose the one that suits you.</p>
+                                        @else
                                         <p style="margin:0;font-size:14px;font-weight:600;color:#1e293b;">We prepare a tailored proposal</p>
                                         <p style="margin:4px 0 0;font-size:13px;color:#64748b;">A custom quote or demo schedule is prepared based on your needs.</p>
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>

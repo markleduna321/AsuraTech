@@ -16,7 +16,7 @@ class LeadController extends Controller
 {
     public function store(StoreLeadRequest $request): JsonResponse
     {
-        $lead = Lead::create($request->validated());
+        $lead = Lead::create($request->leadAttributes());
 
         try {
             Mail::to(config('services.mail.team_address'))->send(new NewLeadMail($lead));

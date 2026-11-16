@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================================================================
+   DESIGN TOKENS — single definition, used everywhere via var()
+   ================================================================ */
+:root {
+    /* Dark sections */
+    --bg: #050A18;
+    --surface: #0A1224;
+    --card: #101A33;
+    --border: rgba(255, 255, 255, 0.10);
+    --white: #FFFFFF;
+    --soft: #EEF4FF;
+    --muted: #9AA9C7;
+
+    /* Light sections */
+    --light-bg: #FFFFFF;
+    --light-band: #EEF4FF;
+    --ink: #0B1B3A;
+    --ink-muted: #5B6B8C;
+
+    /* Brand */
+    --navy: #0A44A8;
+    --blue: #2F6BFF;
+    --cyan: #00E5FF;
+    --cyan-deep: #007A9E;
+    --violet: #7C3AED;
+    --violet-light: #A78BFA;
+
+    /* Signature gradient */
+    --gradient-brand: linear-gradient(135deg, #00E5FF, #2F6BFF, #7C3AED);
+
+    /* Shared easing (already existed as --ease-expo, reuse) */
+    --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Layout constants */
+    --header-h: 72px;
+}
+
 @layer base {
     @media (prefers-reduced-motion: no-preference) {
         html {
@@ -9,6 +46,52 @@
         }
     }
 }
+
+/* ================================================================
+   SITE HEADER — sticky dark frosted bar, mega menus, active state
+   ================================================================ */
+@layer components {
+    .site-header {
+        /* height set via inline style + h-[72px] utility */
+    }
+
+    /* Active page underline (cyan) */
+    .nav-link--active {
+        position: relative;
+    }
+    .nav-link--active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0.75rem;
+        right: 0.75rem;
+        height: 2px;
+        border-radius: 1px;
+        background: var(--cyan);
+    }
+
+    /* Focus ring everywhere in the header uses --cyan */
+    .site-header :focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--cyan);
+        border-radius: 6px;
+    }
+
+    /* Mega-menu item icon glow on hover */
+    .mega-item:hover .flex-shrink-0 {
+        box-shadow: 0 0 12px rgba(0, 229, 255, 0.25);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .mega-panel {
+        transition: opacity 200ms var(--ease-expo), transform 200ms var(--ease-expo);
+    }
+}
+
+/* ================================================================
+   MOBILE DRAWER — full-screen dark overlay with focus trap
+   ================================================================ */
 
 /* ---- Choose Your Path bento: glass cards, cursor spotlight, scroll "build" ---- */
 @layer components {
@@ -116,9 +199,7 @@
 }
 
 /* ---- Platform deep dive (Section 3): glass surfaces, spotlight, noise, stage choreography ---- */
-:root {
-    --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
+/* --ease-expo moved to global :root at top of file */
 
 @layer components {
     .glass-panel {
@@ -828,4 +909,33 @@
 
 @keyframes cta-sweep {
     to { transform: rotate(360deg); }
+}
+
+
+/* ================================================================
+   WHAT WE DO PAGE — in-page chip navigation, anchor offsets
+   ================================================================ */
+.wwd-chip-row {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.wwd-chip-row::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ensure deep-linked anchors clear both the sticky header and chip row. */
+.wwd-anchor {
+    scroll-margin-top: calc(var(--header-h) + 56px);
+}
+
+/* ================================================================
+   ABOUT PAGE — light-section base, dark hero, proof section
+   ================================================================ */
+.about-section-light {
+    background: var(--light-bg);
+    color: var(--ink);
+}
+.about-section-band {
+    background: var(--light-band);
+    color: var(--ink);
 }

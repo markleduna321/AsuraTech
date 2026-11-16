@@ -35,6 +35,14 @@ Route::get('/demos', function () {
     ]);
 })->name('demos');
 
+Route::get('/what-we-do', function () {
+    return Inertia::render('what-we-do/page');
+})->name('what-we-do');
+
+Route::get('/about', function () {
+    return Inertia::render('about/page');
+})->name('about');
+
 Route::get('/privacy', function () {
     return Inertia::render('legal/privacy/page', [
         'canLogin' => Route::has('login'),

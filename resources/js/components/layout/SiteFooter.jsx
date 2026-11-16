@@ -14,13 +14,14 @@ export default function SiteFooter() {
         <footer id="site-footer" className="relative border-t border-white/[0.06] bg-[#060a18] text-slate-300">
             <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-10 pt-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1.4fr_repeat(3,1fr)] lg:px-8">
                 <div className="space-y-4 sm:col-span-2 lg:col-span-1">
-                    <Link href="/" className="inline-flex items-center gap-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300" aria-label="AsuraTECH home">
-                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500">
-                            <Zap className="h-4 w-4 text-white" aria-hidden="true" />
-                        </span>
-                        <span className="text-lg font-semibold tracking-tight text-white">
-                            Asura<span className="text-indigo-300">TECH</span>
-                        </span>
+                    <Link href="/" className="inline-flex items-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] transition-opacity hover:opacity-90" aria-label="AsuraTECH home">
+                        <img
+                            src="/images/logo-reversed.png"
+                            alt="AsuraTECH Solutions"
+                            className="h-10 w-auto max-w-[200px] object-contain"
+                            width={958}
+                            height={314}
+                        />
                     </Link>
                     <p className="max-w-xs text-sm leading-relaxed text-slate-400">
                         Automation platforms, turnkey industry systems and custom engineering, under one roof.

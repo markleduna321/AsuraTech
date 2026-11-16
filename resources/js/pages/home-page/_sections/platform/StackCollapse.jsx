@@ -26,48 +26,67 @@ class SceneBoundary extends Component {
 
 const money = (n) => `$${n.toLocaleString('en-US')}`;
 
-function PriceLine() {
+function PriceLine({ large = false }) {
     return (
         <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <s className="font-mono text-sm tabular-nums text-slate-500">{money(STACK_TOTAL)}/mo</s>
-            <span className="text-slate-600" aria-hidden="true">→</span>
+            <s className={`font-mono tabular-nums text-slate-400 ${large ? 'text-base' : 'text-sm'}`}>{money(STACK_TOTAL)}/mo</s>
+            <span className="text-slate-500" aria-hidden="true">→</span>
             {PLATFORM_PRICE ? (
                 <span className="font-mono text-2xl font-semibold tabular-nums text-white">{PLATFORM_PRICE}</span>
             ) : (
-                <span className="text-lg font-semibold tracking-[-0.01em] text-white">One plan. One bill.</span>
+                <span className={`font-semibold tracking-[-0.01em] text-white ${large ? 'text-xl sm:text-2xl' : 'text-lg'}`}>One plan. One bill.</span>
             )}
         </p>
     );
 }
 
-function PlatformCard({ className = '', style, cardRef }) {
+/**
+ * `solid` gives the card a near-opaque backdrop so the animated glow behind it can't wash out the text.
+ * `large` scales it up for the roomy desktop stage.
+ */
+function PlatformCard({ className = '', style, cardRef, solid = false, large = false }) {
     return (
         <div
             ref={cardRef}
             onPointerMove={trackSpotlight}
-            className={`glass-panel w-full max-w-[420px] rounded-2xl p-6 sm:p-7 ${className}`}
+            className={`glass-panel w-full rounded-2xl ${
+                large ? 'max-w-[540px] p-7 sm:p-9' : 'max-w-[420px] p-6 sm:p-7'
+            } ${
+                solid ? 'z-10 bg-[#0a0f24]/95 shadow-[0_24px_80px_-20px_rgba(79,70,229,0.55)] backdrop-blur-xl' : ''
+            } ${className}`}
             style={style}
         >
             <div className="relative">
                 <div className="flex items-center gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500 text-white shadow-[0_0_24px_rgba(129,140,248,0.45)]">
-                        <Zap className="h-5 w-5" aria-hidden="true" />
+                    <span
+                        className={`flex items-center justify-center rounded-xl bg-indigo-500 text-white shadow-[0_0_24px_rgba(129,140,248,0.45)] ${
+                            large ? 'h-12 w-12' : 'h-10 w-10'
+                        }`}
+                    >
+                        <Zap className={large ? 'h-6 w-6' : 'h-5 w-5'} aria-hidden="true" />
                     </span>
                     <div>
-                        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500">All-in-one</p>
-                        <p className="text-base font-semibold tracking-[-0.01em] text-white">AsuraTECH Automation Platform</p>
+                        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-400">All-in-one</p>
+                        <p className={`font-semibold tracking-[-0.01em] text-white ${large ? 'text-lg sm:text-xl' : 'text-base'}`}>
+                            AsuraTECH Automation Platform
+                        </p>
                     </div>
                 </div>
-                <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Included in the platform">
+                <ul className={`flex flex-wrap ${large ? 'mt-6 gap-2' : 'mt-5 gap-1.5'}`} aria-label="Included in the platform">
                     {PLATFORM_INCLUDES.map((item) => (
-                        <li key={item} className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-slate-300">
-                            <Check className="h-3 w-3 text-slate-500" aria-hidden="true" />
+                        <li
+                            key={item}
+                            className={`inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] text-slate-200 ${
+                                large ? 'px-3 py-1.5 text-sm' : 'px-2.5 py-1 text-xs'
+                            }`}
+                        >
+                            <Check className={`text-indigo-300 ${large ? 'h-3.5 w-3.5' : 'h-3 w-3'}`} aria-hidden="true" />
                             {item}
                         </li>
                     ))}
                 </ul>
-                <div className="mt-6 border-t border-white/[0.08] pt-5">
-                    <PriceLine />
+                <div className={`border-t border-white/[0.08] ${large ? 'mt-7 pt-6' : 'mt-6 pt-5'}`}>
+                    <PriceLine large={large} />
                 </div>
             </div>
         </div>
@@ -133,7 +152,8 @@ function computeDesktop(p, t, W, H, sizes) {
         merge,
         card,
         strike: smoothstep(0.42, 0.7, p),
-        coreIntensity: 0.16 + 0.84 * smoothstep(0.05, 1, merge) - 0.3 * card,
+        // Fade the glowing core out completely as the card lands so it never shines through the text.
+        coreIntensity: (0.16 + 0.84 * smoothstep(0.05, 1, merge)) * (1 - card),
         time: t,
     };
 }
@@ -317,7 +337,13 @@ function DesktopCollapse() {
                             ))}
                         </ul>
 
-                        <PlatformCard cardRef={cardRef} className="absolute left-1/2 top-1/2" style={{ opacity: 0, visibility: 'hidden' }} />
+                        <PlatformCard
+                            cardRef={cardRef}
+                            solid
+                            large
+                            className="absolute left-1/2 top-1/2"
+                            style={{ opacity: 0, visibility: 'hidden' }}
+                        />
                     </div>
                 </div>
             </div>
@@ -431,7 +457,7 @@ function MobileCollapse() {
                         </li>
                     ))}
                 </ul>
-                <PlatformCard cardRef={cardRef} className="absolute left-1/2 top-1/2" style={{ opacity: 0, visibility: 'hidden' }} />
+                <PlatformCard cardRef={cardRef} solid className="absolute left-1/2 top-1/2" style={{ opacity: 0, visibility: 'hidden' }} />
             </div>
         </div>
     );

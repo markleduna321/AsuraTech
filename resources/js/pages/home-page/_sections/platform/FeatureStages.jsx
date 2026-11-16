@@ -30,44 +30,44 @@ function LeadNurtureStage() {
                     <Avatar initials="MS" />
                     <div>
                         <p className="text-sm font-medium text-slate-100">Maria Santos</p>
-                        <p className="text-xs text-slate-500">New lead · Website form</p>
+                        <p className="text-xs text-slate-400">New lead · Website form</p>
                     </div>
                 </div>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-400/30 bg-indigo-500/10 px-2.5 py-1 text-[11px] text-indigo-200">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-400/30 bg-indigo-500/15 px-2.5 py-1 text-[11px] font-medium text-indigo-200">
                     <span className="h-1.5 w-1.5 rounded-full bg-indigo-300" /> Sequence active
                 </span>
             </div>
 
-            <div className="stage-in relative" style={d(0.1)}>
+            <div className="stage-in relative" style={d(0.08)}>
                 <div className="absolute left-0 right-0 top-[5px] h-px bg-white/10" />
-                <div className="stage-grow absolute left-0 right-0 top-[5px] h-px origin-left bg-indigo-400/70" style={{ ...d(0.25), '--dur': '2.6s' }} />
+                <div className="stage-grow absolute left-0 right-0 top-[5px] h-px origin-left bg-indigo-400/80" style={{ ...d(0.15), '--dur': '1.6s' }} />
                 <ol className="relative flex justify-between">
                     {days.map((day) => (
                         <li key={day} className="flex flex-col items-center gap-2 first:items-start last:items-end">
-                            <span className="h-[11px] w-[11px] rounded-full border border-white/20 bg-[#060a18]" />
-                            <span className="font-mono text-[11px] tabular-nums text-slate-400">{day}</span>
+                            <span className="h-[11px] w-[11px] rounded-full border border-indigo-400/40 bg-[#060a18]" />
+                            <span className="font-mono text-[11px] tabular-nums text-slate-300">{day}</span>
                         </li>
                     ))}
                 </ol>
             </div>
 
             <div className="flex flex-1 flex-col justify-end gap-3">
-                <div className="stage-in ml-auto max-w-[78%]" style={d(0.5)}>
+                <div className="stage-in ml-auto max-w-[78%]" style={d(0.25)}>
                     <Tag icon={MessageSquare}>SMS · 42s after sign-up</Tag>
-                    <p className="mt-1.5 rounded-2xl rounded-tr-md border border-white/10 bg-white/[0.07] px-3.5 py-2.5 text-sm text-slate-100">
+                    <p className="mt-1.5 rounded-2xl rounded-tr-md border border-indigo-400/20 bg-indigo-500/10 px-3.5 py-2.5 text-sm text-slate-100">
                         Hi Maria, thanks for reaching out! Want to grab a quick call this week?
                     </p>
                 </div>
-                <div className="stage-in ml-auto w-[78%]" style={d(1.1)}>
+                <div className="stage-in ml-auto w-[78%]" style={d(0.65)}>
                     <Tag icon={Mail}>Email · Day 3</Tag>
-                    <div className="mt-1.5 rounded-2xl rounded-tr-md border border-white/10 bg-white/[0.04] px-3.5 py-2.5">
+                    <div className="mt-1.5 rounded-2xl rounded-tr-md border border-white/15 bg-white/[0.06] px-3.5 py-2.5">
                         <p className="text-sm font-medium text-slate-100">3 ways our clients save 10 hours a week</p>
-                        <p className="mt-0.5 truncate text-xs text-slate-500">Plus a link to pick a time that suits you…</p>
+                        <p className="mt-0.5 truncate text-xs text-slate-400">Plus a link to pick a time that suits you…</p>
                     </div>
                 </div>
-                <div className="stage-in max-w-[70%]" style={d(1.7)}>
+                <div className="stage-in max-w-[70%]" style={d(1.1)}>
                     <Tag icon={MessagesSquare}>Chat · Day 7</Tag>
-                    <p className="mt-1.5 rounded-2xl rounded-tl-md border border-white/[0.06] bg-white/[0.02] px-3.5 py-2.5 text-sm text-slate-300">
+                    <p className="mt-1.5 rounded-2xl rounded-tl-md border border-cyan-400/25 bg-cyan-500/10 px-3.5 py-2.5 text-sm text-cyan-100">
                         Yes! Thursday works for me.
                     </p>
                 </div>
@@ -101,15 +101,15 @@ function PipelineStage() {
         <div className="flex h-full flex-col">
             <div className="stage-in flex items-center justify-between" style={d(0)}>
                 <p className="text-sm font-medium text-slate-100">Sales pipeline</p>
-                <p className="font-mono text-xs tabular-nums text-slate-500">$48,250 open</p>
+                <p className="font-mono text-xs tabular-nums text-indigo-300">$48,250 open</p>
             </div>
-            <div className="stage-in relative mt-5 flex-1" style={d(0.1)}>
+            <div className="stage-in relative mt-5 flex-1" style={d(0.08)}>
                 <div className="grid h-full grid-cols-4 gap-2">
                     {COLUMNS.map((col) => (
-                        <div key={col.name} className="flex flex-col gap-2 rounded-xl bg-white/[0.02] p-1.5">
+                        <div key={col.name} className="flex flex-col gap-2 rounded-xl border border-white/[0.05] bg-white/[0.03] p-1.5">
                             <div className="flex h-6 items-center justify-between px-1">
-                                <span className="truncate text-[11px] font-medium text-slate-400">{col.name}</span>
-                                <span className="font-mono text-[10px] tabular-nums text-slate-600">{col.count}</span>
+                                <span className="truncate text-[11px] font-medium text-slate-300">{col.name}</span>
+                                <span className="font-mono text-[10px] tabular-nums text-slate-500">{col.count}</span>
                             </div>
                             <div className="h-[52px]" aria-hidden="true" />
                             {col.cards.map(([name, value]) => (
@@ -120,14 +120,14 @@ function PipelineStage() {
                 </div>
                 {/* The lead card travels New → Won across the same column grid */}
                 <div className="pointer-events-none absolute inset-x-0 top-0 grid grid-cols-4 gap-2 p-0">
-                    <div className="stage-slide px-1.5 pt-[38px]" style={d(0.5)}>
+                    <div className="stage-slide px-1.5 pt-[38px]" style={d(0.25)}>
                         <DealCard name="Maria Santos" value="$4,800" highlight />
                     </div>
                 </div>
             </div>
-            <p className="stage-in mt-4 inline-flex items-center gap-2 text-xs text-slate-400" style={d(3.3)}>
-                <Check className="h-3.5 w-3.5 text-slate-300" aria-hidden="true" />
-                Moved to <span className="text-slate-200">Won</span> · owner notified automatically
+            <p className="stage-in mt-4 inline-flex items-center gap-2 text-xs text-slate-300" style={d(1.8)}>
+                <Check className="h-3.5 w-3.5 text-emerald-400" aria-hidden="true" />
+                Moved to <span className="font-medium text-white">Won</span> · owner notified automatically
             </p>
         </div>
     );
@@ -169,9 +169,9 @@ function BookingStage() {
                                 </div>
                             )}
                             {slot.time === '10:00' && (
-                                <div className="stage-fill absolute inset-0 flex origin-left items-center gap-2 border-l-2 border-indigo-400 bg-indigo-500/15 px-3" style={d(0.7)}>
+                                <div className="stage-fill absolute inset-0 flex origin-left items-center gap-2 border-l-2 border-indigo-400 bg-indigo-500/20 px-3" style={d(0.35)}>
                                     <span className="text-xs font-medium text-white">Discovery call</span>
-                                    <span className="text-xs text-slate-400">· Maria Santos · booked online</span>
+                                    <span className="text-xs text-indigo-200">· Maria Santos · booked online</span>
                                 </div>
                             )}
                         </div>
@@ -179,15 +179,15 @@ function BookingStage() {
                 ))}
             </ul>
             <div
-                className="stage-toast absolute bottom-2 right-2 flex items-center gap-3 rounded-xl border border-white/10 bg-[#060a18]/90 px-4 py-3 shadow-[0_8px_24px_-16px_rgba(0,0,0,0.6)]"
-                style={d(1.5)}
+                className="stage-toast absolute bottom-2 right-2 flex items-center gap-3 rounded-xl border border-indigo-400/30 bg-[#060a18]/95 px-4 py-3 shadow-[0_8px_24px_-12px_rgba(99,102,241,0.5)]"
+                style={d(0.85)}
             >
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#060a18]">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-400 text-[#060a18]">
                     <Check className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <div>
                     <p className="text-sm font-medium text-white">Appointment confirmed</p>
-                    <p className="font-mono text-[11px] tabular-nums text-slate-400">Thu 10:00 AM · reminder scheduled</p>
+                    <p className="font-mono text-[11px] tabular-nums text-slate-300">Thu 10:00 AM · reminder scheduled</p>
                 </div>
             </div>
         </div>
@@ -252,28 +252,28 @@ function ReputationStage({ active, reduced }) {
                 </div>
             </div>
 
-            <div className="stage-in flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.03] px-4 py-3" style={d(0.6)}>
-                <Send className="h-4 w-4 text-slate-400" aria-hidden="true" />
+            <div className="stage-in flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3" style={d(0.25)}>
+                <Send className="h-4 w-4 text-indigo-300" aria-hidden="true" />
                 <div className="min-w-0 flex-1">
                     <p className="text-sm text-slate-200">Review request sent to Maria Santos</p>
-                    <p className="text-xs text-slate-500">SMS · 2 hours after her visit</p>
+                    <p className="text-xs text-slate-400">SMS · 2 hours after her visit</p>
                 </div>
-                <span className="font-mono text-[11px] tabular-nums text-slate-500">10:42</span>
+                <span className="font-mono text-[11px] tabular-nums text-slate-400">10:42</span>
             </div>
 
-            <ul className="stage-in space-y-1.5" style={d(0.9)} aria-label="Rating breakdown">
+            <ul className="stage-in space-y-1.5" style={d(0.45)} aria-label="Rating breakdown">
                 {[
                     [5, 86],
                     [4, 10],
                     [3, 3],
                     [2, 1],
                 ].map(([stars, pct], i) => (
-                    <li key={stars} className="flex items-center gap-3 font-mono text-[11px] tabular-nums text-slate-500">
+                    <li key={stars} className="flex items-center gap-3 font-mono text-[11px] tabular-nums text-slate-400">
                         <span className="w-3">{stars}</span>
-                        <span className="h-1 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
+                        <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
                             <span
-                                className="stage-grow block h-full origin-left rounded-full bg-slate-300/70"
-                                style={{ width: `${pct}%`, '--d': `${1 + i * 0.07}s`, '--dur': '0.9s' }}
+                                className="stage-grow block h-full origin-left rounded-full bg-indigo-400/80"
+                                style={{ width: `${pct}%`, '--d': `${0.5 + i * 0.05}s`, '--dur': '0.7s' }}
                             />
                         </span>
                         <span className="w-8 text-right">{pct}%</span>
@@ -282,8 +282,8 @@ function ReputationStage({ active, reduced }) {
             </ul>
 
             <div
-                className="stage-in mt-auto rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.07] to-white/[0.02] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
-                style={d(1.5)}
+                className="stage-in mt-auto rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.03] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+                style={d(0.85)}
             >
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
@@ -326,25 +326,25 @@ function BotStage() {
                 </div>
             </div>
             <div className="mt-5 flex flex-1 flex-col justify-end gap-3">
-                <p className="stage-in ml-auto max-w-[75%] rounded-2xl rounded-tr-md border border-white/10 bg-white/[0.07] px-3.5 py-2.5 text-sm text-slate-100" style={d(0.3)}>
+                <p className="stage-in ml-auto max-w-[75%] rounded-2xl rounded-tr-md border border-white/10 bg-white/[0.07] px-3.5 py-2.5 text-sm text-slate-100" style={d(0.15)}>
                     Do you have anything open this week?
                 </p>
                 <div className="grid">
-                    <Typing delay={0.8} />
-                    <p className="stage-in [grid-area:1/1] max-w-[80%] rounded-2xl rounded-tl-md border border-white/[0.06] bg-white/[0.03] px-3.5 py-2.5 text-sm text-slate-300" style={d(1.9)}>
+                    <Typing delay={0.35} />
+                    <p className="stage-in [grid-area:1/1] max-w-[80%] rounded-2xl rounded-tl-md border border-indigo-400/20 bg-indigo-500/10 px-3.5 py-2.5 text-sm text-slate-200" style={d(0.9)}>
                         Yes! Thursday 10:00 AM or Friday 2:00 PM. Want me to book one for you?
                     </p>
                 </div>
-                <p className="stage-in ml-auto max-w-[75%] rounded-2xl rounded-tr-md border border-white/10 bg-white/[0.07] px-3.5 py-2.5 text-sm text-slate-100" style={d(2.6)}>
+                <p className="stage-in ml-auto max-w-[75%] rounded-2xl rounded-tr-md border border-white/10 bg-white/[0.07] px-3.5 py-2.5 text-sm text-slate-100" style={d(1.3)}>
                     Thursday, please.
                 </p>
                 <div className="grid">
-                    <Typing delay={3.0} />
-                    <div className="stage-in [grid-area:1/1] flex max-w-[80%] items-center gap-3 rounded-2xl rounded-tl-md border border-white/10 bg-white/[0.05] px-3.5 py-3" style={d(4.1)}>
-                        <CalendarCheck className="h-5 w-5 flex-shrink-0 text-white" aria-hidden="true" />
+                    <Typing delay={1.55} />
+                    <div className="stage-in [grid-area:1/1] flex max-w-[80%] items-center gap-3 rounded-2xl rounded-tl-md border border-emerald-400/30 bg-emerald-500/10 px-3.5 py-3" style={d(2.1)}>
+                        <CalendarCheck className="h-5 w-5 flex-shrink-0 text-emerald-400" aria-hidden="true" />
                         <div>
                             <p className="text-sm font-medium text-white">Booked: Thu 10:00 AM</p>
-                            <p className="text-xs text-slate-500">Confirmation sent by SMS and email</p>
+                            <p className="text-xs text-slate-300">Confirmation sent by SMS and email</p>
                         </div>
                     </div>
                 </div>

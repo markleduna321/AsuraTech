@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { Menu, X, ChevronDown, ArrowRight, Zap } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight, ArrowUpRight } from 'lucide-react';
 import {
-    NAV_ITEMS,
     PRIMARY_CTA,
+    PLATFORMS_COLUMNS,
+    PLATFORMS_UTILITY_BAR,
     SOLUTIONS_COLUMNS,
     SOLUTIONS_UTILITY_BAR,
-    AUDIT_URL,
 } from '@/features/site/navConfig';
 import SectionLink from '@/components/ui/SectionLink';
 
@@ -15,6 +15,23 @@ import SectionLink from '@/components/ui/SectionLink';
 // ---------------------------------------------------------------------------
 const HOVER_OPEN_DELAY = 150;
 const HOVER_CLOSE_DELAY = 200;
+
+const MEGA_MENUS = [
+    {
+        key: 'platforms',
+        label: 'Platforms',
+        panelId: 'mega-platforms',
+        columns: PLATFORMS_COLUMNS,
+        utilityBar: PLATFORMS_UTILITY_BAR,
+    },
+    {
+        key: 'solutions',
+        label: 'Solutions & Engineering',
+        panelId: 'mega-solutions',
+        columns: SOLUTIONS_COLUMNS,
+        utilityBar: SOLUTIONS_UTILITY_BAR,
+    },
+];
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -28,6 +45,46 @@ function isActive(href, currentPath) {
     if (!href) return false;
     const clean = href.split(/[?#]/)[0];
     return clean === currentPath;
+}
+
+/**
+ * Renders a menu entry as an internal link, an external link (new tab),
+ * or a non-clickable placeholder when no href is set yet.
+ */
+function MenuItemLink({ item, onClick, className, children }) {
+    if (!item.href) {
+        return (
+            <div className={`${className} cursor-default`} aria-disabled="true">
+                {children}
+            </div>
+        );
+    }
+    if (item.external) {
+        return (
+            <a href={item.href} target="_blank" rel="noopener noreferrer" onClick={onClick} className={className}>
+                {children}
+            </a>
+        );
+    }
+    return (
+        <SectionLink href={item.href} onClick={onClick} className={className}>
+            {children}
+        </SectionLink>
+    );
+}
+
+function ItemBadge({ item }) {
+    if (!item.href) {
+        return (
+            <span className="ml-1.5 inline-flex items-center rounded-full border border-[var(--border)] bg-white/[0.04] px-1.5 py-px text-[10px] font-medium uppercase tracking-wide text-[var(--muted)] align-middle">
+                Soon
+            </span>
+        );
+    }
+    if (item.external) {
+        return <ArrowUpRight className="ml-1 inline w-3.5 h-3.5 text-[var(--muted)] align-[-2px]" aria-hidden="true" />;
+    }
+    return null;
 }
 
 // ---------------------------------------------------------------------------
@@ -131,87 +188,61 @@ function MobileDrawer({ open, onClose }) {
 
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 space-y-3">
-                {/* Accordion 1: Platforms */}
-                <div className="border border-[var(--border)] rounded-xl overflow-hidden bg-white/[0.02]">
-                    <button
-                        type="button"
-                        onClick={() => toggleAccordion('platforms')}
-                        className="flex items-center justify-between w-full px-4 py-3.5 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)]"
-                        aria-expanded={accordions.platforms}
+                {/* Accordions: Platforms + Solutions & Engineering (same structure) */}
+                {MEGA_MENUS.map((menu) => (
+                    <div
+                        key={menu.key}
+                        className="border border-[var(--border)] rounded-xl overflow-hidden bg-white/[0.02]"
                     >
-                        <span>Platforms</span>
-                        <ChevronDown
-                            className={`w-4 h-4 text-[var(--muted)] transition-transform duration-200 motion-reduce:transition-none ${
-                                accordions.platforms ? 'rotate-180' : ''
-                            }`}
-                        />
-                    </button>
-                    {accordions.platforms && (
-                        <div className="px-4 pb-4 pt-1 border-t border-[var(--border)] space-y-2">
-                            <p className="text-xs text-[var(--muted)] italic">
-                                TODO: Platforms mega-menu. Quick links:
-                            </p>
-                            <Link
-                                href="/products/timesync"
-                                onClick={onClose}
-                                className="block py-2 text-sm text-[var(--soft)] hover:text-[var(--cyan)]"
-                            >
-                                TimeSync (HRIS & Payroll)
-                            </Link>
-                            <Link
-                                href="/products/gymasura"
-                                onClick={onClose}
-                                className="block py-2 text-sm text-[var(--soft)] hover:text-[var(--cyan)]"
-                            >
-                                GymAsura (Gym Management)
-                            </Link>
-                        </div>
-                    )}
-                </div>
-
-                {/* Accordion 2: Solutions & Engineering */}
-                <div className="border border-[var(--border)] rounded-xl overflow-hidden bg-white/[0.02]">
-                    <button
-                        type="button"
-                        onClick={() => toggleAccordion('solutions')}
-                        className="flex items-center justify-between w-full px-4 py-3.5 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)]"
-                        aria-expanded={accordions.solutions}
-                    >
-                        <span>Solutions & Engineering</span>
-                        <ChevronDown
-                            className={`w-4 h-4 text-[var(--muted)] transition-transform duration-200 motion-reduce:transition-none ${
-                                accordions.solutions ? 'rotate-180' : ''
-                            }`}
-                        />
-                    </button>
-                    {accordions.solutions && (
-                        <div className="px-4 pb-4 pt-2 border-t border-[var(--border)] space-y-5">
-                            {SOLUTIONS_COLUMNS.map((col) => (
-                                <div key={col.heading}>
-                                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--cyan)] mb-2">
-                                        {col.heading}
-                                    </p>
-                                    <div className="space-y-1">
-                                        {col.items.map((item) => (
-                                            <SectionLink
-                                                key={item.title}
-                                                href={item.href}
-                                                onClick={onClose}
-                                                className="flex items-start gap-3 py-2 text-sm text-[var(--soft)] hover:text-white"
-                                            >
-                                                <item.icon className="w-4 h-4 text-[var(--cyan)] shrink-0 mt-0.5" />
-                                                <div>
-                                                    <span className="block font-medium">{item.title}</span>
-                                                    <span className="block text-xs text-[var(--muted)]">{item.desc}</span>
-                                                </div>
-                                            </SectionLink>
-                                        ))}
+                        <button
+                            type="button"
+                            onClick={() => toggleAccordion(menu.key)}
+                            className="flex items-center justify-between w-full px-4 py-3.5 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)]"
+                            aria-expanded={!!accordions[menu.key]}
+                        >
+                            <span>{menu.label}</span>
+                            <ChevronDown
+                                className={`w-4 h-4 text-[var(--muted)] transition-transform duration-200 motion-reduce:transition-none ${
+                                    accordions[menu.key] ? 'rotate-180' : ''
+                                }`}
+                            />
+                        </button>
+                        {accordions[menu.key] && (
+                            <div className="px-4 pb-4 pt-2 border-t border-[var(--border)] space-y-5">
+                                {menu.columns.map((col) => (
+                                    <div key={col.heading}>
+                                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--cyan)] mb-2">
+                                            {col.heading}
+                                        </p>
+                                        <div className="space-y-1">
+                                            {col.items.map((item) => (
+                                                <MenuItemLink
+                                                    key={item.title}
+                                                    item={item}
+                                                    onClick={onClose}
+                                                    className={`flex items-start gap-3 py-2 text-sm ${
+                                                        item.href
+                                                            ? 'text-[var(--soft)] hover:text-white'
+                                                            : 'text-[var(--soft)] opacity-70'
+                                                    }`}
+                                                >
+                                                    <item.icon className="w-4 h-4 text-[var(--cyan)] shrink-0 mt-0.5" />
+                                                    <div>
+                                                        <span className="block font-medium">
+                                                            {item.title}
+                                                            <ItemBadge item={item} />
+                                                        </span>
+                                                        <span className="block text-xs text-[var(--muted)]">{item.desc}</span>
+                                                    </div>
+                                                </MenuItemLink>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                ))}
 
                 {/* Plain Links */}
                 <div className="space-y-1 pt-2">
@@ -408,109 +439,35 @@ export default function SiteHeader() {
 
                 {/* Desktop Navigation Items */}
                 <div className="hidden lg:flex items-center gap-1 xl:gap-2 flex-nowrap shrink-0">
-                    {/* Item 1: Platforms (Dropdown Trigger) */}
-                    <div
-                        className="relative"
-                        onMouseEnter={() => handleTriggerMouseEnter('platforms')}
-                        onMouseLeave={handleTriggerMouseLeave}
-                    >
-                        <button
-                            ref={(el) => (triggerRefs.current.platforms = el)}
-                            type="button"
-                            className={`nav-link flex items-center gap-1 text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] ${
-                                openMenu === 'platforms' ? 'text-white' : 'text-[var(--soft)] hover:text-white'
-                            }`}
-                            aria-expanded={openMenu === 'platforms'}
-                            aria-controls="mega-platforms"
-                            aria-haspopup="true"
-                            onClick={() => handleTriggerClick('platforms')}
-                            onKeyDown={(e) => handleTriggerKeyDown(e, 'platforms', 'mega-platforms')}
-                        >
-                            Platforms
-                            <ChevronDown
-                                className={`w-3.5 h-3.5 text-[var(--muted)] transition-transform duration-200 motion-reduce:transition-none ${
-                                    openMenu === 'platforms' ? 'rotate-180 text-[var(--cyan)]' : ''
-                                }`}
-                                aria-hidden="true"
-                            />
-                        </button>
-
-                        {/* Platforms Dropdown Menu (Stub with TODO) */}
+                    {/* Items 1Ã¢â‚¬â€œ2: Platforms + Solutions & Engineering (Mega Menu Triggers) */}
+                    {MEGA_MENUS.map((menu) => (
                         <div
-                            id="mega-platforms"
-                            role="region"
-                            aria-label="Platforms menu"
-                            onMouseEnter={handlePanelMouseEnter}
-                            onMouseLeave={handlePanelMouseLeave}
-                            className={`absolute left-0 top-full pt-2 w-80 z-50 transition-all duration-200 motion-reduce:transition-none ${
-                                openMenu === 'platforms'
-                                    ? 'pointer-events-auto opacity-100 visible translate-y-0'
-                                    : 'pointer-events-none opacity-0 invisible -translate-y-2'
-                            }`}
+                            key={menu.key}
+                            onMouseEnter={() => handleTriggerMouseEnter(menu.key)}
+                            onMouseLeave={handleTriggerMouseLeave}
                         >
-                            <div
-                                className="rounded-xl p-4 shadow-2xl border border-[var(--border)]"
-                                style={{
-                                    background: 'rgba(10, 18, 36, 0.95)',
-                                    backdropFilter: 'blur(20px)',
-                                    WebkitBackdropFilter: 'blur(20px)',
-                                }}
-                            >
-                                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--cyan)] mb-2">
-                                    Platforms & SaaS
-                                </p>
-                                <p className="text-xs text-[var(--muted)] leading-relaxed mb-3">
-                                    {/* TODO: Populate with Platforms mega menu configuration */}
-                                    Turnkey software platforms ready to deploy:
-                                </p>
-                                <div className="space-y-1">
-                                    <Link
-                                        href="/products/timesync"
-                                        onClick={handleItemClick}
-                                        className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-[var(--soft)] hover:bg-white/[0.04] hover:text-white transition-colors"
-                                    >
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--cyan)]" />
-                                        TimeSync (HRIS & Payroll)
-                                    </Link>
-                                    <Link
-                                        href="/products/gymasura"
-                                        onClick={handleItemClick}
-                                        className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-[var(--soft)] hover:bg-white/[0.04] hover:text-white transition-colors"
-                                    >
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--cyan)]" />
-                                        GymAsura (Gym Management)
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Item 2: Solutions & Engineering (Mega Menu Trigger) */}
-                    <div
-                        onMouseEnter={() => handleTriggerMouseEnter('solutions')}
-                        onMouseLeave={handleTriggerMouseLeave}
-                    >
-                        <button
-                            ref={(el) => (triggerRefs.current.solutions = el)}
-                            type="button"
-                            className={`nav-link flex items-center gap-1 text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] ${
-                                openMenu === 'solutions' ? 'text-white' : 'text-[var(--soft)] hover:text-white'
-                            }`}
-                            aria-expanded={openMenu === 'solutions'}
-                            aria-controls="mega-solutions"
-                            aria-haspopup="true"
-                            onClick={() => handleTriggerClick('solutions')}
-                            onKeyDown={(e) => handleTriggerKeyDown(e, 'solutions', 'mega-solutions')}
-                        >
-                            Solutions & Engineering
-                            <ChevronDown
-                                className={`w-3.5 h-3.5 text-[var(--muted)] transition-transform duration-200 motion-reduce:transition-none ${
-                                    openMenu === 'solutions' ? 'rotate-180 text-[var(--cyan)]' : ''
+                            <button
+                                ref={(el) => (triggerRefs.current[menu.key] = el)}
+                                type="button"
+                                className={`nav-link flex items-center gap-1 text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] ${
+                                    openMenu === menu.key ? 'text-white' : 'text-[var(--soft)] hover:text-white'
                                 }`}
-                                aria-hidden="true"
-                            />
-                        </button>
-                    </div>
+                                aria-expanded={openMenu === menu.key}
+                                aria-controls={menu.panelId}
+                                aria-haspopup="true"
+                                onClick={() => handleTriggerClick(menu.key)}
+                                onKeyDown={(e) => handleTriggerKeyDown(e, menu.key, menu.panelId)}
+                            >
+                                {menu.label}
+                                <ChevronDown
+                                    className={`w-3.5 h-3.5 text-[var(--muted)] transition-transform duration-200 motion-reduce:transition-none ${
+                                        openMenu === menu.key ? 'rotate-180 text-[var(--cyan)]' : ''
+                                    }`}
+                                    aria-hidden="true"
+                                />
+                            </button>
+                        </div>
+                    ))}
 
                     {/* Item 3: What We Do */}
                     <Link
@@ -574,94 +531,107 @@ export default function SiteHeader() {
             </nav>
 
             {/* ================================================================
-                FULL-WIDTH SOLUTIONS & ENGINEERING MEGA MENU (Desktop)
+                FULL-WIDTH MEGA MENUS (Desktop) â€” Platforms + Solutions & Engineering
                 Rendered directly under the header: left-0 right-0 top-full
                ================================================================ */}
-            <div
-                id="mega-solutions"
-                role="region"
-                aria-label="Solutions & Engineering menu"
-                onMouseEnter={handlePanelMouseEnter}
-                onMouseLeave={handlePanelMouseLeave}
-                className={`hidden lg:block absolute left-0 right-0 top-full transition-all duration-200 motion-reduce:transition-none z-50 ${
-                    openMenu === 'solutions'
-                        ? 'pointer-events-auto opacity-100 visible translate-y-0'
-                        : 'pointer-events-none opacity-0 invisible -translate-y-2'
-                }`}
-            >
-                {/* Diagonal hover safe zone bridge */}
-                <div className="absolute -top-3 inset-x-0 h-3" />
-
+            {MEGA_MENUS.map((menu) => (
                 <div
-                    className="border-t border-b border-[var(--border)] rounded-b-2xl shadow-2xl shadow-black/80"
-                    style={{
-                        background: 'rgba(10, 18, 36, 0.94)',
-                        backdropFilter: 'blur(24px)',
-                        WebkitBackdropFilter: 'blur(24px)',
-                    }}
+                    key={menu.key}
+                    id={menu.panelId}
+                    role="region"
+                    aria-label={`${menu.label} menu`}
+                    onMouseEnter={handlePanelMouseEnter}
+                    onMouseLeave={handlePanelMouseLeave}
+                    className={`hidden lg:block absolute left-0 right-0 top-full transition-all duration-200 motion-reduce:transition-none z-50 ${
+                        openMenu === menu.key
+                            ? 'pointer-events-auto opacity-100 visible translate-y-0'
+                            : 'pointer-events-none opacity-0 invisible -translate-y-2'
+                    }`}
                 >
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-                        {/* 3 Columns */}
-                        <div className="grid grid-cols-3 gap-8">
-                            {SOLUTIONS_COLUMNS.map((col) => (
-                                <div key={col.heading}>
-                                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--cyan)] mb-4">
-                                        {col.heading}
-                                    </p>
-                                    <ul className="space-y-1.5">
-                                        {col.items.map((item) => (
-                                            <li key={item.title}>
-                                                <SectionLink
-                                                    href={item.href}
-                                                    onClick={handleItemClick}
-                                                    className="mega-item group flex items-start gap-3.5 rounded-xl p-2.5 transition-colors hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] cursor-pointer"
-                                                >
-                                                    <span className="mt-0.5 flex-shrink-0 w-8 h-8 rounded-lg bg-[var(--cyan)]/10 text-[var(--cyan)] flex items-center justify-center transition-all group-hover:shadow-[0_0_12px_rgba(0,229,255,0.35)] group-hover:bg-[var(--cyan)]/20">
-                                                        <item.icon className="w-4 h-4" aria-hidden="true" />
-                                                    </span>
-                                                    <span className="min-w-0 flex-1">
-                                                        <span className="block text-sm font-semibold text-white group-hover:text-[var(--cyan)] transition-colors">
-                                                            {item.title}
-                                                        </span>
-                                                        <span className="block text-xs text-[var(--muted)] mt-0.5 leading-relaxed">
-                                                            {item.desc}
-                                                        </span>
-                                                    </span>
-                                                </SectionLink>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ))}
-                        </div>
+                    {/* Diagonal hover safe zone bridge */}
+                    <div className="absolute -top-3 inset-x-0 h-3" />
 
-                        {/* Utility Bar */}
-                        <div className="mt-7 pt-5 border-t border-[var(--border)] flex items-center justify-between gap-4">
-                            <div className="flex flex-wrap items-center gap-2">
-                                <span className="text-xs text-[var(--muted)] font-medium">
-                                    {SOLUTIONS_UTILITY_BAR.label}
-                                </span>
-                                {SOLUTIONS_UTILITY_BAR.chips.map((chip) => (
-                                    <span
-                                        key={chip}
-                                        className="inline-flex items-center rounded-full border border-[var(--border)] bg-white/[0.03] px-2.5 py-0.5 text-[11px] font-medium text-[var(--soft)]"
-                                    >
-                                        {chip}
-                                    </span>
+                    <div
+                        className="border-t border-b border-[var(--border)] rounded-b-2xl shadow-2xl shadow-black/80"
+                        style={{
+                            background: 'rgba(10, 18, 36, 0.94)',
+                            backdropFilter: 'blur(24px)',
+                            WebkitBackdropFilter: 'blur(24px)',
+                        }}
+                    >
+                        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+                            {/* Columns */}
+                            <div
+                                className="grid gap-8"
+                                style={{ gridTemplateColumns: `repeat(${menu.columns.length}, minmax(0, 1fr))` }}
+                            >
+                                {menu.columns.map((col) => (
+                                    <div key={col.heading}>
+                                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--cyan)] mb-4">
+                                            {col.heading}
+                                        </p>
+                                        <ul className="space-y-1.5">
+                                            {col.items.map((item) => (
+                                                <li key={item.title}>
+                                                    <MenuItemLink
+                                                        item={item}
+                                                        onClick={handleItemClick}
+                                                        className={`mega-item group flex items-start gap-3.5 rounded-xl p-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] ${
+                                                            item.href ? 'hover:bg-white/[0.04] cursor-pointer' : 'opacity-70'
+                                                        }`}
+                                                    >
+                                                        <span className="mt-0.5 flex-shrink-0 w-8 h-8 rounded-lg bg-[var(--cyan)]/10 text-[var(--cyan)] flex items-center justify-center transition-all group-hover:shadow-[0_0_12px_rgba(0,229,255,0.35)] group-hover:bg-[var(--cyan)]/20">
+                                                            <item.icon className="w-4 h-4" aria-hidden="true" />
+                                                        </span>
+                                                        <span className="min-w-0 flex-1">
+                                                            <span
+                                                                className={`block text-sm font-semibold text-white transition-colors ${
+                                                                    item.href ? 'group-hover:text-[var(--cyan)]' : ''
+                                                                }`}
+                                                            >
+                                                                {item.title}
+                                                                <ItemBadge item={item} />
+                                                            </span>
+                                                            <span className="block text-xs text-[var(--muted)] mt-0.5 leading-relaxed">
+                                                                {item.desc}
+                                                            </span>
+                                                        </span>
+                                                    </MenuItemLink>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 ))}
                             </div>
-                            <SectionLink
-                                href={SOLUTIONS_UTILITY_BAR.cta.href}
-                                onClick={handleItemClick}
-                                className="group inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--cyan)] hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] rounded-lg py-1 px-2 whitespace-nowrap"
-                            >
-                                {SOLUTIONS_UTILITY_BAR.cta.label}
-                                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
-                            </SectionLink>
+
+                            {/* Utility Bar */}
+                            <div className="mt-7 pt-5 border-t border-[var(--border)] flex items-center justify-between gap-4">
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <span className="text-xs text-[var(--muted)] font-medium">
+                                        {menu.utilityBar.label}
+                                    </span>
+                                    {menu.utilityBar.chips.map((chip) => (
+                                        <span
+                                            key={chip}
+                                            className="inline-flex items-center rounded-full border border-[var(--border)] bg-white/[0.03] px-2.5 py-0.5 text-[11px] font-medium text-[var(--soft)]"
+                                        >
+                                            {chip}
+                                        </span>
+                                    ))}
+                                </div>
+                                <SectionLink
+                                    href={menu.utilityBar.cta.href}
+                                    onClick={handleItemClick}
+                                    className="group inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--cyan)] hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] rounded-lg py-1 px-2 whitespace-nowrap"
+                                >
+                                    {menu.utilityBar.cta.label}
+                                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
+                                </SectionLink>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            ))}
 
             {/* Mobile Drawer Overlay */}
             <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />

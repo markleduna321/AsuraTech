@@ -1,6 +1,6 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowUpRight, User, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, User } from 'lucide-react';
 import LandingLayout from '@/components/layout/LandingLayout';
 import SiteFooter from '@/components/layout/SiteFooter';
 import FinalCtaSection from '@/pages/home-page/_sections/final-cta/FinalCtaSection';

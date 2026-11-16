@@ -1,12 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
+import { Calendar, GitBranch, MessageSquare, Sparkles, Star } from 'lucide-react';
 import { FEATURES } from './platformData';
 import FeatureStage from './FeatureStages';
 import { trackSpotlight, useInViewOnce } from './scrollHooks';
 
-function StageFrame({ title, children, className = '', onPointerMove, onPointerLeave, style }) {
+const FEATURE_META = {
+    nurture: { icon: MessageSquare, tag: 'Instant SMS & Email' },
+    pipeline: { icon: GitBranch, tag: 'Automated Deal Stages' },
+    booking: { icon: Calendar, tag: 'Self-Serve Scheduling' },
+    reputation: { icon: Star, tag: 'Review Autopilot' },
+    bots: { icon: Sparkles, tag: '24/7 AI Concierge' },
+};
+
+function StageFrame({ title, activeIndex = 0, total = FEATURES.length, onSelect, children, className = '', onPointerMove, onPointerLeave, style }) {
     return (
         <div
-            className={`glass-panel flex flex-col rounded-2xl ${className}`}
+            className={`glass-panel flex flex-col rounded-2xl border border-white/10 bg-[#080d21]/90 shadow-[0_32px_80px_-24px_rgba(79,70,229,0.45)] backdrop-blur-xl ${className}`}
             style={style}
             onPointerMove={(e) => {
                 trackSpotlight(e);
@@ -14,37 +23,137 @@ function StageFrame({ title, children, className = '', onPointerMove, onPointerL
             }}
             onPointerLeave={onPointerLeave}
         >
-            <div className="relative flex items-center gap-3 border-b border-white/[0.07] px-5 py-3">
-                <span className="flex gap-1.5" aria-hidden="true">
-                    <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-white/[0.06]" />
-                </span>
-                <span className="truncate text-xs text-slate-500">
-                    app.asuratech <span className="text-slate-600">/</span> <span className="text-slate-300">{title}</span>
-                </span>
-                <span className="ml-auto inline-flex items-center gap-1.5 text-[11px] text-slate-500">
-                    <span className="h-1.5 w-1.5 rounded-full bg-slate-400" /> Live
-                </span>
+            {/* Browser chrome + interactive story tabs */}
+            <div className="relative flex flex-col border-b border-white/[0.08] bg-white/[0.02]">
+                <div className="flex items-center gap-3 px-5 py-3">
+                    <span className="flex gap-1.5" aria-hidden="true">
+                        <span className="h-2.5 w-2.5 rounded-full bg-rose-400/50" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-amber-400/50" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/50" />
+                    </span>
+                    <span className="truncate rounded-md border border-white/[0.06] bg-[#050814]/80 px-2.5 py-1 text-xs text-slate-400">
+                        app.asuratech.com <span className="text-slate-600">/</span> <span className="font-medium text-indigo-200">{title}</span>
+                    </span>
+                    <div className="ml-auto flex items-center gap-3">
+                        <span className="font-mono text-[11px] font-medium tabular-nums text-slate-400">
+                            {String(activeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-300">
+                            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" /> Live
+                        </span>
+                    </div>
+                </div>
+
+                {/* Clickable step switcher bar inside the stage header */}
+                {onSelect && (
+                    <div className="grid grid-cols-5 gap-1 border-t border-white/[0.06] bg-[#050814]/50 px-3 py-1.5">
+                        {FEATURES.map((feat, i) => {
+                            const isCurrent = i === activeIndex;
+                            const isPast = i < activeIndex;
+                            return (
+                                <button
+                                    key={feat.key}
+                                    type="button"
+                                    onClick={() => onSelect(i)}
+                                    className={`group flex flex-col gap-1 rounded-lg px-2 py-1 text-left transition-colors ${
+                                        isCurrent ? 'bg-indigo-500/15' : 'hover:bg-white/[0.04]'
+                                    }`}
+                                >
+                                    <div className="flex items-center justify-between gap-1">
+                                        <span
+                                            className={`truncate text-[10px] font-semibold ${
+                                                isCurrent ? 'text-indigo-200' : isPast ? 'text-slate-300' : 'text-slate-500 group-hover:text-slate-300'
+                                            }`}
+                                        >
+                                            {String(i + 1).padStart(2, '0')}. {feat.title.split(' ')[0]}
+                                        </span>
+                                    </div>
+                                    <span className="h-1 w-full overflow-hidden rounded-full bg-white/10">
+                                        <span
+                                            className={`block h-full rounded-full transition-all duration-500 ${
+                                                isCurrent ? 'w-full bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.8)]' : isPast ? 'w-full bg-indigo-400/40' : 'w-0'
+                                            }`}
+                                        />
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
+
             <div className="relative flex-1 p-5 sm:p-6">{children}</div>
         </div>
     );
 }
 
-function FeatureCopy({ feature, index, active = true }) {
+function FeatureCopy({ feature, index, active = true, onClick }) {
+    const meta = FEATURE_META[feature.key] || { icon: Sparkles, tag: 'Automation' };
+    const Icon = meta.icon;
+
     return (
-        <div className="relative pl-6">
-            <span className="absolute inset-y-0 left-0 w-px bg-white/10" aria-hidden="true" />
+        <div
+            onClick={onClick}
+            role={onClick ? 'button' : undefined}
+            tabIndex={onClick ? 0 : undefined}
+            onKeyDown={
+                onClick
+                    ? (e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              onClick();
+                          }
+                      }
+                    : undefined
+            }
+            className={`group relative rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none sm:p-7 ${
+                onClick ? 'cursor-pointer' : ''
+            } ${
+                active
+                    ? 'border-indigo-400/40 bg-gradient-to-br from-indigo-500/[0.12] via-white/[0.04] to-transparent shadow-[0_20px_50px_-20px_rgba(79,70,229,0.45)]'
+                    : 'border-white/[0.06] bg-white/[0.015] opacity-55 hover:border-white/15 hover:bg-white/[0.03] hover:opacity-85'
+            }`}
+        >
+            {/* Active left accent bar */}
             <span
-                className={`absolute inset-y-0 left-0 w-px bg-indigo-400 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${active ? 'opacity-100' : 'opacity-0'}`}
+                className={`absolute bottom-5 left-0 top-5 w-1 rounded-r-full bg-indigo-400 shadow-[0_0_12px_rgba(129,140,248,0.9)] transition-all duration-500 ${
+                    active ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-50'
+                }`}
                 aria-hidden="true"
             />
-            <div className={`transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${active ? 'opacity-100' : 'opacity-50'}`}>
-                <p className="font-mono text-xs tabular-nums text-slate-400">{String(index + 1).padStart(2, '0')}</p>
-                <h4 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">{feature.title}</h4>
-                <p className="mt-2 max-w-[44ch] text-base leading-relaxed text-slate-300">{feature.benefit}</p>
+
+            <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                    <span
+                        className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-colors duration-500 ${
+                            active
+                                ? 'border-indigo-400/40 bg-indigo-500/20 text-indigo-200 shadow-[0_0_20px_rgba(99,102,241,0.35)]'
+                                : 'border-white/10 bg-white/[0.04] text-slate-400 group-hover:text-slate-200'
+                        }`}
+                    >
+                        <Icon className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <span
+                        className={`rounded-full border px-2.5 py-0.5 text-[11px] font-medium transition-colors duration-500 ${
+                            active
+                                ? 'border-indigo-400/30 bg-indigo-500/15 text-indigo-200'
+                                : 'border-white/10 bg-white/[0.03] text-slate-400'
+                        }`}
+                    >
+                        {meta.tag}
+                    </span>
+                </div>
+                <span
+                    className={`font-mono text-xs font-semibold tabular-nums transition-colors duration-500 ${
+                        active ? 'text-indigo-300' : 'text-slate-500'
+                    }`}
+                >
+                    STEP {String(index + 1).padStart(2, '0')}
+                </span>
             </div>
+
+            <h4 className="mt-4 text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">{feature.title}</h4>
+            <p className="mt-2 max-w-[46ch] text-sm leading-relaxed text-slate-300 sm:text-base">{feature.benefit}</p>
         </div>
     );
 }
@@ -54,12 +163,15 @@ function SectionIntro() {
     const inView = useInViewOnce(ref);
     return (
         <div ref={ref} className="stage max-w-[60ch]" data-active={inView ? 'true' : 'false'}>
-            <p className="stage-in text-xs font-medium uppercase tracking-[0.18em] text-slate-500" style={{ '--d': '0s' }}>
+            <p className="stage-in text-xs font-medium uppercase tracking-[0.18em] text-indigo-300" style={{ '--d': '0s' }}>
                 Inside the platform
             </p>
             <h3 className="stage-in mt-3 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl" style={{ '--d': '0.08s' }}>
                 Deep enough to run your whole front office.
             </h3>
+            <p className="stage-in mt-3 text-base leading-relaxed text-slate-400" style={{ '--d': '0.14s' }}>
+                Scroll or click any step below to watch how a single lead moves from first message to a 5-star review automatically.
+            </p>
         </div>
     );
 }
@@ -100,42 +212,66 @@ function StickyShowcase() {
         };
     }, []);
 
+    const scrollToStep = (index) => {
+        setActive(index);
+        const el = itemRefs.current[index];
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const targetY = window.scrollY + rect.top - (window.innerHeight / 2 - rect.height / 2);
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+    };
+
     // Written straight to CSS variables so pointer moves don't re-render the five stages.
     const handleTilt = (e) => {
         const el = e.currentTarget;
         const rect = el.getBoundingClientRect();
         const nx = (e.clientX - rect.left) / rect.width - 0.5;
         const ny = (e.clientY - rect.top) / rect.height - 0.5;
-        el.style.setProperty('--rx', `${(4 - ny * 4).toFixed(2)}deg`);
-        el.style.setProperty('--ry', `${(-7 + nx * 5).toFixed(2)}deg`);
+        el.style.setProperty('--rx', `${(2.5 - ny * 3).toFixed(2)}deg`);
+        el.style.setProperty('--ry', `${(-4 + nx * 4).toFixed(2)}deg`);
     };
     const resetTilt = (e) => {
-        e.currentTarget.style.setProperty('--rx', '4deg');
-        e.currentTarget.style.setProperty('--ry', '-7deg');
+        e.currentTarget.style.setProperty('--rx', '2.5deg');
+        e.currentTarget.style.setProperty('--ry', '-4deg');
     };
 
     return (
-        <div className="mt-16 grid grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-16">
-            <ol>
+        <div className="mt-14 grid grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 xl:gap-16">
+            <ol className="relative space-y-6 py-[8vh]">
                 {FEATURES.map((feature, i) => (
                     <li
                         key={feature.key}
                         ref={(el) => {
                             itemRefs.current[i] = el;
                         }}
-                        className="flex min-h-[60vh] items-center"
+                        className="flex min-h-[42vh] items-center"
                         aria-current={active === i ? 'step' : undefined}
                     >
-                        <FeatureCopy feature={feature} index={i} active={active === i} />
+                        <div className="w-full">
+                            <FeatureCopy
+                                feature={feature}
+                                index={i}
+                                active={active === i}
+                                onClick={() => scrollToStep(i)}
+                            />
+                        </div>
                     </li>
                 ))}
             </ol>
 
             <div>
-                <div className="sticky top-[calc(50vh-13rem)] [perspective:1600px]" aria-hidden="true">
+                <div className="sticky top-[calc(50vh-14.5rem)] [perspective:1600px]">
+                    {/* Ambient glow behind the stage so the right side immediately draws the eye */}
+                    <div
+                        className="pointer-events-none absolute -inset-6 -z-10 rounded-3xl bg-[radial-gradient(closest-side,rgba(99,102,241,0.22),transparent)] blur-2xl"
+                        aria-hidden="true"
+                    />
                     <StageFrame
                         title={FEATURES[active].title}
-                        className="stage-tilt h-[30rem]"
+                        activeIndex={active}
+                        total={FEATURES.length}
+                        onSelect={scrollToStep}
+                        className="stage-tilt h-[32rem]"
                         onPointerMove={handleTilt}
                         onPointerLeave={resetTilt}
                     >
@@ -159,9 +295,9 @@ function StackedFeature({ feature, index, reduced }) {
     const active = reduced || inView;
     return (
         <li ref={ref} className="lg:grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-16">
-            <FeatureCopy feature={feature} index={index} />
+            <FeatureCopy feature={feature} index={index} active={active} />
             <div className="mt-6 lg:mt-0" aria-hidden="true">
-                <StageFrame title={feature.title} className="min-h-[26rem]">
+                <StageFrame title={feature.title} activeIndex={index} total={FEATURES.length} className="min-h-[26rem]">
                     <div className="stage h-full min-h-[22rem]" data-active={active ? 'true' : 'false'}>
                         <FeatureStage featureKey={feature.key} active={active} reduced={reduced} />
                     </div>
@@ -174,7 +310,7 @@ function StackedFeature({ feature, index, reduced }) {
 // Mobile, tablet and reduced motion: each feature followed by its own static or play-once stage.
 function StackedShowcase({ reduced }) {
     return (
-        <ol className="mt-12 space-y-20">
+        <ol className="mt-12 space-y-16">
             {FEATURES.map((feature, i) => (
                 <StackedFeature key={feature.key} feature={feature} index={i} reduced={reduced} />
             ))}

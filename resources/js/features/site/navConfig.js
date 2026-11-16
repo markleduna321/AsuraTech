@@ -15,6 +15,11 @@ import {
     Lightbulb,
     RefreshCw,
     ShieldCheck,
+    Clock,
+    Dumbbell,
+    Stethoscope,
+    Radar,
+    Cloud,
 } from 'lucide-react';
 
 // ---------------------------------------------------------------------------
@@ -47,10 +52,62 @@ export const PRIMARY_CTA = {
 // ---------------------------------------------------------------------------
 // Mega menu 1 — Platforms
 // ---------------------------------------------------------------------------
-// TODO: build the Platforms mega-menu content. For now, render the existing
-// "Products" dropdown items that were already in the old LandingLayout nav.
+// Items without an `href` render as non-clickable "Soon" entries.
+// Items with `external: true` open in a new tab.
 
-export const PLATFORMS_MENU = null; // stub — see TODO above
+export const PLATFORMS_COLUMNS = [
+    {
+        heading: 'Turnkey Industry Systems',
+        items: [
+            {
+                icon: Clock,
+                title: 'TimeSync',
+                desc: 'Complete HRIS, biometric attendance, and BIR-compliant payroll.',
+                href: '/products/timesync',
+            },
+            {
+                icon: Dumbbell,
+                title: 'GymAsura',
+                desc: 'Automated memberships, door access tracking, and class scheduling.',
+                href: '/products/gymasura',
+            },
+            {
+                icon: Stethoscope,
+                title: 'Clinic Management',
+                desc: 'Patient records, appointments, and live queue management.',
+                href: null, // TODO: add link once the product page is ready
+            },
+        ],
+    },
+    {
+        heading: 'Ecosystem Platforms',
+        items: [
+            {
+                icon: Radar,
+                title: 'Diskobre',
+                desc: 'Local business discovery and automated lead generation pipeline.',
+                href: 'https://diskobre.com',
+                external: true,
+            },
+            {
+                icon: Cloud,
+                title: 'Caleho',
+                desc: 'High-availability Git-to-cloud deployment and database hosting.',
+                href: 'https://www.caleho.cloud',
+                external: true,
+            },
+        ],
+    },
+];
+
+export const PLATFORMS_UTILITY_BAR = {
+    label: 'Ready to Deploy:',
+    chips: ['HRIS & Payroll', 'Gym', 'Clinic', 'Lead Generation', 'Cloud Hosting'],
+    cta: {
+        label: 'Try the Live Demos',
+        href: DEMOS_URL,
+    },
+};
 
 // ---------------------------------------------------------------------------
 // Mega menu 2 — Solutions & Engineering

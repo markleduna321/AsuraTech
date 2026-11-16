@@ -4,8 +4,8 @@ import LandingLayout from '@/components/layout/LandingLayout';
 import Hero from './_sections/Hero';
 import ChoosePath from './_sections/ChoosePath';
 import PlatformSection from './_sections/platform/PlatformSection';
-import DemoShowcase from './_sections/demos/DemoShowcase';
-import EcosystemSection from './_sections/ecosystem/EcosystemSection';
+// import DemoShowcase from './_sections/demos/DemoShowcase';
+// import EcosystemSection from './_sections/ecosystem/EcosystemSection';
 import EngineeringSection from './_sections/engineering/EngineeringSection';
 import ConnectSection from './_sections/connect/ConnectSection';
 import FinalCtaSection from './_sections/final-cta/FinalCtaSection';
@@ -27,10 +27,10 @@ export default function Home(props) {
 			<PlatformSection />
 
 			{/* Live demo showcase: tabbed product launcher with a device stage */}
-			<DemoShowcase />
+			{/* <DemoShowcase /> */}
 
 			{/* Ecosystem spotlight: Diskobre.com + Caleho.cloud (CSS-only, no WebGL) */}
-			<EcosystemSection />
+			{/* <EcosystemSection /> */}
 
 			{/* Custom engineering: explorable 3D system architecture (ERP, apps, AI, consultancy) */}
 			<EngineeringSection />

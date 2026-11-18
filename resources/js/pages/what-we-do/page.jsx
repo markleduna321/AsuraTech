@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import {
     ArrowRight,
     ArrowUpRight,
-    Check,
     Radar,
     MessagesSquare,
     LayoutDashboard,
@@ -11,17 +10,17 @@ import {
 } from 'lucide-react';
 import LandingLayout from '@/components/layout/LandingLayout';
 import SiteFooter from '@/components/layout/SiteFooter';
-import FinalCtaSection from '@/pages/home-page/_sections/final-cta/FinalCtaSection';
 import SectionLink from '@/components/ui/SectionLink';
 import {
     CHIPS,
     BLOCKS,
     PROCESS_STEPS,
+    CLOSING_CTA,
     TECH_STACK,
 } from './whatWeDoData';
 
 // ---------------------------------------------------------------------------
-// 4-Step Pipeline Data (Section 3: How it connects)
+// 4-Step Pipeline Data (How it connects)
 // ---------------------------------------------------------------------------
 const PIPELINE_STEPS = [
     {
@@ -37,7 +36,7 @@ const PIPELINE_STEPS = [
         title: 'Capture & Nurture',
         desc: 'Every lead followed up instantly through automated funnels, SMS, email and AI chat.',
         icon: MessagesSquare,
-        tag: 'Automation & AI',
+        tag: 'Tailored Automation & AI',
         accent: '#00E5FF',
     },
     {
@@ -51,9 +50,9 @@ const PIPELINE_STEPS = [
     {
         num: '04',
         title: 'Scale Securely',
-        desc: 'Deploy on high-performance cloud infrastructure protected by ongoing security audits.',
+        desc: 'Deploy on high-performance cloud infrastructure protected by ongoing process & network audits.',
         icon: ShieldCheck,
-        tag: 'Caleho.cloud · Security',
+        tag: 'Caleho.cloud · Network Architecture',
         accent: '#00E5FF',
     },
 ];
@@ -132,10 +131,10 @@ export default function WhatWeDo() {
     return (
         <div className="bg-[var(--bg)] text-white">
             <Head>
-                <title>What We Do — Everything in One Place | AsuraTECH Solutions</title>
+                <title>What We Do — Automate Your Business to Scale | AsuraTECH Solutions</title>
                 <meta
                     name="description"
-                    content="Explore all AsuraTECH solutions: CRM automation, AI integration, turnkey industry software (HRIS, Gym, Clinic), cloud hosting, and full-stack custom engineering."
+                    content="We build automation and software around how your team actually works: tailored CRM & AI, turnkey HRIS/Gym/Clinic systems, proprietary platforms, and custom ERP engineering."
                 />
             </Head>
 
@@ -158,12 +157,13 @@ export default function WhatWeDo() {
                     </p>
                     <h1
                         id="what-we-do-hero-heading"
-                        className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.08]"
+                        className="mt-4 max-w-4xl mx-auto text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.08]"
                     >
-                        Everything we do, <span className="text-[var(--cyan)]">in one place.</span>
+                        We don’t just digitize your business.{' '}
+                        <span className="text-[var(--cyan)]">We automate it to scale.</span>
                     </h1>
                     <p className="mt-5 max-w-2xl mx-auto text-base sm:text-lg text-[var(--muted)] leading-relaxed">
-                        From turnkey SaaS platforms to automated growth pipelines and mission-critical custom engineering, discover our full spectrum of technology solutions.
+                        Every business runs differently, so templates fail. We build automation and software around how your team actually works, and if a feature doesn’t remove a bad process or save hours, we skip it.
                     </p>
                 </div>
             </section>
@@ -198,7 +198,7 @@ export default function WhatWeDo() {
             </nav>
 
             {/* ============================================================
-                SECTION 2: FOUR OFFER BLOCKS (Alternating Light & Dark)
+                SECTION 2: FOUR OFFER BLOCKS (Alternating Dark & Light)
                ============================================================ */}
             <div>
                 {BLOCKS.map((block) => {
@@ -289,7 +289,11 @@ export default function WhatWeDo() {
 
                                                 {/* Card-specific Links / CTAs */}
                                                 {(card.demoUrl || card.externalUrl) && (
-                                                    <div className="mt-6 pt-4 border-t border-black/5 dark:border-white/10">
+                                                    <div
+                                                        className={`mt-6 pt-4 border-t ${
+                                                            isLight ? 'border-black/5' : 'border-white/10'
+                                                        }`}
+                                                    >
                                                         {card.demoUrl && (
                                                             <a
                                                                 href={card.demoUrl}
@@ -308,8 +312,12 @@ export default function WhatWeDo() {
                                                                 rel="noopener noreferrer"
                                                                 className={`inline-flex items-center gap-1.5 text-sm font-semibold hover:underline focus-visible:outline-none focus-visible:ring-2 rounded ${
                                                                     card.accent === 'violet'
-                                                                        ? 'text-[var(--violet)] focus-visible:ring-[var(--violet)]'
-                                                                        : 'text-[var(--cyan-deep)] focus-visible:ring-[var(--cyan-deep)]'
+                                                                        ? isLight
+                                                                            ? 'text-[var(--violet)] focus-visible:ring-[var(--violet)]'
+                                                                            : 'text-violet-300 focus-visible:ring-violet-300'
+                                                                        : isLight
+                                                                        ? 'text-[var(--cyan-deep)] focus-visible:ring-[var(--cyan-deep)]'
+                                                                        : 'text-[var(--cyan)] focus-visible:ring-[var(--cyan)]'
                                                                 }`}
                                                             >
                                                                 {card.externalLabel}
@@ -402,12 +410,12 @@ export default function WhatWeDo() {
             </section>
 
             {/* ============================================================
-                SECTION 4: HOW WE WORK (Light)
+                SECTION 4: METHODOLOGY (Soft-White Band #EEF4FF)
                ============================================================ */}
             <section
                 id="how-we-work"
                 aria-labelledby="how-we-work-heading"
-                className="bg-white text-[var(--ink)] py-20 sm:py-28 border-b border-gray-100"
+                className="bg-[#EEF4FF] text-[var(--ink)] py-20 sm:py-28 border-b border-blue-100"
             >
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="max-w-2xl">
@@ -418,10 +426,10 @@ export default function WhatWeDo() {
                             id="how-we-work-heading"
                             className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight text-[var(--ink)]"
                         >
-                            How we work
+                            We fix the process first. Then we automate it.
                         </h2>
                         <p className="mt-3 text-base sm:text-lg text-[var(--ink-muted)]">
-                            A battle-tested 4-step framework from initial consultation to continuous delivery.
+                            Automating a bad process just creates faster chaos.
                         </p>
                     </div>
 
@@ -429,10 +437,10 @@ export default function WhatWeDo() {
                         {PROCESS_STEPS.map((step, idx) => (
                             <div
                                 key={step.key}
-                                className="rounded-2xl p-6 bg-[var(--light-band)] border border-blue-100"
+                                className="rounded-2xl p-6 bg-white border border-blue-100 shadow-sm"
                             >
                                 <span className="font-mono text-xs font-bold text-[var(--navy)] uppercase tracking-wider block mb-2">
-                                    Step 0{idx + 1}
+                                    {step.num ?? `0${idx + 1}`}
                                 </span>
                                 <h3 className="text-xl font-bold text-[var(--ink)] mb-2">
                                     {step.title}
@@ -478,9 +486,45 @@ export default function WhatWeDo() {
             </section>
 
             {/* ============================================================
-                SECTION 6: FINAL CTA (Dark) & FOOTER
+                SECTION 6: CLOSING CTA (Dark) & FOOTER
                ============================================================ */}
-            <FinalCtaSection />
+            <section
+                aria-labelledby="wwd-closing-cta-heading"
+                className="relative isolate overflow-hidden bg-[var(--bg)] py-20 sm:py-28 border-b border-[var(--border)]"
+            >
+                <div
+                    className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[32rem] w-[64rem] max-w-[160vw] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(47,107,255,0.16),transparent)]"
+                    aria-hidden="true"
+                />
+
+                <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+                    <h2
+                        id="wwd-closing-cta-heading"
+                        className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight"
+                    >
+                        {CLOSING_CTA.headline}
+                    </h2>
+                    <p className="mt-4 text-base sm:text-lg text-[var(--muted)] leading-relaxed">
+                        {CLOSING_CTA.sub}
+                    </p>
+                    <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <SectionLink
+                            href={CLOSING_CTA.primary.href}
+                            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-[var(--blue)] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[rgba(47,107,255,0.3)] transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)]"
+                        >
+                            {CLOSING_CTA.primary.label}
+                            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                        </SectionLink>
+                        <SectionLink
+                            href={CLOSING_CTA.secondary.href}
+                            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-white/[0.04] px-6 py-3.5 text-sm font-semibold text-[var(--soft)] transition-all hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)]"
+                        >
+                            {CLOSING_CTA.secondary.label}
+                            <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                        </SectionLink>
+                    </div>
+                </div>
+            </section>
 
             <SiteFooter />
         </div>

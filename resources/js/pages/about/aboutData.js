@@ -1,115 +1,148 @@
 /**
  * About page configuration and content.
  * Single source of truth for the About Us page.
- * Unprovided facts are strictly kept as TODO placeholders.
+ * Unprovided facts are strictly kept as empty arrays (so optional sections hide gracefully).
  */
 
-// ---------------------------------------------------------------------------
-// Our Story (2-3 short paragraphs, TODO placeholder copy)
-// ---------------------------------------------------------------------------
-export const STORY_PARAGRAPHS = [
-    'TODO: Paragraph 1 — Founded with the mission to help modern businesses stop duct-taping disconnected software tools together and instead operate on a single, coherent technology backbone.',
-    'TODO: Paragraph 2 — Describe the background of AsuraTECH, the problems seen across growing companies managing multiple disparate subscriptions, and how our unified approach transforms operational efficiency.',
-    'TODO: Paragraph 3 — Describe the vision forward: uniting custom full-stack engineering, specialized SaaS platforms, and intelligent automated workflows under one roof.',
-];
+import { DEMOS } from '@/features/demos/demoData';
 
 // ---------------------------------------------------------------------------
-// What We Believe (3-4 principle cards)
+// 2. Our Story (white section)
 // ---------------------------------------------------------------------------
-export const PRINCIPLES = [
-    {
-        title: 'TODO: Principle 1 Title',
-        desc: 'TODO: Principle 1 description — One partner is better than five disconnected agencies.',
+export const STORY = {
+    eyebrow: 'OUR STORY',
+    headline: 'Business software shouldn’t create more work.',
+    paragraphs: [
+        'Most growing businesses end up with the same setup: one tool for leads, another for follow-up, a spreadsheet for operations, and a hosting account nobody really owns. Each works on its own. Together, they make more work than they remove.',
+        'AsuraTECH was built to be the alternative. We built our own lead-generation and hosting platforms and design the systems around them, from turnkey tools to fully custom software. Based in the Philippines, our engineering team works directly with business owners and operations leads to replace fragmented tools with systems that fit how their people actually work.',
+    ],
+    pullQuote: 'Software should remove work, not add it.',
+    link: {
+        label: 'See what we build',
+        href: '/what-we-do',
     },
-    {
-        title: 'TODO: Principle 2 Title',
-        desc: 'TODO: Principle 2 description — Automation should serve people, not replace thoughtful strategy.',
-    },
-    {
-        title: 'TODO: Principle 3 Title',
-        desc: 'TODO: Principle 3 description — Architecture must be secure, maintainable, and built to scale.',
-    },
-    {
-        title: 'TODO: Principle 4 Title',
-        desc: 'TODO: Principle 4 description — Transparent delivery, no black boxes, full ownership stays with you.',
-    },
-];
+};
+
+// Backwards-compatible alias in case anything imports STORY_PARAGRAPHS
+export const STORY_PARAGRAPHS = STORY.paragraphs;
 
 // ---------------------------------------------------------------------------
-// Team members (data-driven with placeholder avatars and TODO names)
+// 3. Our Team (soft-white band)
+// Each card: photo, name, role, oneLiner, and social/code links (repo, github, linkedin).
+// Leave links as '' (blank) for now — they render as disabled/placeholder pills until filled in.
 // ---------------------------------------------------------------------------
 export const TEAM_MEMBERS = [
     {
-        name: 'TODO: Team Member 1',
-        role: 'Founder & Systems Architect',
-        oneLiner: 'TODO: One-line bio describing background and focus.',
-        photo: null, // placeholder avatar rendered when null
+        name: 'Mark Harvey Leduna',
+        role: 'Founder / Solutions Architect',
+        oneLiner: 'Architects custom ERPs, cloud infrastructure, and end-to-end systems. Cares about eliminating busywork.',
+        photo: null,
+        links: {
+            repo: '',
+            github: '',
+            linkedin: '',
+        },
     },
     {
-        name: 'TODO: Team Member 2',
-        role: 'Lead Full-Stack Engineer',
-        oneLiner: 'TODO: One-line bio describing engineering expertise.',
+        name: 'CV Kyle',
+        role: 'Co-Founder / Marketing',
+        oneLiner: 'Builds lead generation pipelines and growth campaigns. Cares about turning cold traffic into booked calls.',
         photo: null,
+        links: {
+            repo: '',
+            github: '',
+            linkedin: '',
+        },
     },
     {
-        name: 'TODO: Team Member 3',
-        role: 'Automation & AI Specialist',
-        oneLiner: 'TODO: One-line bio describing pipeline and AI workflow work.',
+        name: 'Wacky',
+        role: 'AI & Automation Engineer',
+        oneLiner: 'Builds AI agents, LLM pipelines, and webhook automations. Cares about making tools talk to each other.',
         photo: null,
+        links: {
+            repo: '',
+            github: '',
+            linkedin: '',
+        },
     },
 ];
 
 // ---------------------------------------------------------------------------
-// Proof Section data
-// Per specification: only render if real data exists. Empty arrays hide the section.
-// NEVER invent numbers, clients, or quotes.
+// 4. What We Believe (white section)
 // ---------------------------------------------------------------------------
-export const PROOF_STATS = []; // e.g. [{ label: '...', value: '...' }]
+export const PRINCIPLES = [
+    {
+        title: 'Honest advice, even when it costs us a sale.',
+        desc: 'We’ll tell you what you need and what to skip, before you spend anything.',
+    },
+    {
+        title: 'Built for the people who use it.',
+        desc: 'A system only works if your staff enjoys it, so we train your team and keep refining after launch.',
+    },
+    {
+        title: 'One partner, start to finish.',
+        desc: 'From finding leads to hosting your systems, one team stays accountable for the whole chain.',
+    },
+];
+
+// ---------------------------------------------------------------------------
+// 5. By the Numbers (dark section)
+// Add real stats, client logos or testimonials only when verified and permitted.
+// ---------------------------------------------------------------------------
+export const PROOF_STATS = [
+    {
+        value: '6',
+        label: 'live platforms and systems you can open today',
+    },
+    {
+        value: '3',
+        label: 'industry systems with working demos',
+    },
+];
+
 export const CLIENT_LOGOS = []; // e.g. [{ name: '...', logoUrl: '...' }]
 export const TESTIMONIALS = []; // e.g. [{ quote: '...', author: '...', company: '...' }]
 
 // ---------------------------------------------------------------------------
-// Products We Built (linking to Diskobre.com, Caleho.cloud, and Demos)
+// 6. Live Systems You Can Open Today (soft-white band)
+// Cards: name, type and a "Visit live system" link, with no descriptions.
+// Only cards with a non-null `url` are rendered.
 // ---------------------------------------------------------------------------
 export const PRODUCTS_BUILT = [
     {
         name: 'Diskobre.com',
-        type: 'Lead Generation Platform',
-        desc: 'Local business discovery and automated outreach pipeline.',
+        type: 'Lead generation',
         url: 'https://diskobre.com',
         external: true,
-        accent: 'violet',
     },
     {
         name: 'Caleho.cloud',
-        type: 'Cloud Hosting & Infrastructure',
-        desc: 'High-availability Git-to-cloud deployment and database hosting.',
+        type: 'Cloud hosting',
         url: 'https://www.caleho.cloud',
         external: true,
-        accent: 'cyan',
     },
     {
-        name: 'TimeSync',
-        type: 'Turnkey Industry System',
-        desc: 'Complete HRIS, biometric attendance, and BIR-compliant payroll.',
-        url: 'https://demo.asuratechsolutions.com',
-        external: true,
-        accent: 'blue',
+        name: 'Business Automation Platform',
+        type: 'Sales & marketing automation',
+        url: '/what-we-do#automation-ai',
+        external: false,
     },
     {
-        name: 'GymAsura',
-        type: 'Turnkey Industry System',
-        desc: 'Automated memberships, door access tracking, and class scheduling.',
-        url: 'https://demogym.asuratechsolutions.com',
+        name: 'HRIS & Payroll System',
+        type: 'Live demo, HR & payroll',
+        url: DEMOS.find((d) => d.key === 'hris')?.url ?? 'https://demo.asuratechsolutions.com',
         external: true,
-        accent: 'blue',
     },
     {
-        name: 'Clinic System',
-        type: 'Turnkey Industry System',
-        desc: 'Patient records, appointments, and live queue management.',
-        url: 'https://democlinic.asuratechsolutions.com',
+        name: 'Gym Management System',
+        type: 'Live demo, Gym',
+        url: DEMOS.find((d) => d.key === 'gym')?.url ?? 'https://demogym.asuratechsolutions.com',
         external: true,
-        accent: 'blue',
+    },
+    {
+        name: 'Clinic Booking System',
+        type: 'Live demo, Clinic',
+        url: DEMOS.find((d) => d.key === 'clinic')?.url ?? 'https://democlinic.asuratechsolutions.com',
+        external: true,
     },
 ];

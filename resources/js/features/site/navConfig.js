@@ -10,11 +10,11 @@ import {
     Workflow,
     Plug,
     Database,
+    Users,
     Globe,
     Smartphone,
     Lightbulb,
     RefreshCw,
-    ShieldCheck,
     Clock,
     Dumbbell,
     Stethoscope,
@@ -45,7 +45,7 @@ export const NAV_ITEMS = [
 ];
 
 export const PRIMARY_CTA = {
-    label: 'Book Free Audit',
+    label: 'Book a Free Workflow Audit',
     href: AUDIT_URL,
 };
 
@@ -57,7 +57,7 @@ export const PRIMARY_CTA = {
 
 export const PLATFORMS_COLUMNS = [
     {
-        heading: 'Turnkey Industry Systems',
+        heading: 'Turnkey Systems',
         items: [
             {
                 icon: Clock,
@@ -74,25 +74,25 @@ export const PLATFORMS_COLUMNS = [
             {
                 icon: Stethoscope,
                 title: 'Clinic Management',
-                desc: 'Patient records, appointments, and live queue management.',
+                desc: 'Online booking, SMS reminders, doctor queues and patient records (EMR).',
                 href: null, // TODO: add link once the product page is ready
             },
         ],
     },
     {
-        heading: 'Ecosystem Platforms',
+        heading: 'Proprietary Platforms',
         items: [
             {
                 icon: Radar,
                 title: 'Diskobre',
-                desc: 'Local business discovery and automated lead generation pipeline.',
+                desc: 'B2B lead generation that finds high-intent businesses and feeds them into your pipeline.',
                 href: 'https://diskobre.com',
                 external: true,
             },
             {
                 icon: Cloud,
                 title: 'Caleho',
-                desc: 'High-availability Git-to-cloud deployment and database hosting.',
+                desc: 'Fast, isolated web and app hosting with automated deployment.',
                 href: 'https://www.caleho.cloud',
                 external: true,
             },
@@ -104,7 +104,7 @@ export const PLATFORMS_UTILITY_BAR = {
     label: 'Ready to Deploy:',
     chips: ['HRIS & Payroll', 'Gym', 'Clinic', 'Lead Generation', 'Cloud Hosting'],
     cta: {
-        label: 'Try the Live Demos',
+        label: 'Test-Drive Our Live Demos',
         href: DEMOS_URL,
     },
 };
@@ -115,81 +115,86 @@ export const PLATFORMS_UTILITY_BAR = {
 
 export const SOLUTIONS_COLUMNS = [
     {
-        heading: 'Automation & AI',
+        heading: 'Tailored Automation & AI',
         items: [
             {
                 icon: Bot,
-                title: 'CRM & Pipeline Automation',
-                desc: 'Done-for-you GoHighLevel-style workflows, funnels, and lead nurture.',
+                title: 'Tailored CRM & Sales Pipelines',
+                desc: 'Unified inbox (SMS, email, chat), automated follow-ups and funnels mapped to your sales cycle.',
                 href: '/what-we-do#crm-pipeline-automation',
             },
             {
                 icon: Workflow,
-                title: 'AI API & LLM Integration',
-                desc: 'Custom AI agents, OpenAI/Claude pipelines, and internal knowledge bots.',
+                title: 'Practical AI Integration',
+                desc: 'Bots and LLM pipelines inside your systems that qualify leads, book appointments and handle routine data.',
                 href: '/what-we-do#ai-integration',
             },
             {
                 icon: Plug,
-                title: 'Workflow Orchestration',
-                desc: 'Connecting your existing ERP, POS, and marketing tools via custom webhooks.',
+                title: 'Tool Syncing',
+                desc: 'Your CRM, accounting, POS and databases connected by custom webhooks, so you enter data once.',
                 href: '/what-we-do#workflow-orchestration',
             },
         ],
     },
     {
-        heading: 'Full-Stack Development',
+        heading: 'Custom Engineering',
         items: [
             {
                 icon: Database,
-                title: 'Custom ERP & CRM Systems',
-                desc: 'Tailored operational software built around your exact business rules.',
-                href: '/what-we-do#custom-erp-crm',
+                title: 'Custom ERP & Operational Systems',
+                desc: 'Inventory, supply chain, accounting and operations built around your rules.',
+                href: '/what-we-do#custom-erp',
+            },
+            {
+                icon: Users,
+                title: 'Custom CRM Architecture',
+                desc: 'A lightweight, fast CRM when standard ones don’t fit.',
+                href: '/what-we-do#custom-crm',
             },
             {
                 icon: Globe,
-                title: 'Custom Web Applications',
-                desc: 'High-performance portals, SaaS builds, and scalable web platforms.',
+                title: 'Full-Stack Web Apps',
+                desc: 'Customer portals, dashboards and SaaS built for speed and clarity.',
                 href: '/what-we-do#custom-web-apps',
-            },
-            {
-                icon: Smartphone,
-                title: 'Mobile & Desktop Apps',
-                desc: 'Cross-platform mobile apps and native desktop/kiosk interfaces.',
-                href: '/what-we-do#mobile-desktop-apps',
             },
         ],
     },
     {
-        heading: 'Infrastructure & Advisory',
+        heading: 'Apps, Modernization & IT',
         items: [
             {
-                icon: Lightbulb,
-                title: 'IT Consultancy & Architecture',
-                desc: 'Systems integration, multi-site network design, and digital transformation.',
-                href: '/what-we-do#it-consultancy',
+                icon: Smartphone,
+                title: 'Mobile & Cross-Platform Apps',
+                desc: 'Android, iOS and local-network apps for field teams and customers.',
+                href: '/what-we-do#mobile-desktop-apps',
             },
             {
                 icon: RefreshCw,
-                title: 'Legacy System Modernization',
-                desc: 'Migrating spreadsheets and outdated software into modern cloud databases.',
+                title: 'Legacy Modernization',
+                desc: 'Spreadsheets and old software replaced by clean cloud databases, without disrupting your day.',
                 href: '/what-we-do#legacy-modernization',
             },
             {
-                icon: ShieldCheck,
-                title: 'Security Review & Hardening',
-                desc: 'Review and tighten security across your systems and integrations.',
-                href: '/what-we-do#security-review',
+                icon: Lightbulb,
+                title: 'IT Consultancy & Network Architecture',
+                desc: 'Honest advice, process audits and secure network design, including what to skip.',
+                href: '/what-we-do#it-consultancy',
             },
         ],
     },
 ];
 
 export const SOLUTIONS_UTILITY_BAR = {
-    label: 'Built on Modern Architecture:',
-    chips: ['Laravel', 'React', 'Python', 'C#', 'AI APIs', 'Cloud Native'],
+    label: 'What We Do:',
+    chips: [
+        'Tailored Automation & AI',
+        'Turnkey Systems',
+        'Proprietary Platforms',
+        'Custom Engineering & IT',
+    ],
     cta: {
-        label: 'Request a Custom Architecture Audit',
+        label: 'Book a Free Workflow Audit',
         href: AUDIT_URL,
     },
 };

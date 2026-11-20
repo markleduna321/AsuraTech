@@ -1,0 +1,1 @@
+import{f as u,j as e,L as a}from"./app-Bi3329pK.js";function x({href:t,...n}){const{url:c}=u(),s=t.indexOf("#");if(s===-1)return e.jsx(a,{href:t,...n});const i=t.slice(0,s),r=c.split(/[?#]/)[0];return i===""||i===r?e.jsx("a",{href:t.slice(s),...n}):e.jsx(a,{href:t,...n})}export{x as S};

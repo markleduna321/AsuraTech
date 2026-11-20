@@ -41,3 +41,10 @@ export const LEGAL_LINKS = [
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms', href: '/terms' },
 ];
+
+export const SOCIAL_LINKS = [
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/asuratech-solutions/posts/?feedView=all', icon: 'linkedin' },
+    { label: 'Instagram', href: 'https://www.instagram.com/asuratech_admin/', icon: 'instagram' },
+    { label: 'Facebook', href: 'https://www.facebook.com/AlhoOnlineServices', icon: 'facebook' },
+    //{ label: 'Upwork', href: '', icon: 'upwork' },
+];

@@ -1,7 +1,8 @@
 import { Link, usePage } from '@inertiajs/react';
-import { ArrowUpRight, Mail, MapPin, Phone, Zap } from 'lucide-react';
+import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
+import { siFacebook, siInstagram, siUpwork } from 'simple-icons';
 import SectionLink from '@/components/ui/SectionLink';
-import { CONTACT, FOOTER_COLUMNS, LEGAL_LINKS } from '@/features/site/siteConfig';
+import { CONTACT, FOOTER_COLUMNS, LEGAL_LINKS, SOCIAL_LINKS } from '@/features/site/siteConfig';
 
 // Plum & Mist footer on every route (black: mist headings 19.6:1, mauve-500 body/links 6.2:1, magenta-400 hover 6.9:1,
 // mist focus rings). Aurora hairline/heading underline come from .footer-aurora-* in app.css.
@@ -16,7 +17,35 @@ const t = {
     bottom: 'border-t border-white/10',
     bottomInner: 'mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 text-xs text-mauve-500 sm:flex-row sm:px-6 lg:px-8',
     legal: 'rounded transition-colors hover:text-magenta-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist',
+    socialLink: 'inline-flex h-10 w-10 items-center justify-center rounded-full text-mauve-500 transition-colors hover:text-magenta-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist motion-reduce:transition-none',
+    socialDisabled: 'inline-flex h-10 w-10 cursor-not-allowed items-center justify-center rounded-full text-mauve-500',
 };
+
+const SOCIAL_ICON_DATA = {
+    instagram: siInstagram,
+    facebook: siFacebook,
+    upwork: siUpwork,
+};
+
+function SocialIcon({ name }) {
+    const simpleIcon = SOCIAL_ICON_DATA[name];
+
+    return (
+        <svg
+            aria-hidden="true"
+            className="h-5 w-5"
+            focusable="false"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+        >
+            {name === 'linkedin' ? (
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.35V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124ZM7.119 20.452H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z" />
+            ) : (
+                <path d={simpleIcon.path} />
+            )}
+        </svg>
+    );
+}
 
 export default function SiteFooter() {
     const year = new Date().getFullYear();
@@ -57,6 +86,34 @@ export default function SiteFooter() {
                             {CONTACT.location}
                         </li>
                     </ul>
+                    <nav aria-label="Social media">
+                        <ul className="flex items-center gap-1">
+                            {SOCIAL_LINKS.map((social) => (
+                                <li key={social.label}>
+                                    {social.href?.trim() ? (
+                                        <a
+                                            href={social.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            aria-label={social.label}
+                                            className={t.socialLink}
+                                        >
+                                            <SocialIcon name={social.icon} />
+                                        </a>
+                                    ) : (
+                                        <span
+                                            role="img"
+                                            aria-label={`${social.label} link unavailable`}
+                                            aria-disabled="true"
+                                            className={t.socialDisabled}
+                                        >
+                                            <SocialIcon name={social.icon} />
+                                        </span>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
                 </div>
 
                 {FOOTER_COLUMNS.map((column) => (

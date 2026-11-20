@@ -64,7 +64,7 @@ const STACK = [
 
 function TechItem({ name, icon, glyph: Glyph }) {
     return (
-        <span className="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium text-slate-400 transition-colors duration-200 hover:text-slate-100 motion-reduce:transition-none">
+        <span className="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium text-mauve-500 transition-colors duration-200 hover:text-mist motion-reduce:transition-none">
             {icon ? (
                 <svg viewBox="0 0 24 24" className="h-4 w-4 flex-shrink-0 fill-current" aria-hidden="true" focusable="false">
                     <path d={icon.path} />
@@ -79,14 +79,14 @@ function TechItem({ name, icon, glyph: Glyph }) {
 
 export default function TrustBar() {
     return (
-        <div className="relative border-t border-white/[0.06] bg-white/[0.015]">
+        <div className="relative border-t border-mauve-500/15 bg-white/[0.015]">
             <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
-                <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center text-xs font-medium uppercase tracking-[0.14em] text-slate-400 sm:text-[13px]">
+                <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center text-xs font-medium uppercase tracking-[0.14em] text-mauve-500 sm:text-[13px]">
                     {METRICS.map(({ value, label }, i) => (
                         <li key={label} className="flex items-center gap-x-6">
-                            {i > 0 && <span className="hidden text-indigo-400/60 sm:inline" aria-hidden="true">•</span>}
+                            {i > 0 && <span className="hidden text-mauve-500/60 sm:inline" aria-hidden="true">•</span>}
                             <span>
-                                <span className="font-semibold text-white">{value}</span> {label}
+                                <span className="aurora-text font-semibold">{value}</span> {label}
                             </span>
                         </li>
                     ))}

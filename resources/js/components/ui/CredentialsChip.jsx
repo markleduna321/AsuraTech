@@ -23,10 +23,16 @@ export default function CredentialsChip({ credentials }) {
         <button
             type="button"
             onClick={copy}
-            className="glass-chip inline-flex max-w-full items-center gap-2 rounded-full px-3 py-1.5 text-left font-mono text-xs text-slate-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300"
+            className="inline-flex max-w-full items-center gap-2 rounded-full border border-plum-800 bg-plum-900/60 px-3 py-1.5 text-left font-mono text-xs text-mist transition-colors hover:border-plum-600 hover:bg-plum-900/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black motion-reduce:transition-none"
         >
-            <span className="truncate">Demo login: {text}</span>
-            {copied ? <Check className="h-3.5 w-3.5 shrink-0 text-indigo-300" aria-hidden="true" /> : <Copy className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
+            <span className="truncate">
+                <span className="text-mauve-300">Demo login:</span> {text}
+            </span>
+            {copied ? (
+                <Check className="h-3.5 w-3.5 shrink-0 text-magenta-400" aria-hidden="true" />
+            ) : (
+                <Copy className="h-3.5 w-3.5 shrink-0 text-mauve-300" aria-hidden="true" />
+            )}
             <span className="sr-only" aria-live="polite">
                 {copied ? 'Copied to clipboard' : 'Copy demo login'}
             </span>

@@ -39,7 +39,9 @@ export default function About() {
     const readyProducts = PRODUCTS_BUILT.filter((prod) => Boolean(prod.url));
 
     return (
-        <div className="bg-white text-[var(--ink)]">
+        // "Plum & Mist" scope (same as home): remaps --bg/--cyan/--navy tokens to the plum palette.
+        // Band order: hero black → story mauve → team black → principles mauve → proof black → products plum-900 → FinalCta.
+        <div data-theme="plum" className="bg-black text-mist">
             <Head>
                 <title>About Us | AsuraTECH Solutions</title>
                 <meta
@@ -49,98 +51,109 @@ export default function About() {
             </Head>
 
             {/* ============================================================
-                1. HERO (Dark)
+                1. HERO (Black band)
                ============================================================ */}
             <section
                 aria-labelledby="about-hero-heading"
-                className="relative isolate overflow-hidden bg-[var(--bg)] text-white py-20 sm:py-28 border-b border-[var(--border)]"
+                className="band-dark relative isolate overflow-hidden py-20 sm:py-28"
             >
-                {/* Glow backdrop */}
+                {/* Spacer: hero background runs under the transparent 72px header; content stays put */}
+                <div aria-hidden="true" className="h-[72px]" />
+
+                {/* Plum glow backdrop */}
                 <div
-                    className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[36rem] w-[70rem] max-w-[160vw] -translate-x-1/2 -translate-y-1/4 bg-[radial-gradient(closest-side,rgba(47,107,255,0.18),transparent)]"
+                    className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[36rem] w-[70rem] max-w-[160vw] -translate-x-1/2 -translate-y-1/4 bg-[radial-gradient(closest-side,rgba(106,52,151,0.32),transparent)]"
                     aria-hidden="true"
                 />
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--cyan)]">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-magenta-400">
                         ABOUT US
                     </p>
                     <h1
                         id="about-hero-heading"
-                        className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.08] max-w-4xl mx-auto"
+                        className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-mist leading-[1.08] max-w-4xl mx-auto"
                     >
                         Engineers who’d rather{' '}
-                        <span className="text-[var(--cyan)]">fix your process</span> than sell you more software.
+                        <span className="aurora-text motion-safe:animate-text-shimmer">fix your process</span> than sell you more software.
                     </h1>
-                    <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-[var(--muted)] leading-relaxed">
+                    <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-mauve-300 leading-relaxed">
                         AsuraTECH Solutions builds the connected systems behind growing businesses: lead generation, automation, daily operations and hosting, all from one team.
                     </p>
                 </div>
             </section>
 
             {/* ============================================================
-                2. OUR STORY (White)
+                2. OUR STORY (Mauve band + glass)
                ============================================================ */}
             <section
                 aria-labelledby="our-story-heading"
-                className="py-16 sm:py-24 bg-white border-b border-gray-100"
+                className="band-light relative isolate py-16 sm:py-24"
             >
+                <div className="glass-backdrop -z-10" aria-hidden="true" />
+
                 <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--navy)] mb-2">
-                        {STORY.eyebrow}
-                    </p>
-                    <h2
-                        id="our-story-heading"
-                        className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--ink)] mb-8"
-                    >
-                        {STORY.headline}
-                    </h2>
+                    <div className="glass-card rounded-2xl p-6 sm:p-10">
+                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pink-800 mb-2">
+                            {STORY.eyebrow}
+                        </p>
+                        <h2
+                            id="our-story-heading"
+                            className="text-3xl sm:text-4xl font-semibold tracking-tight text-black mb-8"
+                        >
+                            {STORY.headline}
+                        </h2>
 
-                    <div className="space-y-6 text-base sm:text-lg text-[var(--ink-muted)] leading-relaxed">
-                        {STORY.paragraphs.map((paragraph, i) => (
-                            <p key={i}>{paragraph}</p>
-                        ))}
-                    </div>
+                        <div className="space-y-6 text-base sm:text-lg text-plum-900 leading-relaxed">
+                            {STORY.paragraphs.map((paragraph, i) => (
+                                <p key={i}>{paragraph}</p>
+                            ))}
+                        </div>
 
-                    {STORY.pullQuote && (
-                        <blockquote className="my-10 rounded-2xl border-l-4 border-[var(--navy)] bg-[var(--light-band)] px-6 py-5 text-xl sm:text-2xl font-bold tracking-tight text-[var(--ink)]">
-                            “{STORY.pullQuote}”
-                        </blockquote>
-                    )}
-
-                    {STORY.link && (
-                        <div className="mt-8">
-                            <Link
-                                href={STORY.link.href}
-                                className="group inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-[var(--navy)] hover:text-[var(--blue)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--navy)] rounded"
-                            >
-                                <span>{STORY.link.label}</span>
-                                <ArrowRight
-                                    className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                        {STORY.pullQuote && (
+                            <blockquote className="relative my-10 overflow-hidden rounded-2xl bg-white/60 py-5 pl-7 pr-6 text-xl sm:text-2xl font-semibold tracking-tight text-black">
+                                <span
+                                    className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-magenta-600 to-iris-600"
                                     aria-hidden="true"
                                 />
-                            </Link>
-                        </div>
-                    )}
+                                “{STORY.pullQuote}”
+                            </blockquote>
+                        )}
+
+                        {STORY.link && (
+                            <div className="mt-8">
+                                <Link
+                                    href={STORY.link.href}
+                                    className="group inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-pink-800 hover:text-black transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plum-900 rounded"
+                                >
+                                    <span>{STORY.link.label}</span>
+                                    <ArrowRight
+                                        className="w-4 h-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
+                                        aria-hidden="true"
+                                    />
+                                </Link>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </section>
 
             {/* ============================================================
-                3. OUR TEAM (Soft-White Band — hidden when TEAM_MEMBERS is empty)
+                3. OUR TEAM (Black band — hidden when TEAM_MEMBERS is empty)
                ============================================================ */}
             {hasTeam && (
                 <section
                     aria-labelledby="team-heading"
-                    className="py-16 sm:py-24 bg-[var(--light-band)] border-b border-gray-200"
+                    className="band-dark py-16 sm:py-24"
                 >
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="max-w-2xl">
-                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--navy)]">
+                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-magenta-400">
                                 THE PEOPLE BEHIND THE CODE
                             </p>
                             <h2
                                 id="team-heading"
-                                className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-[var(--ink)]"
+                                className="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight text-mist"
                             >
                                 Our team
                             </h2>
@@ -157,35 +170,35 @@ export default function About() {
                                 return (
                                     <div
                                         key={idx}
-                                        className="rounded-2xl p-6 bg-white border border-blue-100 shadow-sm flex flex-col justify-between"
+                                        className="aurora-border--hover relative rounded-2xl p-6 bg-plum-950/60 border border-plum-800 flex flex-col justify-between"
                                     >
                                         <div className="flex items-start gap-4">
                                             {member.photo ? (
                                                 <img
                                                     src={member.photo}
                                                     alt={member.name}
-                                                    className="w-14 h-14 rounded-full object-cover border border-blue-200 shrink-0 shadow-sm"
+                                                    className="w-14 h-14 rounded-full object-cover border border-plum-800 shrink-0"
                                                 />
                                             ) : (
-                                                <div className="w-14 h-14 rounded-full bg-[var(--light-band)] border border-blue-200 text-[var(--navy)] flex items-center justify-center shrink-0 shadow-sm">
+                                                <div className="w-14 h-14 rounded-full bg-plum-900 border border-plum-800 text-mauve-300 flex items-center justify-center shrink-0">
                                                     <User className="w-6 h-6" />
                                                 </div>
                                             )}
                                             <div className="min-w-0 flex-1">
-                                                <h3 className="text-lg font-bold text-[var(--ink)] truncate">
+                                                <h3 className="text-lg font-semibold text-mist truncate">
                                                     {member.name}
                                                 </h3>
-                                                <p className="text-xs font-semibold text-[var(--navy)] uppercase tracking-wider mt-0.5">
+                                                <p className="text-xs font-semibold text-mauve-300 uppercase tracking-wider mt-0.5">
                                                     {member.role}
                                                 </p>
-                                                <p className="text-xs text-[var(--ink-muted)] mt-2.5 leading-relaxed">
+                                                <p className="text-xs text-mauve-300 mt-2.5 leading-relaxed">
                                                     {member.oneLiner}
                                                 </p>
                                             </div>
                                         </div>
 
                                         {/* Repo, GitHub & LinkedIn links (blank links stay non-clickable until filled in) */}
-                                        <div className="mt-5 pt-4 border-t border-blue-100 flex flex-wrap items-center gap-2">
+                                        <div className="mt-5 pt-4 border-t border-plum-800 flex flex-wrap items-center gap-2">
                                             {socialItems.map(({ key, label, icon: Icon, href }) =>
                                                 href ? (
                                                     <a
@@ -193,7 +206,7 @@ export default function About() {
                                                         href={href}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-[var(--light-band)] px-2.5 py-1.5 text-xs font-semibold text-[var(--navy)] hover:border-[var(--navy)] hover:bg-blue-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--navy)]"
+                                                        className="inline-flex items-center gap-1.5 rounded-lg border border-plum-800 bg-white/[0.04] px-2.5 py-1.5 text-xs font-semibold text-mauve-300 hover:border-magenta-400 hover:text-mist transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist"
                                                     >
                                                         <Icon className="w-3.5 h-3.5" aria-hidden="true" />
                                                         <span>{label}</span>
@@ -202,7 +215,7 @@ export default function About() {
                                                     <span
                                                         key={key}
                                                         aria-disabled="true"
-                                                        className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1.5 text-xs font-medium text-gray-400 cursor-default select-none"
+                                                        className="inline-flex items-center gap-1.5 rounded-lg border border-plum-800/60 bg-transparent px-2.5 py-1.5 text-xs font-medium text-mauve-600 cursor-default select-none"
                                                     >
                                                         <Icon className="w-3.5 h-3.5" aria-hidden="true" />
                                                         <span>{label}</span>
@@ -219,20 +232,22 @@ export default function About() {
             )}
 
             {/* ============================================================
-                4. WHAT WE BELIEVE (White)
+                4. WHAT WE BELIEVE (Mauve band + glass)
                ============================================================ */}
             <section
                 aria-labelledby="principles-heading"
-                className="py-16 sm:py-24 bg-white border-b border-gray-100"
+                className="band-light relative isolate py-16 sm:py-24"
             >
+                <div className="glass-backdrop -z-10" aria-hidden="true" />
+
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="max-w-2xl">
-                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--navy)]">
+                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-plum-900">
                             WHAT WE STAND FOR
                         </p>
                         <h2
                             id="principles-heading"
-                            className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-[var(--ink)]"
+                            className="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight text-black"
                         >
                             What we believe
                         </h2>
@@ -242,16 +257,16 @@ export default function About() {
                         {PRINCIPLES.map((item, idx) => (
                             <div
                                 key={idx}
-                                className="bg-[var(--light-band)] rounded-2xl p-6 sm:p-7 border border-blue-100 shadow-sm flex flex-col justify-between"
+                                className="glass-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between"
                             >
                                 <div>
-                                    <div className="w-8 h-8 rounded-lg bg-white text-[var(--navy)] border border-blue-100 flex items-center justify-center font-mono font-bold text-xs mb-4 shadow-sm">
+                                    <div className="w-8 h-8 rounded-lg bg-[image:var(--aurora-deep)] text-white flex items-center justify-center font-mono font-bold text-xs mb-4">
                                         0{idx + 1}
                                     </div>
-                                    <h3 className="text-lg sm:text-xl font-bold text-[var(--ink)] mb-2">
+                                    <h3 className="text-lg sm:text-xl font-semibold text-black mb-2">
                                         {item.title}
                                     </h3>
-                                    <p className="text-sm text-[var(--ink-muted)] leading-relaxed">
+                                    <p className="text-sm text-plum-900 leading-relaxed">
                                         {item.desc}
                                     </p>
                                 </div>
@@ -262,18 +277,18 @@ export default function About() {
             </section>
 
             {/* ============================================================
-                5. BY THE NUMBERS (Dark)
+                5. BY THE NUMBERS (Black band)
                ============================================================ */}
             {hasProof && (
                 <section
                     aria-labelledby="proof-heading"
-                    className="py-16 sm:py-24 bg-[var(--surface)] text-white border-b border-[var(--border)]"
+                    className="band-dark py-16 sm:py-24"
                 >
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="max-w-2xl mx-auto text-center mb-12">
                             <h2
                                 id="proof-heading"
-                                className="text-3xl sm:text-4xl font-bold tracking-tight text-white"
+                                className="text-3xl sm:text-4xl font-semibold tracking-tight text-mist"
                             >
                                 By the numbers
                             </h2>
@@ -290,12 +305,12 @@ export default function About() {
                                 {PROOF_STATS.map((stat, i) => (
                                     <div
                                         key={i}
-                                        className="p-7 sm:p-8 rounded-2xl bg-[var(--card)] border border-[var(--border)] text-center"
+                                        className="p-7 sm:p-8 rounded-2xl bg-plum-950/60 border border-plum-800 text-center"
                                     >
-                                        <p className="font-mono text-4xl sm:text-5xl font-extrabold text-[var(--cyan)]">
-                                            {stat.value}
+                                        <p className="font-mono text-4xl sm:text-5xl font-semibold tabular-nums">
+                                            <span className="aurora-text">{stat.value}</span>
                                         </p>
-                                        <p className="text-sm sm:text-base text-[var(--muted)] mt-2">
+                                        <p className="text-sm sm:text-base text-mauve-300 mt-2">
                                             {stat.label}
                                         </p>
                                     </div>
@@ -304,13 +319,13 @@ export default function About() {
                         )}
 
                         {CLIENT_LOGOS.length > 0 && (
-                            <div className="mt-14 pt-10 border-t border-[var(--border)] flex flex-wrap items-center justify-center gap-8">
+                            <div className="mt-14 pt-10 border-t border-plum-800 flex flex-wrap items-center justify-center gap-8">
                                 {CLIENT_LOGOS.map((client) => (
                                     <img
                                         key={client.name}
                                         src={client.logoUrl}
                                         alt={client.name}
-                                        className="h-8 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity"
+                                        className="h-8 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity motion-reduce:transition-none"
                                     />
                                 ))}
                             </div>
@@ -321,12 +336,12 @@ export default function About() {
                                 {TESTIMONIALS.map((t, i) => (
                                     <blockquote
                                         key={i}
-                                        className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)]"
+                                        className="p-6 rounded-2xl bg-plum-950/60 border border-plum-800"
                                     >
-                                        <p className="text-base text-[var(--soft)] leading-relaxed">
+                                        <p className="text-base text-mist leading-relaxed">
                                             “{t.quote}”
                                         </p>
-                                        <footer className="mt-4 text-xs font-semibold text-[var(--muted)]">
+                                        <footer className="mt-4 text-xs font-semibold text-mauve-300">
                                             {t.author} · {t.company}
                                         </footer>
                                     </blockquote>
@@ -338,21 +353,23 @@ export default function About() {
             )}
 
             {/* ============================================================
-                6. LIVE SYSTEMS YOU CAN OPEN TODAY (Soft-White Band)
+                6. LIVE SYSTEMS YOU CAN OPEN TODAY (Plum-900 closing band, plum-outline cards)
+                   Light glass is NOT used here: 70% white over plum-900 is too dark for pink-800/mauve-700 small text.
+                   Hairline bottom seam separates it from FinalCtaSection (also plum-900).
                ============================================================ */}
             {readyProducts.length > 0 && (
                 <section
                     aria-labelledby="products-built-heading"
-                    className="py-16 sm:py-24 bg-[var(--light-band)] border-b border-gray-200"
+                    className="py-16 sm:py-24 bg-plum-900 text-mist border-b border-white/10"
                 >
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="max-w-2xl mb-10">
-                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--navy)]">
+                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-magenta-400">
                                 OUR WORK IN PRODUCTION
                             </p>
                             <h2
                                 id="products-built-heading"
-                                className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-[var(--ink)]"
+                                className="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight text-mist"
                             >
                                 Live systems you can open today
                             </h2>
@@ -373,22 +390,24 @@ export default function About() {
                                     <CardTag
                                         key={prod.name}
                                         {...linkProps}
-                                        className="group rounded-2xl p-6 bg-white border border-blue-100 hover:border-blue-300 transition-all flex flex-col justify-between shadow-sm hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--navy)]"
+                                        className="aurora-border--hover group relative rounded-2xl p-6 bg-plum-950/50 border border-plum-600/60 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist focus-visible:ring-offset-2 focus-visible:ring-offset-plum-900"
                                     >
                                         <div>
                                             <div className="flex items-center justify-between mb-2">
-                                                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--navy)]">
+                                                <span className="text-xs font-semibold uppercase tracking-wider text-magenta-400">
                                                     {prod.type}
                                                 </span>
-                                                <ArrowUpRight className="w-4 h-4 text-gray-400 group-hover:text-[var(--navy)] transition-colors" />
+                                                <ArrowUpRight className="w-4 h-4 text-mauve-300 group-hover:text-mist transition-colors motion-reduce:transition-none" />
                                             </div>
-                                            <h3 className="text-xl font-bold text-[var(--ink)] group-hover:text-[var(--navy)] transition-colors">
+                                            <h3 className="text-xl font-semibold text-mist">
                                                 {prod.name}
                                             </h3>
                                         </div>
-                                        <div className="mt-6 pt-4 border-t border-blue-100 flex items-center text-xs font-semibold text-[var(--navy)]">
-                                            <span>Visit live system</span>
-                                            <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1" />
+                                        <div className="mt-6 pt-4 border-t border-plum-600/50 flex items-center">
+                                            <span className="aurora-btn inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-semibold text-white">
+                                                <span>Visit live system</span>
+                                                <ArrowRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" />
+                                            </span>
                                         </div>
                                     </CardTag>
                                 );

@@ -63,8 +63,8 @@ function useAfterFirstPaint() {
 function ScenePoster({ className = '' }) {
     return (
         <div className={`absolute inset-0 ${className}`} aria-hidden="true">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.38)_0%,rgba(79,70,229,0.14)_22%,transparent_58%)]" />
-            <div className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-400/30 blur-2xl" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,46,126,0.22)_0%,rgba(124,58,237,0.18)_24%,transparent_58%)]" />
+            <div className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-magenta-400/25 blur-2xl" />
         </div>
     );
 }
@@ -100,13 +100,19 @@ export default function Hero() {
     const sceneFade = `transition-opacity duration-700 motion-reduce:transition-none ${sceneReady ? 'opacity-100' : 'opacity-0'}`;
 
     return (
-        <section aria-labelledby="hero-heading" className="relative isolate overflow-hidden bg-[#060a18]">
-            {/* Faint engineering grid */}
+        <section
+            aria-labelledby="hero-heading"
+            className="band-dark relative isolate overflow-hidden bg-[radial-gradient(60%_55%_at_78%_42%,rgba(43,2,74,0.6),transparent_70%)]"
+        >
+            {/* Spacer: hero background runs under the transparent 72px header; content stays put */}
+            <div aria-hidden="true" className="h-[72px]" />
+
+            {/* Faint engineering grid (mauve lines) */}
             <div
                 className="pointer-events-none absolute inset-0 -z-10 opacity-[0.07] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"
                 style={{
                     backgroundImage:
-                        'linear-gradient(rgba(165,180,252,0.9) 1px, transparent 1px), linear-gradient(90deg, rgba(165,180,252,0.9) 1px, transparent 1px)',
+                        'linear-gradient(rgba(147,135,156,0.9) 1px, transparent 1px), linear-gradient(90deg, rgba(147,135,156,0.9) 1px, transparent 1px)',
                     backgroundSize: '48px 48px',
                 }}
                 aria-hidden="true"
@@ -117,7 +123,7 @@ export default function Hero() {
                 <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
                     <ScenePoster className="opacity-60" />
                     <div className={`absolute inset-0 opacity-40 ${sceneFade}`}>{scene}</div>
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#060a18]/70 via-[#060a18]/55 to-[#060a18]/90" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/90" />
                 </div>
             )}
 
@@ -125,11 +131,11 @@ export default function Hero() {
                 <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
                     {/* Left: copy (HTML for SEO, accessibility and LCP) */}
                     <div className="max-w-xl">
-                        <p className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-medium text-slate-300">
-                            <span className="h-1.5 w-1.5 rounded-full bg-indigo-400" aria-hidden="true" />
+                        <p className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-mauve-500/30 bg-white/[0.04] px-3 py-1 text-xs font-medium text-mauve-300">
+                            <span className="h-1.5 w-1.5 rounded-full bg-magenta-500 shadow-[0_0_8px_rgba(255,46,126,0.7)] motion-safe:animate-pulse" aria-hidden="true" />
                             {PILLARS.map((pillar, i) => (
                                 <React.Fragment key={pillar}>
-                                    {i > 0 && <span className="text-slate-600" aria-hidden="true">/</span>}
+                                    {i > 0 && <span className="text-mauve-500" aria-hidden="true">/</span>}
                                     <span>{pillar}</span>
                                 </React.Fragment>
                             ))}
@@ -137,13 +143,13 @@ export default function Hero() {
 
                         <h1
                             id="hero-heading"
-                            className="mt-6 text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-[3.5rem]"
+                            className="mt-6 text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-mist sm:text-5xl lg:text-[3.5rem]"
                         >
                             Replace duct-taped tools with{' '}
-                            <span className="text-indigo-300">one connected backbone.</span>
+                            <span className="aurora-text motion-safe:animate-text-shimmer">one connected backbone.</span>
                         </h1>
 
-                        <p className="mt-6 text-base leading-relaxed text-slate-300 sm:text-lg">
+                        <p className="mt-6 text-base leading-relaxed text-mauve-500 sm:text-lg">
                             asuraTECH designs, engineers and automates the systems your business runs on. We unify
                             custom SaaS platforms, purpose-built software and AI-driven workflows into a single, secure
                             platform your team can scale, so data flows and work follows up automatically.
@@ -153,7 +159,7 @@ export default function Hero() {
                             <a
                                 href="#get-started"
                                 data-cta-source="hero"
-                                className="group inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-colors hover:bg-indigo-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060a18]"
+                                className="aurora-btn group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold focus-visible:outline-none"
                             >
                                 Start Automating
                                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
@@ -164,9 +170,9 @@ export default function Hero() {
                                 onMouseLeave={() => setHighlight(false)}
                                 onFocus={() => setHighlight(true)}
                                 onBlur={() => setHighlight(false)}
-                                className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-indigo-300/50 hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060a18]"
+                                className="aurora-border aurora-border--hover group relative inline-flex items-center gap-2 rounded-full border border-mauve-500 bg-white/[0.03] px-6 py-3 text-sm font-semibold text-mist transition-colors hover:border-transparent hover:bg-white/[0.07] focus-visible:border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist focus-visible:ring-offset-2 focus-visible:ring-offset-black motion-reduce:transition-none"
                             >
-                                <PlayCircle className="h-4 w-4 text-indigo-300" aria-hidden="true" />
+                                <PlayCircle className="h-4 w-4 text-mauve-300 transition-colors group-hover:text-iris-300 motion-reduce:transition-none" aria-hidden="true" />
                                 View Demos
                             </Link>
                         </div>

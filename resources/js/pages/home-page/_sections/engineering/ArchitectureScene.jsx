@@ -29,10 +29,16 @@ import {
 import { CSS2DObject, CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import { easeInOutCubic } from '../platform/scrollHooks';
 
-const EDGE = new Color('#94a3b8');
-const ACCENT = new Color('#a5b4fc');
-const FILL = new Color('#818cf8');
-const PULSE = new Color('#22d3ee');
+// Plum & Mist at rest: mauve-500 edges, plum-400 links, plum-500 fills + glow.
+// Accent Phase C: the lit zone lerps to magenta (edges/links/nodes #FF2E7E, fill #D6136B, orb glow #FF2E7E);
+// pulses alternate magenta-400 #FF5C9D / iris-400 #A78BFA via instance colors (base material stays white).
+const EDGE = new Color('#93879C');
+const ACCENT = new Color('#A27CC6');
+const FILL = new Color('#8350AE');
+const LIT = new Color('#FF2E7E');
+const LIT_FILL = new Color('#D6136B');
+const PULSE = new Color('#FFFFFF');
+const PULSE_COLORS = [new Color('#FF5C9D'), new Color('#A78BFA')];
 const FLOOR_Y = -1.4;
 const TWEEN_S = 0.8;
 
@@ -235,7 +241,7 @@ export default function ArchitectureScene({ focus, running, reduced, onReady, on
             const obj = makeLabel(text, opts.variant, opts.anchor);
             obj.position.copy(position);
             (opts.parent || zone.group).add(obj);
-            zone.labels.push({ obj, glowOnly: !!opts.glowOnly, explode: !!opts.explode });
+            zone.labels.push({ obj, glowOnly: !!opts.glowOnly, explode: !!opts.explode, lit: null });
             return obj;
         };
 
@@ -331,7 +337,7 @@ export default function ArchitectureScene({ focus, running, reduced, onReady, on
             new ShaderMaterial({
                 vertexShader: glowVertex,
                 fragmentShader: glowFragment,
-                uniforms: { uColor: { value: FILL }, uIntensity: { value: 0.5 } },
+                uniforms: { uColor: { value: FILL.clone() }, uIntensity: { value: 0.5 } },
                 transparent: true,
                 depthWrite: false,
                 depthTest: false,
@@ -415,6 +421,8 @@ export default function ArchitectureScene({ focus, running, reduced, onReady, on
         pulseMesh.instanceMatrix.setUsage(DynamicDrawUsage);
         pulseMesh.frustumCulled = false;
         pulseMesh.renderOrder = 3;
+        // Set before the first render so the instance-color shader variant is compiled up front.
+        pulses.forEach((_, i) => pulseMesh.setColorAt(i, PULSE_COLORS[i % PULSE_COLORS.length]));
         scene.add(pulseMesh);
 
         // ---- State ----
@@ -456,16 +464,25 @@ export default function ArchitectureScene({ focus, running, reduced, onReady, on
                 const z = zones[key];
                 const k = z.tune;
                 z.edgeMat.opacity = z.vis * (k.edge + k.edgeGlow * z.glow);
-                z.edgeMat.color.copy(EDGE).lerp(ACCENT, z.glow);
+                z.edgeMat.color.copy(EDGE).lerp(LIT, z.glow);
                 z.fillMat.opacity = z.vis * (k.fill + k.fillGlow * z.glow);
+                z.fillMat.color.copy(FILL).lerp(LIT_FILL, z.glow);
                 z.linkMat.opacity = z.vis * (k.link + k.linkGlow * z.glow);
+                z.linkMat.color.copy(ACCENT).lerp(LIT, z.glow);
+                const lit = z.glow > 0.5;
                 z.labels.forEach((l) => {
                     const o = z.vis * (l.glowOnly ? z.glow : 0.55 + 0.45 * z.glow) * (l.explode ? explode : 1);
                     l.obj.visible = o > 0.02;
                     l.obj.element.style.opacity = o.toFixed(3);
+                    if (l.lit !== lit) {
+                        l.lit = lit;
+                        l.obj.element.dataset.lit = lit ? 'true' : 'false';
+                    }
                 });
             });
             nodeMaterial.opacity = zones.ai.vis * (0.45 + 0.55 * zones.ai.glow);
+            nodeMaterial.color.copy(ACCENT).lerp(LIT, zones.ai.glow);
+            glowMaterial.uniforms.uColor.value.copy(FILL).lerp(LIT, zones.ai.glow);
             glowMaterial.uniforms.uIntensity.value = zones.ai.vis * (0.3 + 0.7 * zones.ai.glow) * (reducedRef.current ? 1 : 0.92 + 0.08 * Math.sin(elapsed * 1.4));
             slabs.forEach((g, i) => {
                 g.position.y = SLAB_Y[i] + explode * (0.1 + i * 0.24);

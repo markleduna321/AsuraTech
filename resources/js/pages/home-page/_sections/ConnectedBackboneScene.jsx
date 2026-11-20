@@ -36,13 +36,18 @@ import {
     WebGLRenderer,
 } from 'three';
 
-const BG = '#060a18';
-const ACCENT = new Color('#818cf8');
-const ACCENT_LIGHT = new Color('#c7d2fe');
-const PULSE = new Color('#22d3ee');
-const BLOCK_BASE = new Color('#3b4290');
-const BLOCK_HOT = new Color('#8b93ff');
-const EDGE_LOOSE = new Color('#475569');
+const BG = '#000000';
+// Network: mauve lines + plum-600 blocks on the black field. Core: hot pink-white glow with a magenta halo.
+// Pulses alternate magenta / iris; active links + edges tint toward magenta.
+const ACCENT = new Color('#93879C');
+const CORE = new Color('#FFD1E3');
+const HALO = new Color('#FF2E7E');
+const PULSE = new Color('#FF5C9D');
+const PULSE_ALT = new Color('#A78BFA');
+const LINK_HOT = new Color('#FF5C9D');
+const BLOCK_BASE = new Color('#6A3497');
+const BLOCK_HOT = new Color('#93879C');
+const EDGE_LOOSE = new Color('#401364');
 
 export const CLUSTERS = [
     { key: 'saas', label: 'SaaS Platforms', angle: 150 },
@@ -178,11 +183,11 @@ export default function ConnectedBackboneScene({ highlight = false, lite = false
         const root = new Group();
         scene.add(root);
 
-        scene.add(new AmbientLight('#8ea0ff', 0.7));
+        scene.add(new AmbientLight('#C9C1CF', 0.7));
         const key = new DirectionalLight('#ffffff', 1.4);
         key.position.set(4, 6, 8);
         scene.add(key);
-        const coreLight = new PointLight(ACCENT, 14, 9, 2);
+        const coreLight = new PointLight(HALO, 14, 9, 2);
         root.add(coreLight);
 
         // Faint engineering grid
@@ -198,8 +203,8 @@ export default function ConnectedBackboneScene({ highlight = false, lite = false
         // Core: dark faceted body, emissive edge lines, orbit rings and a soft glow sprite (light "bloom").
         const coreGeo = track(new IcosahedronGeometry(0.62, lite ? 0 : 1));
         const coreMat = track(new MeshStandardMaterial({
-            color: '#0b1030',
-            emissive: ACCENT,
+            color: '#2B024A',
+            emissive: CORE,
             emissiveIntensity: 0.28,
             roughness: 0.35,
             metalness: 0.3,
@@ -209,7 +214,7 @@ export default function ConnectedBackboneScene({ highlight = false, lite = false
         root.add(core);
 
         const coreEdgeGeo = track(new EdgesGeometry(coreGeo));
-        const coreEdgeMat = track(new LineBasicMaterial({ color: '#c7d2fe', transparent: true, opacity: 0.9, blending: AdditiveBlending, depthWrite: false }));
+        const coreEdgeMat = track(new LineBasicMaterial({ color: '#FFD1E3', transparent: true, opacity: 0.9, blending: AdditiveBlending, depthWrite: false }));
         core.add(new LineSegments(coreEdgeGeo, coreEdgeMat));
 
         const ringPts = [];
@@ -229,7 +234,7 @@ export default function ConnectedBackboneScene({ highlight = false, lite = false
         });
 
         const glowTex = track(makeGlowTexture());
-        const glowMat = track(new SpriteMaterial({ map: glowTex, color: ACCENT, transparent: true, opacity: 0.85, blending: AdditiveBlending, depthWrite: false }));
+        const glowMat = track(new SpriteMaterial({ map: glowTex, color: HALO, transparent: true, opacity: 0.85, blending: AdditiveBlending, depthWrite: false }));
         const glow = new Sprite(glowMat);
         glow.scale.setScalar(3.4);
         root.add(glow);
@@ -366,9 +371,9 @@ export default function ConnectedBackboneScene({ highlight = false, lite = false
                 tmpColor.copy(BLOCK_BASE).lerp(BLOCK_HOT, glowK * 0.35 + highlightAmt * 0.55);
                 blockMesh.setColorAt(i, tmpColor);
 
-                // Edges: dim slate while loose, accent once locked in.
+                // Edges: dim plum while loose, mauve once locked in.
                 mtx.copy(dummy.matrix);
-                tmpColor.copy(EDGE_LOOSE).lerp(ACCENT, raw).lerp(ACCENT_LIGHT, highlightAmt * 0.5);
+                tmpColor.copy(EDGE_LOOSE).lerp(ACCENT, raw).lerp(LINK_HOT, highlightAmt * 0.5);
                 const edgeScale = 0.35 + raw * 0.35 + highlightAmt * 0.3;
                 const base = i * edgeTemplate.length;
                 for (let e = 0; e < edgeVertsPerBlock; e += 1) {
@@ -391,7 +396,8 @@ export default function ConnectedBackboneScene({ highlight = false, lite = false
                 b.toArray(linkPos, li * 6 + 3);
                 const k = link.a < 0 ? blocks[link.b].k : Math.min(blocks[link.a].k, blocks[link.b].k);
                 const strength = k * k * (link.cluster < 0 ? 0.35 : 0.5) * (1 + highlightAmt * 0.8);
-                tmpColor.copy(ACCENT).lerp(ACCENT_LIGHT, highlightAmt * 0.6);
+                // Core spokes carry a faint magenta tint; everything warms toward magenta on highlight.
+                tmpColor.copy(ACCENT).lerp(LINK_HOT, Math.min(1, (link.a < 0 ? 0.35 : 0) + highlightAmt * 0.6));
                 writeColor(linkCol, li * 2, tmpColor, strength);
                 writeColor(linkCol, li * 2 + 1, tmpColor, strength * (link.a < 0 ? 0.8 : 0.65));
             });
@@ -413,7 +419,7 @@ export default function ConnectedBackboneScene({ highlight = false, lite = false
                     if (pulse.p < 0.55) v.lerpVectors(origin, hub, pulse.p / 0.55);
                     else v.lerpVectors(hub, positions[pulse.block], (pulse.p - 0.55) / 0.45);
                     v.toArray(pulsePos, pi * 3);
-                    writeColor(pulseCol, pi, PULSE, Math.sin(Math.PI * pulse.p) * pulseAmt);
+                    writeColor(pulseCol, pi, pi % 2 ? PULSE_ALT : PULSE, Math.sin(Math.PI * pulse.p) * pulseAmt);
                 });
                 pulseGeo.attributes.position.needsUpdate = true;
                 pulseGeo.attributes.color.needsUpdate = true;
@@ -582,7 +588,7 @@ export default function ConnectedBackboneScene({ highlight = false, lite = false
                             ref={(el) => {
                                 labelRefs.current[i] = el;
                             }}
-                            className="absolute left-0 top-0 whitespace-nowrap rounded-full border border-indigo-400/25 bg-slate-950/60 px-2.5 py-1 text-[11px] font-medium tracking-wide text-indigo-200/90 opacity-0 backdrop-blur-sm transition-colors duration-300 data-[active=true]:border-indigo-300/60 data-[active=true]:text-white"
+                            className="aurora-border absolute left-0 top-0 whitespace-nowrap rounded-full bg-black/85 px-2.5 py-1 text-[12px] font-medium tracking-wide text-mist opacity-0 backdrop-blur-sm transition-shadow duration-300 motion-reduce:transition-none"
                         >
                             {cluster.label}
                         </span>

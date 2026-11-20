@@ -15,7 +15,7 @@ const FEATURE_META = {
 function StageFrame({ title, activeIndex = 0, total = FEATURES.length, onSelect, children, className = '', onPointerMove, onPointerLeave, style }) {
     return (
         <div
-            className={`glass-panel flex flex-col rounded-2xl border border-white/10 bg-[#080d21]/90 shadow-[0_32px_80px_-24px_rgba(79,70,229,0.45)] backdrop-blur-xl ${className}`}
+            className={`glass-panel flex flex-col rounded-2xl ${className}`}
             style={style}
             onPointerMove={(e) => {
                 trackSpotlight(e);
@@ -24,29 +24,29 @@ function StageFrame({ title, activeIndex = 0, total = FEATURES.length, onSelect,
             onPointerLeave={onPointerLeave}
         >
             {/* Browser chrome + interactive story tabs */}
-            <div className="relative flex flex-col border-b border-white/[0.08] bg-white/[0.02]">
+            <div className="relative flex flex-col border-b border-mauve-300/70 bg-white/40">
                 <div className="flex items-center gap-3 px-5 py-3">
                     <span className="flex gap-1.5" aria-hidden="true">
-                        <span className="h-2.5 w-2.5 rounded-full bg-rose-400/50" />
-                        <span className="h-2.5 w-2.5 rounded-full bg-amber-400/50" />
-                        <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/50" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-mauve-300" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-mauve-300" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-mauve-300" />
                     </span>
-                    <span className="truncate rounded-md border border-white/[0.06] bg-[#050814]/80 px-2.5 py-1 text-xs text-slate-400">
-                        app.asuratech.com <span className="text-slate-600">/</span> <span className="font-medium text-indigo-200">{title}</span>
+                    <span className="truncate rounded-md border border-mauve-300/70 bg-white/70 px-2.5 py-1 text-xs text-mauve-700">
+                        app.asuratech.com <span className="text-mauve-600">/</span> <span className="font-medium text-plum-900">{title}</span>
                     </span>
                     <div className="ml-auto flex items-center gap-3">
-                        <span className="font-mono text-[11px] font-medium tabular-nums text-slate-400">
+                        <span className="font-mono text-[11px] font-medium tabular-nums text-mauve-700">
                             {String(activeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
                         </span>
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-300">
-                            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" /> Live
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-plum-900/20 bg-plum-100 px-2 py-0.5 text-[11px] font-medium text-plum-900">
+                            <span className="h-1.5 w-1.5 rounded-full bg-magenta-500 motion-safe:animate-pulse" aria-hidden="true" /> Live
                         </span>
                     </div>
                 </div>
 
                 {/* Clickable step switcher bar inside the stage header */}
                 {onSelect && (
-                    <div className="grid grid-cols-5 gap-1 border-t border-white/[0.06] bg-[#050814]/50 px-3 py-1.5">
+                    <div className="grid grid-cols-5 gap-1 border-t border-mauve-300/60 bg-white/40 px-3 py-1.5">
                         {FEATURES.map((feat, i) => {
                             const isCurrent = i === activeIndex;
                             const isPast = i < activeIndex;
@@ -55,23 +55,23 @@ function StageFrame({ title, activeIndex = 0, total = FEATURES.length, onSelect,
                                     key={feat.key}
                                     type="button"
                                     onClick={() => onSelect(i)}
-                                    className={`group flex flex-col gap-1 rounded-lg px-2 py-1 text-left transition-colors ${
-                                        isCurrent ? 'bg-indigo-500/15' : 'hover:bg-white/[0.04]'
+                                    className={`group flex flex-col gap-1 rounded-lg px-2 py-1 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plum-900 motion-reduce:transition-none ${
+                                        isCurrent ? 'bg-plum-900/[0.08]' : 'hover:bg-white/60'
                                     }`}
                                 >
                                     <div className="flex items-center justify-between gap-1">
                                         <span
                                             className={`truncate text-[10px] font-semibold ${
-                                                isCurrent ? 'text-indigo-200' : isPast ? 'text-slate-300' : 'text-slate-500 group-hover:text-slate-300'
+                                                isCurrent ? 'text-plum-900' : isPast ? 'text-mauve-800' : 'text-mauve-700 group-hover:text-plum-900'
                                             }`}
                                         >
                                             {String(i + 1).padStart(2, '0')}. {feat.title.split(' ')[0]}
                                         </span>
                                     </div>
-                                    <span className="h-1 w-full overflow-hidden rounded-full bg-white/10">
+                                    <span className="h-1 w-full overflow-hidden rounded-full bg-mauve-300/60">
                                         <span
-                                            className={`block h-full rounded-full transition-all duration-500 ${
-                                                isCurrent ? 'w-full bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.8)]' : isPast ? 'w-full bg-indigo-400/40' : 'w-0'
+                                            className={`block h-full rounded-full transition-all duration-500 motion-reduce:transition-none ${
+                                                isCurrent ? 'w-full bg-plum-900 shadow-[0_0_8px_rgba(106,52,151,0.6)]' : isPast ? 'w-full bg-plum-900/40' : 'w-0'
                                             }`}
                                         />
                                     </span>
@@ -106,17 +106,17 @@ function FeatureCopy({ feature, index, active = true, onClick }) {
                       }
                     : undefined
             }
-            className={`group relative rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none sm:p-7 ${
+            className={`group relative rounded-2xl border p-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plum-900 focus-visible:ring-offset-2 focus-visible:ring-offset-mauve-500 motion-reduce:transition-none sm:p-7 ${
                 onClick ? 'cursor-pointer' : ''
             } ${
                 active
-                    ? 'border-indigo-400/40 bg-gradient-to-br from-indigo-500/[0.12] via-white/[0.04] to-transparent shadow-[0_20px_50px_-20px_rgba(79,70,229,0.45)]'
-                    : 'border-white/[0.06] bg-white/[0.015] opacity-55 hover:border-white/15 hover:bg-white/[0.03] hover:opacity-85'
+                    ? 'glass-card border-plum-900/40'
+                    : 'border-white/50 bg-white/40 hover:border-white/70 hover:bg-white/55'
             }`}
         >
             {/* Active left accent bar */}
             <span
-                className={`absolute bottom-5 left-0 top-5 w-1 rounded-r-full bg-indigo-400 shadow-[0_0_12px_rgba(129,140,248,0.9)] transition-all duration-500 ${
+                className={`absolute bottom-5 left-0 top-5 w-1 rounded-r-full bg-gradient-to-b from-magenta-600 to-iris-600 shadow-[0_0_12px_rgba(255,46,126,0.5)] transition-all duration-500 motion-reduce:transition-none ${
                     active ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-50'
                 }`}
                 aria-hidden="true"
@@ -125,35 +125,35 @@ function FeatureCopy({ feature, index, active = true, onClick }) {
             <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                     <span
-                        className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-colors duration-500 ${
+                        className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-colors duration-500 motion-reduce:transition-none ${
                             active
-                                ? 'border-indigo-400/40 bg-indigo-500/20 text-indigo-200 shadow-[0_0_20px_rgba(99,102,241,0.35)]'
-                                : 'border-white/10 bg-white/[0.04] text-slate-400 group-hover:text-slate-200'
+                                ? 'border-plum-900/30 bg-plum-900 text-white shadow-[0_0_20px_rgba(43,2,74,0.3)]'
+                                : 'border-plum-900/20 bg-white/60 text-plum-900 group-hover:bg-white/80'
                         }`}
                     >
                         <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <span
-                        className={`rounded-full border px-2.5 py-0.5 text-[11px] font-medium transition-colors duration-500 ${
+                        className={`rounded-full border px-2.5 py-0.5 text-[11px] font-medium text-plum-900 transition-colors duration-500 motion-reduce:transition-none ${
                             active
-                                ? 'border-indigo-400/30 bg-indigo-500/15 text-indigo-200'
-                                : 'border-white/10 bg-white/[0.03] text-slate-400'
+                                ? 'border-plum-900/20 bg-plum-100'
+                                : 'border-plum-900/15 bg-white/50'
                         }`}
                     >
                         {meta.tag}
                     </span>
                 </div>
                 <span
-                    className={`font-mono text-xs font-semibold tabular-nums transition-colors duration-500 ${
-                        active ? 'text-indigo-300' : 'text-slate-500'
+                    className={`font-mono text-xs font-semibold tabular-nums transition-colors duration-500 motion-reduce:transition-none ${
+                        active ? 'text-pink-800' : 'text-plum-900'
                     }`}
                 >
                     STEP {String(index + 1).padStart(2, '0')}
                 </span>
             </div>
 
-            <h4 className="mt-4 text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">{feature.title}</h4>
-            <p className="mt-2 max-w-[46ch] text-sm leading-relaxed text-slate-300 sm:text-base">{feature.benefit}</p>
+            <h4 className="mt-4 text-xl font-semibold tracking-[-0.02em] text-black sm:text-2xl">{feature.title}</h4>
+            <p className="mt-2 max-w-[46ch] text-sm leading-relaxed text-plum-900 sm:text-base">{feature.benefit}</p>
         </div>
     );
 }
@@ -163,13 +163,13 @@ function SectionIntro() {
     const inView = useInViewOnce(ref);
     return (
         <div ref={ref} className="stage max-w-[60ch]" data-active={inView ? 'true' : 'false'}>
-            <p className="stage-in text-xs font-medium uppercase tracking-[0.18em] text-indigo-300" style={{ '--d': '0s' }}>
+            <p className="stage-in text-xs font-medium uppercase tracking-[0.18em] text-plum-900" style={{ '--d': '0s' }}>
                 Inside the platform
             </p>
-            <h3 className="stage-in mt-3 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl" style={{ '--d': '0.08s' }}>
+            <h3 className="stage-in mt-3 text-3xl font-semibold tracking-[-0.03em] text-black sm:text-4xl" style={{ '--d': '0.08s' }}>
                 Deep enough to run your whole front office.
             </h3>
-            <p className="stage-in mt-3 text-base leading-relaxed text-slate-400" style={{ '--d': '0.14s' }}>
+            <p className="stage-in mt-3 text-base leading-relaxed text-plum-900" style={{ '--d': '0.14s' }}>
                 Scroll or click any step below to watch how a single lead moves from first message to a 5-star review automatically.
             </p>
         </div>
@@ -263,7 +263,7 @@ function StickyShowcase() {
                 <div className="sticky top-[calc(50vh-14.5rem)] [perspective:1600px]">
                     {/* Ambient glow behind the stage so the right side immediately draws the eye */}
                     <div
-                        className="pointer-events-none absolute -inset-6 -z-10 rounded-3xl bg-[radial-gradient(closest-side,rgba(99,102,241,0.22),transparent)] blur-2xl"
+                        className="pointer-events-none absolute -inset-6 -z-10 rounded-3xl bg-[radial-gradient(closest-side,rgba(106,52,151,0.28),transparent)] blur-2xl"
                         aria-hidden="true"
                     />
                     <StageFrame

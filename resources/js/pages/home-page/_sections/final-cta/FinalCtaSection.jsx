@@ -25,12 +25,18 @@ function useCtaAttribution() {
     }, []);
 }
 
+// Light = the mist audit card (plum-900 / mauve-700 text); dark = straight on the plum band (mist / mauve-300 text).
+const CARD_TONES = {
+    light: { title: 'text-plum-900', body: 'text-mauve-700', accent: 'text-plum-600', check: 'text-pink-800' },
+    dark: { title: 'text-mist', body: 'text-mauve-300', accent: 'text-mauve-300', check: 'text-mauve-300' },
+};
+
 function Bullets({ items, tone }) {
     return (
         <ul className="mt-6 space-y-2.5">
             {items.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-sm text-slate-300">
-                    <Check className={`mt-0.5 h-4 w-4 shrink-0 ${tone}`} aria-hidden="true" />
+                <li key={item} className={`flex items-start gap-2.5 text-sm ${tone.body}`}>
+                    <Check className={`mt-0.5 h-4 w-4 shrink-0 ${tone.check}`} aria-hidden="true" />
                     {item}
                 </li>
             ))}
@@ -38,14 +44,14 @@ function Bullets({ items, tone }) {
     );
 }
 
-function CardHeader({ id, eyebrow, title, offer, eyebrowTone }) {
+function CardHeader({ id, eyebrow, title, offer, tone }) {
     return (
         <>
-            <p className={`text-xs font-medium uppercase tracking-[0.18em] ${eyebrowTone}`}>{eyebrow}</p>
-            <h3 id={id} className="mt-3 text-2xl font-semibold leading-tight tracking-[-0.02em] text-white sm:text-[1.75rem]">
+            <p className={`text-xs font-medium uppercase tracking-[0.18em] ${tone.accent}`}>{eyebrow}</p>
+            <h3 id={id} className={`mt-3 text-2xl font-semibold leading-tight tracking-[-0.02em] sm:text-[1.75rem] ${tone.title}`}>
                 {title}
             </h3>
-            <p className="mt-2 text-base text-slate-300">{offer}</p>
+            <p className={`mt-2 text-base ${tone.body}`}>{offer}</p>
         </>
     );
 }
@@ -56,11 +62,11 @@ function AuditCard() {
             <article
                 aria-labelledby="audit-title"
                 onPointerMove={trackSpotlight}
-                className="cta-card cta-card--primary glass-panel relative flex-1 rounded-[15px] bg-[#060a18] p-6 sm:p-8"
+                className="cta-card cta-card--primary glass-panel relative flex-1 rounded-[15px] p-6 sm:p-8"
             >
-                <CardHeader id="audit-title" eyebrow={AUDIT.eyebrow} title={AUDIT.title} offer={AUDIT.offer} eyebrowTone="text-indigo-300" />
-                <Bullets items={AUDIT.bullets} tone="text-indigo-300" />
-                <div className="mt-8 border-t border-white/[0.08] pt-6">
+                <CardHeader id="audit-title" eyebrow={AUDIT.eyebrow} title={AUDIT.title} offer={AUDIT.offer} tone={CARD_TONES.light} />
+                <Bullets items={AUDIT.bullets} tone={CARD_TONES.light} />
+                <div className="mt-8 border-t border-mauve-300/70 pt-6">
                     <AuditForm />
                 </div>
             </article>
@@ -76,18 +82,19 @@ function DemoCard() {
         <article
             aria-labelledby="portal-title"
             onPointerMove={trackSpotlight}
-            className="cta-card glass-panel stage-in relative flex flex-col self-start rounded-2xl p-6 sm:p-8"
+            className="cta-card cta-card--demo glass-panel stage-in relative flex flex-col self-start rounded-2xl p-6 ring-1 ring-inset ring-mist/40 sm:p-8"
             style={{ '--d': '0.12s' }}
         >
-            <CardHeader id="portal-title" eyebrow={DEMO_PORTAL.eyebrow} title={DEMO_PORTAL.title} offer={DEMO_PORTAL.offer} eyebrowTone="text-slate-400" />
-            <Bullets items={DEMO_PORTAL.bullets} tone="text-slate-400" />
+            <span className="cta-ring pointer-events-none absolute inset-0" aria-hidden="true" />
+            <CardHeader id="portal-title" eyebrow={DEMO_PORTAL.eyebrow} title={DEMO_PORTAL.title} offer={DEMO_PORTAL.offer} tone={CARD_TONES.dark} />
+            <Bullets items={DEMO_PORTAL.bullets} tone={CARD_TONES.dark} />
 
             <div className="mt-8 flex flex-col gap-3">
                 <a
                     href={external ? DEMO_PORTAL.url : '#demos'}
                     {...(external ? { target: '_blank', rel: 'noopener' } : {})}
                     onClick={() => track('demo_portal_click', { destination: external ? 'portal' : 'demos-section' })}
-                    className="group inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white ring-1 ring-inset ring-white/20 transition-colors hover:bg-white/[0.05] hover:ring-white/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300"
+                    className="aurora-btn group inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold text-white focus-visible:outline-none"
                 >
                     {DEMO_PORTAL.label}
                     {external && <span className="sr-only">(opens in a new tab)</span>}
@@ -105,8 +112,8 @@ function DemoCard() {
                 )}
             </div>
 
-            <div className="mt-8 border-t border-white/[0.08] pt-6">
-                <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-400">Or jump straight in</p>
+            <div className="mt-8 border-t border-mist/15 pt-6">
+                <p className="text-xs font-medium uppercase tracking-[0.18em] text-mauve-300">Or jump straight in</p>
                 <ul className="mt-3 grid grid-cols-3 gap-2 sm:gap-3">
                     {DEMOS.map((demo) => (
                         <li key={demo.key}>
@@ -115,19 +122,18 @@ function DemoCard() {
                                 target="_blank"
                                 rel="noopener"
                                 onClick={() => track('demo_tile_click', { demo: demo.key })}
-                                className="cta-tile glass-chip group flex h-full flex-col justify-between gap-3 rounded-xl p-3 transition-colors hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 sm:p-4"
-                                style={{ '--tint': demo.tint.css }}
+                                className="cta-tile glass-chip group relative flex h-full flex-col justify-between gap-3 rounded-xl p-3 transition-colors hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist motion-reduce:transition-none sm:p-4"
                             >
                                 <span className="flex items-center justify-between">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-[rgb(var(--tint))]" aria-hidden="true" />
+                                    <span className="h-1.5 w-1.5 rounded-full bg-magenta-400" aria-hidden="true" />
                                     <ArrowUpRight
-                                        className="h-3.5 w-3.5 text-slate-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white motion-reduce:transition-none"
+                                        className="h-3.5 w-3.5 text-mauve-300 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-mist motion-reduce:transition-none"
                                         aria-hidden="true"
                                     />
                                 </span>
                                 <span>
-                                    <span className="block text-sm font-semibold text-white">{TILE_LABELS[demo.key] ?? demo.tab}</span>
-                                    <span className="mt-0.5 block truncate text-xs text-slate-400">{demo.product}</span>
+                                    <span className="block text-sm font-semibold text-mist">{TILE_LABELS[demo.key] ?? demo.tab}</span>
+                                    <span className="mt-0.5 block truncate text-xs text-mauve-300">{demo.product}</span>
                                 </span>
                                 <span className="sr-only">live demo (opens in a new tab)</span>
                             </a>
@@ -147,24 +153,24 @@ export default function FinalCtaSection() {
     useCtaAttribution();
 
     return (
-        <section id="get-started" aria-labelledby="get-started-heading" className="relative isolate scroll-mt-16 bg-[#060a18] pb-28 pt-32 [overflow-x:clip] lg:pb-36 lg:pt-40">
+        <section id="get-started" aria-labelledby="get-started-heading" className="relative isolate scroll-mt-16 bg-plum-900 pb-28 pt-32 [overflow-x:clip] lg:pb-36 lg:pt-40">
             {/* Alias so the shared nav's "Contact" link and older /#contact links land here */}
             <span id="contact" className="absolute top-0 scroll-mt-16" aria-hidden="true" />
             <div className="cta-grid pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
             <div className="cta-glow pointer-events-none absolute left-1/2 top-[55%] -z-10 h-[52rem] w-[72rem] max-w-[160vw]" aria-hidden="true" />
 
             <div ref={headerRef} className="stage mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8" data-active={headerRevealed ? 'true' : 'false'}>
-                <p className="stage-in text-xs font-medium uppercase tracking-[0.18em] text-indigo-300" style={{ '--d': '0s' }}>
+                <p className="stage-in text-xs font-medium uppercase tracking-[0.18em] text-magenta-400" style={{ '--d': '0s' }}>
                     Ready when you are
                 </p>
                 <h2
                     id="get-started-heading"
-                    className="stage-in mx-auto mt-4 max-w-[20ch] text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl lg:text-6xl"
+                    className="stage-in mx-auto mt-4 max-w-[20ch] text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-mist sm:text-5xl lg:text-6xl"
                     style={{ '--d': '0.08s' }}
                 >
-                    Let’s build your technology backbone.
+                    Let’s build your <span className="aurora-text">technology backbone.</span>
                 </h2>
-                <p className="stage-in mx-auto mt-6 max-w-[56ch] text-base leading-relaxed text-slate-400 sm:text-lg" style={{ '--d': '0.16s' }}>
+                <p className="stage-in mx-auto mt-6 max-w-[56ch] text-base leading-relaxed text-mauve-300 sm:text-lg" style={{ '--d': '0.16s' }}>
                     Tell us where you are, and we’ll point you to the right starting point. Or skip the call and try it yourself.
                 </p>
             </div>

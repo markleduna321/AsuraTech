@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ShieldCheck, Calendar } from 'lucide-react';
 
 /**
@@ -14,15 +14,17 @@ export default function VerificationBadge({ issuedDate }) {
 		month: 'long',
 		year: 'numeric',
 	});
+	const reduceMotion = useReducedMotion();
 
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 16, scale: 0.95 }}
+			initial={reduceMotion ? false : { opacity: 0, y: 16, scale: 0.95 }}
 			animate={{ opacity: 1, y: 0, scale: 1 }}
 			transition={{ delay: 0.6, duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
 			className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl
-				border border-emerald-500/20 bg-emerald-500/[0.06] backdrop-blur-xl
-				shadow-[0_0_30px_rgba(16,185,129,0.12)]"
+				border border-plum-800/60 bg-plum-950/50 backdrop-blur-xl
+				ring-1 ring-inset ring-emerald-500/10
+				shadow-[0_0_30px_rgba(16,185,129,0.08)]"
 		>
 			<div className="p-2 rounded-xl bg-emerald-500/15 border border-emerald-500/20">
 				<ShieldCheck className="w-5 h-5 text-emerald-400" />
@@ -32,8 +34,8 @@ export default function VerificationBadge({ issuedDate }) {
 					Verified Certificate
 				</p>
 				<div className="flex items-center gap-1.5 mt-0.5">
-					<Calendar className="w-3 h-3 text-slate-500" />
-					<p className="text-xs text-slate-500">
+					<Calendar aria-hidden="true" className="w-3 h-3 text-mauve-300" />
+					<p className="text-xs text-mauve-300">
 						Issued on {formatted}
 					</p>
 				</div>

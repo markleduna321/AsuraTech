@@ -45,7 +45,7 @@ function useInView(ref, rootMargin = '0px', enabled = true) {
     return inView;
 }
 
-const CHIP_CLASS = 'rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 font-mono text-[11px] text-slate-300';
+const CHIP_CLASS = 'rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 font-mono text-[11px] text-mauve-300';
 
 function Chips({ chips, className = '', inline = false }) {
     // Inside a <button> only phrasing content is valid, so tabs render the chips as spans.
@@ -124,22 +124,22 @@ function OfferTabs({ active, onSelect, onPreview }) {
                         onClick={() => onSelect(i)}
                         onPointerEnter={(e) => previewSoon(e, i)}
                         data-active={selected ? 'true' : 'false'}
-                        className="eng-tab group relative block w-full rounded-xl py-4 pl-6 pr-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-300"
+                        className="eng-tab group relative block w-full rounded-xl py-4 pl-6 pr-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-mist"
                     >
                         <span className="eng-tab-rail absolute bottom-4 left-0 top-4 w-px bg-white/10" aria-hidden="true">
-                            <span className="eng-tab-bar absolute inset-0 origin-top bg-indigo-300 shadow-[0_0_12px_rgba(165,180,252,0.6)]" />
+                            <span className="eng-tab-bar absolute inset-0 origin-top bg-gradient-to-b from-magenta-500 to-iris-400 shadow-[0_0_12px_rgba(255,46,126,0.7)]" />
                         </span>
                         <span className="flex items-center gap-3">
-                            <Icon className="eng-tab-icon h-4 w-4 shrink-0 text-slate-400" aria-hidden="true" />
-                            <span id={`eng-tab-title-${offer.key}`} className="eng-tab-title text-lg font-semibold tracking-[-0.01em] text-white">
+                            <Icon className="eng-tab-icon h-4 w-4 shrink-0 text-mauve-500" aria-hidden="true" />
+                            <span id={`eng-tab-title-${offer.key}`} className="eng-tab-title text-lg font-semibold tracking-[-0.01em] text-mist">
                                 {offer.title}
                             </span>
-                            <span className="ml-auto font-mono text-[11px] text-slate-400" aria-hidden="true">
+                            <span className="ml-auto font-mono text-[11px] text-mauve-500" aria-hidden="true">
                                 0{i + 1}
                             </span>
                         </span>
                         <span className="eng-tab-body mt-1.5 block pl-7">
-                            <span id={`eng-tab-desc-${offer.key}`} className="eng-tab-desc block text-sm leading-relaxed text-slate-300">
+                            <span id={`eng-tab-desc-${offer.key}`} className="eng-tab-desc block text-sm leading-relaxed text-mauve-300">
                                 {offer.outcome}
                             </span>
                             <Chips chips={offer.chips} className="eng-tab-chips mt-3" inline />
@@ -167,18 +167,18 @@ function OfferAccordion({ open, onToggle }) {
                                 aria-expanded={expanded}
                                 aria-controls={`eng-acc-panel-${offer.key}`}
                                 onClick={() => onToggle(i)}
-                                className="flex w-full items-center gap-3 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-300"
+                                className="flex w-full items-center gap-3 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-mist"
                             >
-                                <Icon className={`h-4 w-4 shrink-0 ${expanded ? 'text-indigo-300' : 'text-slate-400'}`} aria-hidden="true" />
-                                <span className={`text-base font-semibold ${expanded ? 'text-white' : 'text-slate-300'}`}>{offer.title}</span>
+                                <Icon className={`h-4 w-4 shrink-0 ${expanded ? 'text-mist' : 'text-mauve-500'}`} aria-hidden="true" />
+                                <span className={`text-base font-semibold ${expanded ? 'text-mist' : 'text-mauve-300'}`}>{offer.title}</span>
                                 <ChevronDown
-                                    className={`ml-auto h-4 w-4 shrink-0 text-slate-400 transition-transform motion-reduce:transition-none ${expanded ? 'rotate-180' : ''}`}
+                                    className={`ml-auto h-4 w-4 shrink-0 text-mauve-500 transition-transform motion-reduce:transition-none ${expanded ? 'rotate-180' : ''}`}
                                     aria-hidden="true"
                                 />
                             </button>
                         </h3>
                         <div id={`eng-acc-panel-${offer.key}`} role="region" aria-labelledby={`eng-acc-${offer.key}`} hidden={!expanded} className="pb-5 pl-7">
-                            <p className="text-sm leading-relaxed text-slate-300">{offer.outcome}</p>
+                            <p className="text-sm leading-relaxed text-mauve-300">{offer.outcome}</p>
                             <Chips chips={offer.chips} className="mt-3" />
                         </div>
                     </div>
@@ -233,23 +233,27 @@ export default function EngineeringSection() {
     }, []);
 
     return (
-        <section id="engineering" aria-labelledby="engineering-heading" className="relative isolate bg-[#060a18] pb-32 [overflow-x:clip] lg:pb-40">
-            <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-[#060a18] via-slate-950 to-[#060a18]" aria-hidden="true" />
+        <section id="engineering" aria-labelledby="engineering-heading" className="band-dark relative isolate pb-32 [overflow-x:clip] lg:pb-40">
+            {/* Plum glow is decorative only; text stays mist/mauve on the black band */}
+            <div
+                className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(45%_40%_at_75%_42%,rgba(106,52,151,0.22),transparent_70%)]"
+                aria-hidden="true"
+            />
             <div className="eng-blueprint pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
 
             <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,9fr)_minmax(0,11fr)] lg:gap-16 lg:px-8">
                 <div ref={headerRef} className="stage" data-active={headerRevealed ? 'true' : 'false'}>
-                    <p className="stage-in text-xs font-medium uppercase tracking-[0.18em] text-indigo-300" style={{ '--d': '0s' }}>
+                    <p className="stage-in text-xs font-medium uppercase tracking-[0.18em] text-magenta-400" style={{ '--d': '0s' }}>
                         Custom engineering
                     </p>
                     <h2
                         id="engineering-heading"
-                        className="stage-in mt-4 max-w-[18ch] text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl"
+                        className="stage-in mt-4 max-w-[18ch] text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-mist sm:text-5xl"
                         style={{ '--d': '0.08s' }}
                     >
-                        When off-the-shelf software doesn’t fit, we build what does.
+                        When off-the-shelf software doesn’t fit, <span className="aurora-text">we build what does.</span>
                     </h2>
-                    <p className="stage-in mt-6 max-w-[52ch] text-base leading-relaxed text-slate-400 sm:text-lg" style={{ '--d': '0.16s' }}>
+                    <p className="stage-in mt-6 max-w-[52ch] text-base leading-relaxed text-mauve-500 sm:text-lg" style={{ '--d': '0.16s' }}>
                         Bespoke ERPs, full-stack apps, AI integrations and architecture guidance for teams with workflows no template can handle.
                     </p>
 
@@ -269,14 +273,14 @@ export default function EngineeringSection() {
                     <div className="stage-in mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6" style={{ '--d': '0.32s' }}>
                         <a
                             href={PRIMARY_CTA.href}
-                            className="group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-indigo-500 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-colors hover:bg-indigo-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060a18]"
+                            className="aurora-btn group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 py-3.5 text-sm font-semibold text-white focus-visible:outline-none"
                         >
                             {PRIMARY_CTA.label}
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
                         </a>
                         <a
                             href={SECONDARY_CTA.href}
-                            className="text-center text-sm font-medium text-slate-400 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 sm:text-left"
+                            className="text-center text-sm font-medium text-mauve-500 underline-offset-4 transition-colors hover:text-mist hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist sm:text-left"
                         >
                             {SECONDARY_CTA.label}
                         </a>
@@ -305,14 +309,14 @@ export default function EngineeringSection() {
                                         </SceneBoundary>
                                     </div>
                                 )}
-                                <div className="pointer-events-none absolute inset-x-5 top-4 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.16em] text-slate-400" aria-hidden="true">
+                                <div className="pointer-events-none absolute inset-x-5 top-4 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.16em] text-mauve-300" aria-hidden="true">
                                     <span>System architecture</span>
-                                    <span className="tabular-nums">
+                                    <span className="tabular-nums text-magenta-400">
                                         0{OFFERS.indexOf(shown) + 1} / 0{OFFERS.length}
                                     </span>
                                 </div>
                             </div>
-                            <p className="mt-4 font-mono text-xs leading-relaxed text-slate-400">{OFFERS[active].caption}</p>
+                            <p className="mt-4 font-mono text-xs leading-relaxed text-mauve-500">{OFFERS[active].caption}</p>
                         </div>
                     </div>
                 )}
@@ -324,12 +328,12 @@ export default function EngineeringSection() {
                         const Icon = TRUST_ICONS[i];
                         return (
                             <li key={item.title} className="stage-in flex gap-4" style={{ '--d': `${i * 0.08}s` }}>
-                                <span className="glass-chip flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-300">
+                                <span className="glass-chip flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-mauve-300">
                                     <Icon className="h-4 w-4" aria-hidden="true" />
                                 </span>
                                 <span>
-                                    <span className="block text-sm font-semibold text-white">{item.title}</span>
-                                    <span className="mt-1 block text-sm leading-relaxed text-slate-400">{item.detail}</span>
+                                    <span className="block text-sm font-semibold text-mist">{item.title}</span>
+                                    <span className="mt-1 block text-sm leading-relaxed text-mauve-500">{item.detail}</span>
                                 </span>
                             </li>
                         );

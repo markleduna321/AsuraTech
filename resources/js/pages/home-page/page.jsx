@@ -17,34 +17,37 @@ export default function Home(props) {
 		<>
 			<Head title="asuraTECH Solutions — Web Development & Business Automation" />
 
-			{/* Full-bleed premium hero */}
-			<Hero />
+			{/* Home palette "Plum & Mist": scopes the "plum" tokens in app.css to the home page only */}
+			<div data-theme="plum">
+				{/* Full-bleed premium hero */}
+				<Hero />
 
-			{/* Choose Your Path — bento grid right below the fold */}
-			<ChoosePath />
+				{/* Choose Your Path — bento grid right below the fold */}
+				<ChoosePath />
 
-			{/* All-in-one automation deep dive: stack collapse, feature showcase, value strip */}
-			<PlatformSection />
+				{/* All-in-one automation deep dive: stack collapse, feature showcase, value strip */}
+				<PlatformSection />
 
-			{/* Live demo showcase: tabbed product launcher with a device stage */}
-			{/* <DemoShowcase /> */}
+				{/* Live demo showcase: tabbed product launcher with a device stage */}
+				{/* <DemoShowcase /> */}
 
-			{/* Ecosystem spotlight: Diskobre.com + Caleho.cloud (CSS-only, no WebGL) */}
-			{/* <EcosystemSection /> */}
+				{/* Ecosystem spotlight: Diskobre.com + Caleho.cloud (CSS-only, no WebGL) */}
+				{/* <EcosystemSection /> */}
 
-			{/* Custom engineering: explorable 3D system architecture (ERP, apps, AI, consultancy) */}
-			<EngineeringSection />
+				{/* Custom engineering: explorable 3D system architecture (ERP, apps, AI, consultancy) */}
+				<EngineeringSection />
 
-			{/* How everything connects: four-step pipeline, agencies vs one partner, closing CTAs */}
-			<ConnectSection />
+				{/* How everything connects: four-step pipeline, agencies vs one partner, closing CTAs */}
+				<ConnectSection />
 
-			{/* Final CTA: free Systems Audit (lead capture) + instant Demo Portal */}
-			<FinalCtaSection />
+				{/* Final CTA: free Systems Audit (lead capture) + instant Demo Portal */}
+				<FinalCtaSection />
 
-			<SiteFooter />
+				<SiteFooter />
 
-			{/* Book Free Audit pill: visible after Section 2, hidden near the final CTA */}
-			<StickyCta />
+				{/* Book Free Audit pill: visible after Section 2, hidden near the final CTA */}
+				<StickyCta />
+			</div>
 		</>
 	);
 }

@@ -207,9 +207,9 @@ export default function ChatWidget() {
 
     return (
         <>
-            {/* â”€â”€ Chat Panel â”€â”€ */}
+            {/* Chat Panel */}
             <div
-                className={`fixed bottom-[88px] right-5 z-50 w-[340px] sm:w-[370px] origin-bottom-right transition-all duration-300 ease-out ${
+                className={`fixed bottom-[88px] right-5 z-50 w-[340px] sm:w-[370px] origin-bottom-right transition-all duration-300 ease-out motion-reduce:transition-none ${
                     open
                         ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
                         : 'opacity-0 scale-95 translate-y-3 pointer-events-none'
@@ -219,24 +219,28 @@ export default function ChatWidget() {
                 aria-modal="false"
             >
                 <div
-                    className="flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-gray-200/80"
+                    className="flex flex-col rounded-2xl overflow-hidden bg-black shadow-2xl shadow-black/60 border border-plum-800"
                     style={{ height: '480px' }}
                 >
-                    {/* Header */}
-                    <div className="bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-3.5 flex items-center gap-3 flex-shrink-0">
-                        <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/20 flex-shrink-0">
+                    {/* Header: plum-950 surface, thin aurora hairline (decorative) */}
+                    <div className="relative bg-plum-950 px-4 py-3.5 flex items-center gap-3 flex-shrink-0">
+                        <span
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-magenta-500/70 via-iris-400/60 to-transparent"
+                        />
+                        <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-r from-magenta-600 to-iris-600 flex-shrink-0">
                             <Activity className="w-5 h-5 text-white" />
                         </span>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-bold text-white leading-none">AsuraTECH Support</p>
-                            <p className="flex items-center gap-1.5 text-xs text-indigo-200 mt-0.5">
+                            <p className="text-sm font-bold text-mist leading-none">AsuraTECH Support</p>
+                            <p className="flex items-center gap-1.5 text-xs text-mauve-300 mt-0.5">
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
                                 Online · AI Automation Assistant
                             </p>
                         </div>
                         <button
                             onClick={() => setOpen(false)}
-                            className="w-7 h-7 rounded-lg flex items-center justify-center text-white/70 hover:text-white hover:bg-white/20 transition-colors flex-shrink-0"
+                            className="w-7 h-7 rounded-lg flex items-center justify-center text-mauve-300 hover:text-mist hover:bg-white/10 transition-colors motion-reduce:transition-none flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist"
                             aria-label="Close chat"
                         >
                             <ChevronDown className="w-4 h-4" />
@@ -244,22 +248,22 @@ export default function ChatWidget() {
                     </div>
 
                     {/* Messages */}
-                    <div className="flex-1 overflow-y-auto bg-gray-50 px-4 py-4 space-y-3 min-h-0">
+                    <div className="flex-1 overflow-y-auto bg-black px-4 py-4 space-y-3 min-h-0">
                         {messages.map((msg) => (
                             <div
                                 key={msg.id}
                                 className={`flex items-end gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                             >
                                 {msg.role === 'assistant' && (
-                                    <span className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center flex-shrink-0 mb-0.5">
+                                    <span className="w-6 h-6 rounded-full bg-gradient-to-r from-magenta-600 to-iris-600 flex items-center justify-center flex-shrink-0 mb-0.5">
                                         <Activity className="w-3 h-3 text-white" />
                                     </span>
                                 )}
                                 <div
                                     className={`max-w-[78%] px-3.5 py-2.5 text-sm leading-relaxed ${
                                         msg.role === 'user'
-                                            ? 'bg-gradient-to-br from-indigo-600 to-violet-600 text-white rounded-2xl rounded-br-sm'
-                                            : 'bg-white text-gray-800 shadow-sm border border-gray-100 rounded-2xl rounded-bl-sm'
+                                            ? 'bg-gradient-to-r from-magenta-600 to-iris-600 text-white rounded-2xl rounded-br-sm'
+                                            : 'bg-plum-900/60 text-mist border border-plum-800/60 rounded-2xl rounded-bl-sm'
                                     }`}
                                 >
                                     {msg.role === 'assistant' ? renderContent(msg.content) : msg.content}
@@ -270,14 +274,14 @@ export default function ChatWidget() {
                         {/* Typing indicator while waiting for reply or between staged bubbles */}
                         {(isLoading || staging) && (
                             <div className="flex items-end gap-2 justify-start">
-                                <span className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center flex-shrink-0 mb-0.5">
+                                <span className="w-6 h-6 rounded-full bg-gradient-to-r from-magenta-600 to-iris-600 flex items-center justify-center flex-shrink-0 mb-0.5">
                                     <Activity className="w-3 h-3 text-white" />
                                 </span>
-                                <div className="bg-white border border-gray-100 shadow-sm rounded-2xl rounded-bl-sm px-4 py-3">
+                                <div className="bg-plum-900/60 border border-plum-800/60 rounded-2xl rounded-bl-sm px-4 py-3">
                                     <span className="flex gap-1 items-center">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:0ms]" />
-                                        <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:150ms]" />
-                                        <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:300ms]" />
+                                        <span className="w-1.5 h-1.5 rounded-full bg-mauve-300 animate-bounce motion-reduce:animate-none [animation-delay:0ms]" />
+                                        <span className="w-1.5 h-1.5 rounded-full bg-mauve-300 animate-bounce motion-reduce:animate-none [animation-delay:150ms]" />
+                                        <span className="w-1.5 h-1.5 rounded-full bg-mauve-300 animate-bounce motion-reduce:animate-none [animation-delay:300ms]" />
                                     </span>
                                 </div>
                             </div>
@@ -290,7 +294,7 @@ export default function ChatWidget() {
                                     <button
                                         key={qr}
                                         onClick={() => submitMessage(qr)}
-                                        className="text-xs text-indigo-600 bg-white hover:bg-indigo-50 border border-indigo-200 rounded-full px-3 py-1.5 transition-colors shadow-sm"
+                                        className="aurora-border--hover relative text-xs text-mauve-300 bg-black hover:text-mist border border-plum-800 rounded-full px-3 py-1.5 transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:text-mist focus-visible:ring-2 focus-visible:ring-mist focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                                     >
                                         {qr}
                                     </button>
@@ -303,8 +307,8 @@ export default function ChatWidget() {
 
                     {/* Lead capture form */}
                     {showLeadForm && !leadSubmitted && (
-                        <div className="bg-white border-t border-gray-100 px-4 py-4 flex-shrink-0">
-                            <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wide mb-3">
+                        <div className="bg-plum-950 border-t border-plum-800 px-4 py-4 flex-shrink-0">
+                            <p className="text-xs font-semibold text-magenta-400 uppercase tracking-wide mb-3">
                                 {SERVICE_LABELS[leadService] || 'Your Request'} — Contact Details
                             </p>
                             <div className="space-y-2">
@@ -314,9 +318,9 @@ export default function ChatWidget() {
                                         placeholder="Full name *"
                                         value={leadForm.name}
                                         onChange={(e) => setLeadForm((f) => ({ ...f, name: e.target.value }))}
-                                        className={`w-full text-sm bg-gray-50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow ${leadErrors.name ? 'border-red-400' : 'border-gray-200'}`}
+                                        className={`w-full text-sm bg-black text-mist placeholder:text-mauve-300 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-magenta-600/50 focus:border-magenta-600 transition-shadow motion-reduce:transition-none ${leadErrors.name ? 'border-rose-400' : 'border-plum-800'}`}
                                     />
-                                    {leadErrors.name && <p className="text-xs text-red-500 mt-1">{leadErrors.name}</p>}
+                                    {leadErrors.name && <p className="text-xs text-rose-400 mt-1">{leadErrors.name}</p>}
                                 </div>
                                 <div>
                                     <input
@@ -324,9 +328,9 @@ export default function ChatWidget() {
                                         placeholder="Email address *"
                                         value={leadForm.email}
                                         onChange={(e) => setLeadForm((f) => ({ ...f, email: e.target.value }))}
-                                        className={`w-full text-sm bg-gray-50 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow ${leadErrors.email ? 'border-red-400' : 'border-gray-200'}`}
+                                        className={`w-full text-sm bg-black text-mist placeholder:text-mauve-300 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-magenta-600/50 focus:border-magenta-600 transition-shadow motion-reduce:transition-none ${leadErrors.email ? 'border-rose-400' : 'border-plum-800'}`}
                                     />
-                                    {leadErrors.email && <p className="text-xs text-red-500 mt-1">{leadErrors.email}</p>}
+                                    {leadErrors.email && <p className="text-xs text-rose-400 mt-1">{leadErrors.email}</p>}
                                 </div>
                                 <div className="flex gap-2">
                                     <input
@@ -334,21 +338,21 @@ export default function ChatWidget() {
                                         placeholder="Phone (optional)"
                                         value={leadForm.phone}
                                         onChange={(e) => setLeadForm((f) => ({ ...f, phone: e.target.value }))}
-                                        className="flex-1 text-sm bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow"
+                                        className="flex-1 min-w-0 text-sm bg-black text-mist placeholder:text-mauve-300 border border-plum-800 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-magenta-600/50 focus:border-magenta-600 transition-shadow motion-reduce:transition-none"
                                     />
                                     <input
                                         type="text"
                                         placeholder="Company (optional)"
                                         value={leadForm.company}
                                         onChange={(e) => setLeadForm((f) => ({ ...f, company: e.target.value }))}
-                                        className="flex-1 text-sm bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow"
+                                        className="flex-1 min-w-0 text-sm bg-black text-mist placeholder:text-mauve-300 border border-plum-800 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-magenta-600/50 focus:border-magenta-600 transition-shadow motion-reduce:transition-none"
                                     />
                                 </div>
-                                {leadErrors.submit && <p className="text-xs text-red-500">{leadErrors.submit}</p>}
+                                {leadErrors.submit && <p className="text-xs text-rose-400">{leadErrors.submit}</p>}
                                 <button
                                     onClick={handleLeadSubmit}
                                     disabled={isSubmittingLead}
-                                    className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:opacity-90 text-white text-sm font-semibold py-2.5 rounded-lg transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
+                                    className="w-full bg-magenta-600 bg-gradient-to-r from-magenta-600 to-iris-600 hover:brightness-105 text-white text-sm font-semibold py-2.5 rounded-lg transition-[filter] motion-reduce:transition-none disabled:opacity-50 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist focus-visible:ring-offset-2 focus-visible:ring-offset-plum-950"
                                 >
                                     {isSubmittingLead ? (
                                         <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</>
@@ -362,7 +366,7 @@ export default function ChatWidget() {
 
                     {/* Input */}
                     {!showLeadForm && (
-                        <div className="bg-white border-t border-gray-100 px-3 py-3 flex items-center gap-2 flex-shrink-0">
+                        <div className="bg-plum-950 border-t border-plum-800 px-3 py-3 flex items-center gap-2 flex-shrink-0">
                             <input
                                 type="text"
                                 value={input}
@@ -370,12 +374,12 @@ export default function ChatWidget() {
                                 onKeyDown={(e) => e.key === 'Enter' && !isLoading && !staging && submitMessage(input)}
                                 placeholder="Type a message..."
                                 disabled={isLoading || staging}
-                                className="flex-1 min-w-0 text-sm bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 transition-shadow disabled:opacity-50"
+                                className="flex-1 min-w-0 text-sm bg-black text-mist placeholder:text-mauve-300 border border-plum-800 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-magenta-600/50 focus:border-magenta-600 transition-shadow motion-reduce:transition-none disabled:opacity-50"
                             />
                             <button
                                 onClick={() => submitMessage(input)}
                                 disabled={!input.trim() || isLoading || staging}
-                                className="w-9 h-9 flex-shrink-0 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white disabled:opacity-40 hover:opacity-90 transition-opacity"
+                                className="w-9 h-9 flex-shrink-0 rounded-xl bg-magenta-600 bg-gradient-to-r from-magenta-600 to-iris-600 flex items-center justify-center text-white disabled:opacity-40 hover:brightness-105 transition-[filter] motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist focus-visible:ring-offset-2 focus-visible:ring-offset-plum-950"
                                 aria-label="Send message"
                             >
                                 {isLoading ? (
@@ -389,14 +393,14 @@ export default function ChatWidget() {
                 </div>
             </div>
 
-            {/* â”€â”€ Floating Trigger Button â”€â”€ */}
+            {/* Floating Trigger Button */}
             <button
                 onClick={open ? () => setOpen(false) : handleOpen}
-                className="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-500/40 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-200"
+                className="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-magenta-600 bg-gradient-to-r from-magenta-600 to-iris-600 text-white shadow-lg shadow-magenta-500/40 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-200 motion-reduce:transition-none motion-reduce:hover:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 aria-label={open ? 'Close chat' : 'Open support chat'}
             >
                 {showDot && !open && (
-                    <span className="absolute inset-0 rounded-full bg-indigo-400 animate-ping opacity-40 pointer-events-none" />
+                    <span className="absolute inset-0 rounded-full bg-magenta-500 animate-ping opacity-40 pointer-events-none motion-reduce:hidden" />
                 )}
                 {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
                 {showDot && !open && (

@@ -29,12 +29,12 @@ const money = (n) => `$${n.toLocaleString('en-US')}`;
 function PriceLine({ large = false }) {
     return (
         <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <s className={`font-mono tabular-nums text-slate-400 ${large ? 'text-base' : 'text-sm'}`}>{money(STACK_TOTAL)}/mo</s>
-            <span className="text-slate-500" aria-hidden="true">→</span>
+            <s className={`aurora-text font-mono tabular-nums decoration-mauve-300 ${large ? 'text-base' : 'text-sm'}`}>{money(STACK_TOTAL)}/mo</s>
+            <span className="text-mauve-500" aria-hidden="true">→</span>
             {PLATFORM_PRICE ? (
-                <span className="font-mono text-2xl font-semibold tabular-nums text-white">{PLATFORM_PRICE}</span>
+                <span className="font-mono text-2xl font-semibold tabular-nums text-mist">{PLATFORM_PRICE}</span>
             ) : (
-                <span className={`font-semibold tracking-[-0.01em] text-white ${large ? 'text-xl sm:text-2xl' : 'text-lg'}`}>One plan. One bill.</span>
+                <span className={`font-semibold tracking-[-0.01em] text-mist ${large ? 'text-xl sm:text-2xl' : 'text-lg'}`}>One plan. One bill.</span>
             )}
         </p>
     );
@@ -52,22 +52,22 @@ function PlatformCard({ className = '', style, cardRef, solid = false, large = f
             className={`glass-panel w-full rounded-2xl ${
                 large ? 'max-w-[540px] p-7 sm:p-9' : 'max-w-[420px] p-6 sm:p-7'
             } ${
-                solid ? 'z-10 bg-[#0a0f24]/95 shadow-[0_24px_80px_-20px_rgba(79,70,229,0.55)] backdrop-blur-xl' : ''
+                solid ? 'z-10 bg-plum-950/95 shadow-[0_24px_80px_-20px_rgba(106,52,151,0.6)] backdrop-blur-xl' : ''
             } ${className}`}
             style={style}
         >
             <div className="relative">
                 <div className="flex items-center gap-3">
                     <span
-                        className={`flex items-center justify-center rounded-xl bg-indigo-500 text-white shadow-[0_0_24px_rgba(129,140,248,0.45)] ${
+                        className={`flex items-center justify-center rounded-xl bg-plum-600 text-mist shadow-[0_0_24px_rgba(106,52,151,0.6)] ${
                             large ? 'h-12 w-12' : 'h-10 w-10'
                         }`}
                     >
                         <Zap className={large ? 'h-6 w-6' : 'h-5 w-5'} aria-hidden="true" />
                     </span>
                     <div>
-                        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-400">All-in-one</p>
-                        <p className={`font-semibold tracking-[-0.01em] text-white ${large ? 'text-lg sm:text-xl' : 'text-base'}`}>
+                        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-mauve-500">All-in-one</p>
+                        <p className={`font-semibold tracking-[-0.01em] text-mist ${large ? 'text-lg sm:text-xl' : 'text-base'}`}>
                             AsuraTECH Automation Platform
                         </p>
                     </div>
@@ -76,11 +76,11 @@ function PlatformCard({ className = '', style, cardRef, solid = false, large = f
                     {PLATFORM_INCLUDES.map((item) => (
                         <li
                             key={item}
-                            className={`inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] text-slate-200 ${
+                            className={`inline-flex items-center gap-1.5 rounded-full border border-mauve-500/25 bg-white/[0.05] text-mauve-300 ${
                                 large ? 'px-3 py-1.5 text-sm' : 'px-2.5 py-1 text-xs'
                             }`}
                         >
-                            <Check className={`text-indigo-300 ${large ? 'h-3.5 w-3.5' : 'h-3 w-3'}`} aria-hidden="true" />
+                            <Check className={`text-mist ${large ? 'h-3.5 w-3.5' : 'h-3 w-3'}`} aria-hidden="true" />
                             {item}
                         </li>
                     ))}
@@ -96,8 +96,8 @@ function PlatformCard({ className = '', style, cardRef, solid = false, large = f
 function ToolChipContent({ tool }) {
     return (
         <>
-            <span className="text-sm font-medium text-slate-200">{tool.label}</span>
-            <span className="font-mono text-xs tabular-nums text-slate-500">${tool.price}/mo</span>
+            <span className="text-sm font-medium text-mauve-300">{tool.label}</span>
+            <span className="font-mono text-xs tabular-nums text-mauve-500">${tool.price}/mo</span>
         </>
     );
 }
@@ -105,11 +105,11 @@ function ToolChipContent({ tool }) {
 function Counter({ totalRef, strikeRef, wrapRef, className = '' }) {
     return (
         <div ref={wrapRef} className={`text-right ${className}`}>
-            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500">Monthly tool spend</p>
-            <p className="relative mt-1 inline-block font-mono text-3xl font-semibold tabular-nums tracking-tight text-white" aria-hidden="true">
+            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-mauve-500">Monthly tool spend</p>
+            <p className="aurora-text relative mt-1 inline-block font-mono text-3xl font-semibold tabular-nums tracking-tight" aria-hidden="true">
                 <span ref={totalRef}>$0</span>
-                <span className="text-base text-slate-500">/mo</span>
-                <span ref={strikeRef} className="absolute left-0 right-0 top-1/2 h-px origin-left scale-x-0 bg-slate-300" />
+                <span className="text-base">/mo</span>
+                <span ref={strikeRef} className="absolute left-0 right-0 top-1/2 h-px origin-left scale-x-0 bg-mauve-300" />
             </p>
             <p className="sr-only">Typical total: {money(STACK_TOTAL)} per month across {STACK_TOOLS.length} tools.</p>
         </div>
@@ -289,14 +289,14 @@ function DesktopCollapse() {
                             className="pointer-events-none absolute inset-0 opacity-[0.06] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]"
                             style={{
                                 backgroundImage:
-                                    'linear-gradient(rgba(165,180,252,0.9) 1px, transparent 1px), linear-gradient(90deg, rgba(165,180,252,0.9) 1px, transparent 1px)',
+                                    'linear-gradient(rgba(201,193,207,0.9) 1px, transparent 1px), linear-gradient(90deg, rgba(201,193,207,0.9) 1px, transparent 1px)',
                                 backgroundSize: '48px 48px',
                             }}
                             aria-hidden="true"
                         />
                         <div
                             ref={glowRef}
-                            className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.32)_0%,rgba(79,70,229,0.1)_40%,transparent_70%)] blur-2xl"
+                            className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,rgba(255,46,126,0.4)_0%,rgba(124,58,237,0.18)_40%,transparent_70%)] blur-2xl"
                             style={{ opacity: 0.3, transform: 'translate(-50%, -50%) scale(0.75)' }}
                             aria-hidden="true"
                         />
@@ -310,12 +310,12 @@ function DesktopCollapse() {
                         )}
 
                         <div className="absolute left-0 top-0 grid">
-                            <p ref={cap1Ref} className="[grid-area:1/1] text-sm text-slate-400">
-                                <span className="font-mono tabular-nums text-slate-200">{STACK_TOOLS.length}</span> tools ·{' '}
-                                <span className="font-mono tabular-nums text-slate-200">{STACK_TOOLS.length}</span> logins ·{' '}
-                                <span className="font-mono tabular-nums text-slate-200">{STACK_TOOLS.length}</span> bills
+                            <p ref={cap1Ref} className="[grid-area:1/1] text-sm text-mauve-500">
+                                <span className="font-mono tabular-nums text-mist">{STACK_TOOLS.length}</span> tools ·{' '}
+                                <span className="font-mono tabular-nums text-mist">{STACK_TOOLS.length}</span> logins ·{' '}
+                                <span className="font-mono tabular-nums text-mist">{STACK_TOOLS.length}</span> bills
                             </p>
-                            <p ref={cap2Ref} className="[grid-area:1/1] text-sm text-slate-200" style={{ opacity: 0 }}>
+                            <p ref={cap2Ref} className="[grid-area:1/1] text-sm text-mauve-300" style={{ opacity: 0 }}>
                                 One platform, connected end to end.
                             </p>
                         </div>
@@ -440,7 +440,7 @@ function MobileCollapse() {
             <Counter wrapRef={counterRef} totalRef={totalRef} strikeRef={strikeRef} />
             <div ref={stageRef} className="relative isolate mt-6 flex min-h-[340px] items-center">
                 <div
-                    className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-600/20 blur-3xl"
+                    className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-plum-600/30 blur-3xl"
                     aria-hidden="true"
                 />
                 <ul className="flex w-full flex-wrap justify-center gap-2.5" aria-label="A typical stack of separate subscriptions">
@@ -471,10 +471,10 @@ function StaticCollapse() {
             <div className="glass-panel rounded-2xl p-6" onPointerMove={trackSpotlight}>
                 <div className="relative">
                     <div className="flex items-baseline justify-between gap-4">
-                        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500">Before: {STACK_TOOLS.length} subscriptions</p>
-                        <p className="font-mono text-2xl font-semibold tabular-nums text-white">
+                        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-mauve-500">Before: {STACK_TOOLS.length} subscriptions</p>
+                        <p className="aurora-text font-mono text-2xl font-semibold tabular-nums">
                             {money(STACK_TOTAL)}
-                            <span className="text-sm text-slate-500">/mo</span>
+                            <span className="text-sm">/mo</span>
                         </p>
                     </div>
                     <ul className="mt-5 flex flex-wrap gap-2" aria-label="A typical stack of separate subscriptions">
@@ -486,7 +486,7 @@ function StaticCollapse() {
                     </ul>
                 </div>
             </div>
-            <div className="flex justify-center text-indigo-300" aria-hidden="true">
+            <div className="flex justify-center text-mauve-500" aria-hidden="true">
                 <ArrowDown className="h-6 w-6 lg:hidden" />
                 <ArrowRight className="hidden h-6 w-6 lg:block" />
             </div>

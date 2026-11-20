@@ -12,22 +12,21 @@ function DemoCard({ demo }) {
         <li className="flex">
             <article
                 aria-labelledby={`portal-${demo.key}`}
-                className="glass-panel relative flex w-full flex-col rounded-2xl p-6 sm:p-7"
-                style={{ '--tint': demo.tint.css }}
+                className="aurora-border--hover relative flex w-full flex-col rounded-2xl border border-plum-800 bg-plum-950/60 p-6 sm:p-7"
             >
-                <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-slate-400">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[rgb(var(--tint))]" aria-hidden="true" />
+                <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-mauve-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-magenta-400" aria-hidden="true" />
                     {demo.eyebrow}
                 </p>
-                <h2 id={`portal-${demo.key}`} className="mt-3 text-xl font-semibold leading-snug tracking-[-0.02em] text-white">
+                <h2 id={`portal-${demo.key}`} className="mt-3 text-xl font-semibold leading-snug tracking-[-0.02em] text-mist">
                     {demo.outcome}
                 </h2>
-                <p className="mt-1 text-sm text-slate-400">{demo.product}</p>
+                <p className="mt-1 text-sm text-mauve-300">{demo.product}</p>
 
                 <ul className="mt-5 flex-1 space-y-2.5">
                     {demo.bullets.map((bullet) => (
-                        <li key={bullet} className="flex items-start gap-2.5 text-sm text-slate-300">
-                            <Check className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" aria-hidden="true" />
+                        <li key={bullet} className="flex items-start gap-2.5 text-sm text-mauve-300">
+                            <Check className="mt-0.5 h-4 w-4 shrink-0 text-magenta-400" aria-hidden="true" />
                             {bullet}
                         </li>
                     ))}
@@ -39,7 +38,7 @@ function DemoCard({ demo }) {
                         target="_blank"
                         rel="noopener"
                         onClick={() => track('demo_tile_click', { demo: demo.key, from: 'portal' })}
-                        className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060a18] motion-reduce:transition-none"
+                        className="aurora-btn group inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white focus-visible:outline-none"
                     >
                         {demo.launchLabel}
                         <span className="sr-only">(opens in a new tab)</span>
@@ -48,7 +47,7 @@ function DemoCard({ demo }) {
                             aria-hidden="true"
                         />
                     </a>
-                    <p className="text-center font-mono text-xs text-slate-400">{demo.domain}</p>
+                    <p className="text-center font-mono text-xs text-mauve-500">{demo.domain}</p>
                     {demo.credentials && (
                         <div className="flex justify-center">
                             <CredentialsChip credentials={demo.credentials} />
@@ -78,12 +77,12 @@ export default function DemoPortal() {
 
                 <div className="glass-chip mt-10 flex flex-col items-start justify-between gap-4 rounded-2xl p-6 sm:flex-row sm:items-center">
                     <div>
-                        <p className="text-base font-semibold text-white">Not sure which one fits?</p>
-                        <p className="mt-1 text-sm text-slate-400">Book a free 15-minute Systems Audit and we’ll point you to the right starting point.</p>
+                        <p className="text-base font-semibold text-mist">Not sure which one fits?</p>
+                        <p className="mt-1 text-sm text-mauve-300">Book a free 15-minute Systems Audit and we’ll point you to the right starting point.</p>
                     </div>
                     <SectionLink
                         href="/#get-started"
-                        className="group inline-flex shrink-0 items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-white/20 transition-colors hover:bg-white/[0.05] hover:ring-white/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 motion-reduce:transition-none"
+                        className="aurora-btn group inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white focus-visible:outline-none"
                     >
                         Book Your Free Audit
                         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />

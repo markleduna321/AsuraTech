@@ -39,50 +39,56 @@ const PHOTO_COLS = [
 export default function GymAsuraHero() {
     return (
         <section
-            className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-emerald-950 to-teal-950 flex flex-col lg:flex-row h-auto lg:h-[calc(100vh-4rem)]"
+            className="band-dark relative overflow-hidden flex flex-col h-auto lg:h-[calc(100vh_-_4rem_+_72px)]"
             aria-label="GymAsura hero"
         >
-            {/* ── Decorative background ── */}
+            {/* Spacer: hero background runs under the transparent 72px header; content stays put.
+                Section height grows by 72px so the inner row below keeps its previous calc(100vh-4rem) height. */}
+            <div aria-hidden="true" className="h-[72px] shrink-0" />
+
+            {/* ── Decorative background: soft plum / magenta glow on black ── */}
             <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                <div className="absolute -top-24 -left-16 w-[500px] h-[500px] rounded-full bg-emerald-600/10 blur-3xl" />
-                <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-teal-600/10 blur-3xl" />
+                <div className="absolute -top-24 -left-16 w-[500px] h-[500px] rounded-full bg-plum-900/50 blur-3xl" />
+                <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-magenta-500/10 blur-3xl" />
                 <div
                     className="absolute inset-0 opacity-[0.05]"
                     style={{
-                        backgroundImage: 'radial-gradient(circle, #6ee7b7 1px, transparent 1px)',
+                        backgroundImage: 'radial-gradient(circle, #93879C 1px, transparent 1px)',
                         backgroundSize: '32px 32px',
                     }}
                 />
             </div>
 
+            {/* Content row (was the section's own flex-col/lg:flex-row) */}
+            <div className="relative flex flex-1 min-h-0 flex-col lg:flex-row">
             {/* ── LEFT: Content panel ── */}
             <div className="relative z-10 flex flex-col justify-center px-8 py-14 lg:px-14 lg:py-0 lg:w-[45%] xl:w-[40%] flex-shrink-0">
                 {/* Logo */}
                 <div className="flex flex-col gap-1.5 mb-8">
                     <div className="flex items-center gap-3">
-                        <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-600 shadow-lg shadow-emerald-500/40">
+                        <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-[image:var(--aurora-deep)] shadow-lg shadow-magenta-500/30">
                             <Activity className="w-5 h-5 text-white" />
                         </span>
-                        <span className="text-2xl font-extrabold tracking-tight text-white">GymAsura</span>
+                        <span className="text-2xl font-semibold tracking-tight text-mist">GymAsura</span>
                     </div>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-emerald-300/60 ml-1">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-mauve-500 ml-1">
                         Powered by AsuraTECH Solutions
                     </p>
                 </div>
 
                 {/* Badge */}
-                <span className="inline-flex items-center gap-2 self-start text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-3.5 py-1.5 rounded-full mb-7">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="inline-flex items-center gap-2 self-start text-xs font-semibold text-magenta-400 bg-plum-900/40 border border-plum-800 px-3.5 py-1.5 rounded-full mb-7">
+                    <span className="w-1.5 h-1.5 rounded-full bg-magenta-400 motion-safe:animate-pulse" />
                     Now Available — Try the Live Demo
                 </span>
 
                 {/* Headline */}
-                <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.08] text-white mb-4">
+                <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight leading-[1.08] text-mist mb-4">
                     Manage Members.
                     <br />
-                    <span className="text-yellow-400">Grow Your Gym.</span>
+                    <span className="aurora-text">Grow Your Gym.</span>
                 </h1>
-                <p className="text-base text-slate-400 max-w-md leading-relaxed mb-8">
+                <p className="text-base text-mauve-300 max-w-md leading-relaxed mb-8">
                     The all-in-one gym management platform for modern fitness businesses.
                     Members, payments, schedules &amp; analytics — all in one place.
                 </p>
@@ -92,9 +98,9 @@ export default function GymAsuraHero() {
                     {FEATURE_PILLS.map(({ icon: Icon, label }) => (
                         <span
                             key={label}
-                            className="flex items-center gap-2 text-xs text-slate-400 bg-slate-800/60 border border-slate-700/60 rounded-full px-3.5 py-1.5"
+                            className="flex items-center gap-2 text-xs text-mauve-300 bg-plum-900/60 border border-plum-800 rounded-full px-3.5 py-1.5"
                         >
-                            <Icon className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                            <Icon className="w-3.5 h-3.5 text-magenta-400 flex-shrink-0" />
                             {label}
                         </span>
                     ))}
@@ -106,11 +112,11 @@ export default function GymAsuraHero() {
                         href="https://demogym.asuratechsolutions.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group relative overflow-hidden inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-7 py-3.5 rounded-xl shadow-lg shadow-emerald-600/30 hover:scale-[1.02] transition-all duration-200"
+                        className="aurora-btn group relative overflow-hidden inline-flex items-center justify-center gap-2 text-white text-sm font-semibold px-7 py-3.5 rounded-full focus-visible:outline-none"
                     >
                         <span
                             aria-hidden="true"
-                            className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 skew-x-12 pointer-events-none"
+                            className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 skew-x-12 pointer-events-none motion-reduce:hidden"
                         />
                         Open Demo
                         <ExternalLink className="w-4 h-4" />
@@ -118,7 +124,7 @@ export default function GymAsuraHero() {
                     <a
                         href="#contact"
                         onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent('open-chat')); }}
-                        className="inline-flex items-center justify-center gap-2 border border-slate-700 hover:border-emerald-500 text-slate-300 hover:text-white text-sm font-medium px-7 py-3.5 rounded-xl transition-colors"
+                        className="inline-flex items-center justify-center gap-2 border border-mist/40 hover:border-mist hover:bg-white/10 text-mist text-sm font-medium px-7 py-3.5 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist focus-visible:ring-offset-2 focus-visible:ring-offset-black motion-reduce:transition-none"
                     >
                         Request a Demo
                         <ArrowRight className="w-4 h-4" />
@@ -130,7 +136,7 @@ export default function GymAsuraHero() {
                     {TRUST_BADGES.map((badge) => (
                         <span
                             key={badge}
-                            className="text-xs text-slate-500 border border-slate-800 rounded-full px-2.5 py-1"
+                            className="text-xs text-mauve-500 border border-plum-800 rounded-full px-2.5 py-1"
                         >
                             {badge}
                         </span>
@@ -144,12 +150,12 @@ export default function GymAsuraHero() {
                 {/* Left-edge gradient — blends mosaic seamlessly into the dark content panel */}
                 <div
                     className="absolute inset-y-0 left-0 w-20 z-10 pointer-events-none"
-                    style={{ background: 'linear-gradient(to right, rgb(2 11 8), transparent)' }}
+                    style={{ background: 'linear-gradient(to right, rgb(0 0 0), transparent)' }}
                     aria-hidden="true"
                 />
                 {/* Top & bottom fades */}
-                <div className="absolute inset-x-0 top-0 h-10 z-10 pointer-events-none bg-gradient-to-b from-slate-950 to-transparent" aria-hidden="true" />
-                <div className="absolute inset-x-0 bottom-0 h-10 z-10 pointer-events-none bg-gradient-to-t from-slate-950/60 to-transparent" aria-hidden="true" />
+                <div className="absolute inset-x-0 top-0 h-10 z-10 pointer-events-none bg-gradient-to-b from-black to-transparent" aria-hidden="true" />
+                <div className="absolute inset-x-0 bottom-0 h-10 z-10 pointer-events-none bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true" />
 
                 {/* Three-column flex mosaic — fills full height on desktop */}
                 <div className="absolute inset-0 flex gap-2.5 p-3 lg:p-4 lg:pl-8">
@@ -163,16 +169,17 @@ export default function GymAsuraHero() {
                                     <img
                                         src={src}
                                         alt={alt}
-                                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                                         loading="lazy"
                                     />
-                                    {/* Emerald tint overlay */}
-                                    <div className="absolute inset-0 bg-emerald-950/30 group-hover:bg-emerald-950/10 transition-colors duration-300" />
+                                    {/* Plum tint overlay */}
+                                    <div className="absolute inset-0 bg-plum-950/40 group-hover:bg-plum-950/10 transition-colors duration-300 motion-reduce:transition-none" />
                                 </div>
                             ))}
                         </div>
                     ))}
                 </div>
+            </div>
             </div>
         </section>
     );

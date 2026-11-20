@@ -40,7 +40,7 @@ export default function StickyCta() {
                 href="#get-started"
                 data-cta-source="sticky"
                 tabIndex={shown ? undefined : -1}
-                className="group pointer-events-auto inline-flex items-center gap-2 rounded-full bg-[var(--blue)] py-3 pl-5 pr-4 text-sm font-semibold text-white shadow-lg shadow-black/50 ring-1 ring-inset ring-white/15 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060a18]"
+                className="aurora-btn group pointer-events-auto inline-flex items-center gap-2 rounded-full py-3 pl-5 pr-4 text-sm font-semibold text-white focus-visible:outline-none"
             >
                 Book Free Audit
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />

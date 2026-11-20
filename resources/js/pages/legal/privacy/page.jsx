@@ -27,16 +27,16 @@ export default function PrivacyPolicy() {
                 <DocSection title="What we collect">
                     <ul>
                         <li>
-                            <strong className="text-white">Systems Audit form:</strong> your name, work email, business type, the optional “what are you
+                            <strong className="text-mist">Systems Audit form:</strong> your name, work email, business type, the optional “what are you
                             trying to fix?” note, the time you gave consent, and which page section or campaign link (UTM parameters) brought you to the
                             form.
                         </li>
                         <li>
-                            <strong className="text-white">Chat assistant:</strong> the messages you type. If you share your contact details in the
+                            <strong className="text-mist">Chat assistant:</strong> the messages you type. If you share your contact details in the
                             chat, we save them together with the conversation so we can follow up.
                         </li>
                         <li>
-                            <strong className="text-white">Technical data:</strong> like most websites, our server records your IP address and
+                            <strong className="text-mist">Technical data:</strong> like most websites, our server records your IP address and
                             browser details (user agent) with your visit session, and uses your IP address to limit repeated form and chat
                             submissions. Campaign and section information is kept in your browser’s session storage and cleared when you close the tab.
                         </li>

@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
+import { ArrowRight, Check, Loader2 } from 'lucide-react';
 import { useSubmitLeadMutation } from '@/features/chat/leadApi';
 import { getAttribution, track } from '@/features/analytics/tracking';
 import { CONTACT } from '@/features/site/siteConfig';
@@ -22,20 +22,20 @@ function validate(values) {
 }
 
 const inputClass = (invalid) =>
-    `block w-full rounded-xl border-0 bg-white/[0.04] px-3.5 py-2.5 text-sm text-white placeholder:text-slate-400 ring-1 ring-inset transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400 motion-reduce:transition-none ${
-        invalid ? 'ring-rose-400/70' : 'ring-white/10 hover:ring-white/20'
+    `block w-full rounded-xl border-0 bg-white px-3.5 py-2.5 text-sm text-plum-900 placeholder:text-mauve-700 ring-1 ring-inset transition-shadow focus:outline-none focus:ring-2 focus:ring-magenta-600 motion-reduce:transition-none ${
+        invalid ? 'ring-rose-600' : 'ring-mauve-500 hover:ring-mauve-700'
     }`;
 
 function Field({ id, label, optional, error, children }) {
     return (
         <div>
-            <label htmlFor={id} className="mb-1.5 flex items-baseline justify-between text-xs font-medium text-slate-300">
+            <label htmlFor={id} className="mb-1.5 flex items-baseline justify-between text-xs font-medium text-plum-900">
                 {label}
-                {optional && <span className="font-normal text-slate-400">Optional</span>}
+                {optional && <span className="font-normal text-mauve-700">Optional</span>}
             </label>
             {children}
             {error && (
-                <p id={`${id}-error`} className="mt-1.5 text-xs text-rose-300">
+                <p id={`${id}-error`} className="mt-1.5 text-xs text-rose-700">
                     {error}
                 </p>
             )}
@@ -138,13 +138,15 @@ export default function AuditForm() {
 
     if (done) {
         return (
-            <div role="status" className="rounded-xl bg-indigo-500/[0.08] p-6 ring-1 ring-inset ring-indigo-400/30">
-                <CheckCircle2 className="h-6 w-6 text-indigo-300" aria-hidden="true" />
-                <h4 ref={successRef} tabIndex={-1} className="mt-3 text-lg font-semibold text-white focus:outline-none">
+            <div role="status" className="rounded-xl bg-plum-600/[0.06] p-6 ring-1 ring-inset ring-plum-600/30">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-magenta-600 bg-[image:var(--aurora-deep)] shadow-[0_6px_20px_-10px_rgba(255,46,126,0.45)]" aria-hidden="true">
+                    <Check className="h-5 w-5 text-white" strokeWidth={2.5} />
+                </span>
+                <h4 ref={successRef} tabIndex={-1} className="mt-3 text-lg font-semibold text-plum-900 focus:outline-none">
                     You’re all set. We’ll email you to pick a time.
                 </h4>
-                <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                    We’ve sent a confirmation to <span className="text-white">{values.email.trim()}</span>. Within 24 hours on business days,
+                <p className="mt-2 text-sm leading-relaxed text-mauve-700">
+                    We’ve sent a confirmation to <span className="font-medium text-plum-900">{values.email.trim()}</span>. Within 24 hours on business days,
                     we’ll email you a few times to choose from for your 15-minute audit.
                 </p>
             </div>
@@ -199,13 +201,13 @@ export default function AuditForm() {
                     required
                     value={values.business_type}
                     onChange={(e) => update('business_type', e.target.value)}
-                    className={`${inputClass(errors.business_type)} pr-10 ${values.business_type ? '' : 'text-slate-400'}`}
+                    className={`${inputClass(errors.business_type)} pr-10 ${values.business_type ? '' : 'text-mauve-700'}`}
                 >
-                    <option value="" disabled className="bg-slate-900">
+                    <option value="" disabled className="bg-white text-mauve-700">
                         Choose one
                     </option>
                     {BUSINESS_TYPES.map((t) => (
-                        <option key={t.value} value={t.value} className="bg-slate-900 text-white">
+                        <option key={t.value} value={t.value} className="bg-white text-plum-900">
                             {t.label}
                         </option>
                     ))}
@@ -238,18 +240,18 @@ export default function AuditForm() {
                         required
                         checked={values.consent}
                         onChange={(e) => update('consent', e.target.checked)}
-                        className={`mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-white/5 text-indigo-500 focus:ring-2 focus:ring-indigo-400 focus:ring-offset-0 ${
-                            errors.consent ? 'border-rose-400/70' : ''
+                        className={`mt-0.5 h-4 w-4 shrink-0 rounded bg-white text-plum-900 focus:ring-2 focus:ring-magenta-600 focus:ring-offset-0 ${
+                            errors.consent ? 'border-rose-600' : 'border-mauve-500'
                         }`}
                     />
-                    <label htmlFor={ids.consent} className="text-xs leading-relaxed text-slate-400">
+                    <label htmlFor={ids.consent} className="text-xs leading-relaxed text-mauve-700">
                         I agree that AsuraTECH Solutions may email or call me about this audit. We use your details only to arrange it, as
                         described in our{' '}
                         <a
                             href="/privacy"
                             target="_blank"
                             rel="noopener"
-                            className="rounded text-slate-200 underline decoration-white/30 underline-offset-2 transition-colors hover:text-white hover:decoration-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 motion-reduce:transition-none"
+                            className="rounded font-medium text-plum-900 underline decoration-plum-900/40 underline-offset-2 transition-colors hover:decoration-plum-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plum-900 motion-reduce:transition-none"
                         >
                             Privacy Policy<span className="sr-only"> (opens in a new tab)</span>
                         </a>
@@ -257,14 +259,14 @@ export default function AuditForm() {
                     </label>
                 </div>
                 {errors.consent && (
-                    <p id={`${ids.consent}-error`} className="mt-1.5 pl-7 text-xs text-rose-300">
+                    <p id={`${ids.consent}-error`} className="mt-1.5 pl-7 text-xs text-rose-700">
                         {errors.consent}
                     </p>
                 )}
             </div>
 
             {formError && (
-                <p role="alert" className="rounded-lg bg-rose-500/10 px-3 py-2 text-xs text-rose-200 ring-1 ring-inset ring-rose-400/30">
+                <p role="alert" className="rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-800 ring-1 ring-inset ring-rose-600/30">
                     {formError}
                 </p>
             )}
@@ -273,7 +275,7 @@ export default function AuditForm() {
                 type="submit"
                 disabled={isLoading}
                 aria-busy={isLoading || undefined}
-                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-colors hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060a18] disabled:cursor-wait disabled:opacity-70"
+                className="aurora-btn group inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold text-white focus-visible:outline-none disabled:cursor-wait disabled:opacity-70"
             >
                 {isLoading ? (
                     <>
@@ -288,7 +290,7 @@ export default function AuditForm() {
                 )}
             </button>
 
-            <p className="text-center text-xs text-slate-400">{AUDIT.trustLine}</p>
+            <p className="text-center text-xs text-mauve-700">{AUDIT.trustLine}</p>
         </form>
     );
 }

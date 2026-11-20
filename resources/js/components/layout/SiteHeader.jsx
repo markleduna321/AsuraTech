@@ -76,13 +76,13 @@ function MenuItemLink({ item, onClick, className, children }) {
 function ItemBadge({ item }) {
     if (!item.href) {
         return (
-            <span className="ml-1.5 inline-flex items-center rounded-full border border-[var(--border)] bg-white/[0.04] px-1.5 py-px text-[10px] font-medium uppercase tracking-wide text-[var(--muted)] align-middle">
+            <span className="ml-1.5 inline-flex items-center rounded-full border border-plum-800/60 bg-white/[0.04] px-1.5 py-px text-[10px] font-medium uppercase tracking-wide text-mauve-300 align-middle">
                 Soon
             </span>
         );
     }
     if (item.external) {
-        return <ArrowUpRight className="ml-1 inline w-3.5 h-3.5 text-[var(--muted)] align-[-2px]" aria-hidden="true" />;
+        return <ArrowUpRight className="ml-1 inline w-3.5 h-3.5 text-mauve-300 align-[-2px]" aria-hidden="true" />;
     }
     return null;
 }
@@ -95,7 +95,7 @@ function Logo() {
     return (
         <Link
             href="/"
-            className="flex items-center flex-shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] transition-opacity hover:opacity-90 py-1"
+            className="flex items-center flex-shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist transition-opacity hover:opacity-90 py-1"
             aria-label="AsuraTECH home"
         >
             <img
@@ -167,19 +167,19 @@ function MobileDrawer({ open, onClose }) {
     return (
         <div
             ref={drawerRef}
-            className="fixed inset-0 z-50 flex flex-col bg-[var(--bg)] lg:hidden"
+            className="fixed inset-0 z-50 flex flex-col bg-black lg:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation menu"
         >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between h-[72px] px-4 sm:px-6 border-b border-[var(--border)]">
+            <div className="flex items-center justify-between h-[72px] px-4 sm:px-6 border-b border-plum-800/60">
                 <Logo />
                 <button
                     ref={closeRef}
                     type="button"
                     onClick={onClose}
-                    className="p-2 rounded-lg text-[var(--soft)] hover:text-white hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)]"
+                    className="p-2 rounded-lg text-mauve-300 hover:text-mist hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist"
                     aria-label="Close navigation menu"
                 >
                     <X className="w-6 h-6" />
@@ -192,26 +192,26 @@ function MobileDrawer({ open, onClose }) {
                 {MEGA_MENUS.map((menu) => (
                     <div
                         key={menu.key}
-                        className="border border-[var(--border)] rounded-xl overflow-hidden bg-white/[0.02]"
+                        className="border border-plum-800/60 rounded-xl overflow-hidden bg-white/[0.02]"
                     >
                         <button
                             type="button"
                             onClick={() => toggleAccordion(menu.key)}
-                            className="flex items-center justify-between w-full px-4 py-3.5 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)]"
+                            className="flex items-center justify-between w-full px-4 py-3.5 text-sm font-semibold text-mist focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist"
                             aria-expanded={!!accordions[menu.key]}
                         >
                             <span>{menu.label}</span>
                             <ChevronDown
-                                className={`w-4 h-4 text-[var(--muted)] transition-transform duration-200 motion-reduce:transition-none ${
+                                className={`w-4 h-4 text-mauve-300 transition-transform duration-200 motion-reduce:transition-none ${
                                     accordions[menu.key] ? 'rotate-180' : ''
                                 }`}
                             />
                         </button>
                         {accordions[menu.key] && (
-                            <div className="px-4 pb-4 pt-2 border-t border-[var(--border)] space-y-5">
+                            <div className="px-4 pb-4 pt-2 border-t border-plum-800/60 space-y-5">
                                 {menu.columns.map((col) => (
                                     <div key={col.heading}>
-                                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--cyan)] mb-2">
+                                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-mauve-300 mb-2">
                                             {col.heading}
                                         </p>
                                         <div className="space-y-1">
@@ -222,17 +222,17 @@ function MobileDrawer({ open, onClose }) {
                                                     onClick={onClose}
                                                     className={`flex items-start gap-3 py-2 text-sm ${
                                                         item.href
-                                                            ? 'text-[var(--soft)] hover:text-white'
-                                                            : 'text-[var(--soft)] opacity-70'
+                                                            ? 'text-mist transition-colors hover:text-magenta-400 motion-reduce:transition-none'
+                                                            : 'text-mist opacity-70'
                                                     }`}
                                                 >
-                                                    <item.icon className="w-4 h-4 text-[var(--cyan)] shrink-0 mt-0.5" />
+                                                    <item.icon className="w-4 h-4 text-mauve-300 shrink-0 mt-0.5" />
                                                     <div>
                                                         <span className="block font-medium">
                                                             {item.title}
                                                             <ItemBadge item={item} />
                                                         </span>
-                                                        <span className="block text-xs text-[var(--muted)]">{item.desc}</span>
+                                                        <span className="block text-xs text-mauve-300">{item.desc}</span>
                                                     </div>
                                                 </MenuItemLink>
                                             ))}
@@ -250,10 +250,10 @@ function MobileDrawer({ open, onClose }) {
                         href="/what-we-do"
                         onClick={onClose}
                         aria-current={isActive('/what-we-do', currentPath) ? 'page' : undefined}
-                        className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                        className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors motion-reduce:transition-none ${
                             isActive('/what-we-do', currentPath)
-                                ? 'bg-white/[0.06] text-[var(--cyan)]'
-                                : 'text-[var(--soft)] hover:bg-white/[0.04] hover:text-white'
+                                ? 'bg-white/[0.06] text-mist nav-drawer-link--active'
+                                : 'text-mist hover:bg-white/[0.06] hover:text-magenta-400'
                         }`}
                     >
                         What We Do
@@ -262,10 +262,10 @@ function MobileDrawer({ open, onClose }) {
                         href="/about"
                         onClick={onClose}
                         aria-current={isActive('/about', currentPath) ? 'page' : undefined}
-                        className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                        className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors motion-reduce:transition-none ${
                             isActive('/about', currentPath)
-                                ? 'bg-white/[0.06] text-[var(--cyan)]'
-                                : 'text-[var(--soft)] hover:bg-white/[0.04] hover:text-white'
+                                ? 'bg-white/[0.06] text-mist nav-drawer-link--active'
+                                : 'text-mist hover:bg-white/[0.06] hover:text-magenta-400'
                         }`}
                     >
                         About
@@ -274,10 +274,10 @@ function MobileDrawer({ open, onClose }) {
                         href="/demos"
                         onClick={onClose}
                         aria-current={isActive('/demos', currentPath) ? 'page' : undefined}
-                        className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                        className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors motion-reduce:transition-none ${
                             isActive('/demos', currentPath)
-                                ? 'bg-white/[0.06] text-[var(--cyan)]'
-                                : 'text-[var(--soft)] hover:bg-white/[0.04] hover:text-white'
+                                ? 'bg-white/[0.06] text-mist nav-drawer-link--active'
+                                : 'text-mist hover:bg-white/[0.06] hover:text-magenta-400'
                         }`}
                     >
                         Live Demos
@@ -286,11 +286,12 @@ function MobileDrawer({ open, onClose }) {
             </div>
 
             {/* Pinned Bottom CTA */}
-            <div className="border-t border-[var(--border)] p-4 sm:px-6 bg-[var(--surface)]">
+            <div className="border-t border-plum-800/60 p-4 sm:px-6 bg-black">
                 <SectionLink
                     href={PRIMARY_CTA.href}
                     onClick={onClose}
-                    className="flex items-center justify-center w-full gap-2 rounded-xl bg-[var(--blue)] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[rgba(47,107,255,0.3)] transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)]"
+                    data-cta="primary"
+                    className="flex items-center justify-center w-full gap-2 rounded-full bg-magenta-600 bg-gradient-to-r from-magenta-600 to-iris-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-magenta-500/30 transition-[filter,box-shadow] duration-200 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist motion-reduce:transition-none"
                 >
                     {PRIMARY_CTA.label}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -307,6 +308,7 @@ function MobileDrawer({ open, onClose }) {
 export default function SiteHeader() {
     const [openMenu, setOpenMenu] = useState(null); // 'platforms' | 'solutions' | null
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const currentPath = useCurrentPath();
 
     const headerRef = useRef(null);
@@ -357,6 +359,26 @@ export default function SiteHeader() {
 
     // Clean up timers on unmount
     useEffect(() => () => clearTimers(), [clearTimers]);
+
+    // Track scroll position (rAF-throttled, passive) for the transparent-at-top header
+    useEffect(() => {
+        let frame = null;
+        const update = () => {
+            frame = null;
+            setScrolled(window.scrollY > 8);
+        };
+        const handleScroll = () => {
+            if (frame === null) frame = window.requestAnimationFrame(update);
+        };
+        update();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (frame !== null) window.cancelAnimationFrame(frame);
+        };
+    }, []);
+
+    const isSolid = scrolled || Boolean(openMenu) || drawerOpen;
 
     // Hover open handler for triggers (150ms delay)
     const handleTriggerMouseEnter = (menuKey) => {
@@ -423,13 +445,20 @@ export default function SiteHeader() {
     return (
         <header
             ref={headerRef}
-            className="site-header sticky top-0 z-50 h-[72px] border-b border-[var(--border)] select-none"
-            style={{
-                background: 'rgba(5, 10, 24, 0.72)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-            }}
+            data-scrolled={isSolid ? 'true' : 'false'}
+            className={`site-header sticky top-0 z-50 h-[72px] border-b ${isSolid ? 'border-plum-800/60' : 'border-transparent'} transition-colors duration-300 motion-reduce:transition-none select-none`}
         >
+            {/* Frosted bar lives on its own layer: a backdrop-filter on <header> would become the
+                containing block for the fixed mobile drawer and clip it to 72px. */}
+            <div
+                className={`pointer-events-none absolute inset-0 -z-10 transition-opacity duration-300 motion-reduce:transition-none ${isSolid ? 'opacity-100' : 'opacity-0'}`}
+                aria-hidden="true"
+                style={{
+                    background: 'rgba(0, 0, 0, 0.82)',
+                    backdropFilter: 'blur(16px)',
+                    WebkitBackdropFilter: 'blur(16px)',
+                }}
+            />
             <nav
                 className="mx-auto max-w-7xl h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4"
                 aria-label="Main navigation"
@@ -449,8 +478,8 @@ export default function SiteHeader() {
                             <button
                                 ref={(el) => (triggerRefs.current[menu.key] = el)}
                                 type="button"
-                                className={`nav-link flex items-center gap-1 text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] ${
-                                    openMenu === menu.key ? 'text-white' : 'text-[var(--soft)] hover:text-white'
+                                className={`nav-link flex items-center gap-1 text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist ${
+                                    openMenu === menu.key ? 'text-mist' : 'text-mauve-300 hover:text-mist'
                                 }`}
                                 aria-expanded={openMenu === menu.key}
                                 aria-controls={menu.panelId}
@@ -460,8 +489,8 @@ export default function SiteHeader() {
                             >
                                 {menu.label}
                                 <ChevronDown
-                                    className={`w-3.5 h-3.5 text-[var(--muted)] transition-transform duration-200 motion-reduce:transition-none ${
-                                        openMenu === menu.key ? 'rotate-180 text-[var(--cyan)]' : ''
+                                    className={`w-3.5 h-3.5 transition-transform duration-200 motion-reduce:transition-none ${
+                                        openMenu === menu.key ? 'rotate-180 text-magenta-400' : 'text-mauve-300'
                                     }`}
                                     aria-hidden="true"
                                 />
@@ -473,10 +502,10 @@ export default function SiteHeader() {
                     <Link
                         href="/what-we-do"
                         aria-current={isActive('/what-we-do', currentPath) ? 'page' : undefined}
-                        className={`nav-link text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] ${
+                        className={`nav-link text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist ${
                             isActive('/what-we-do', currentPath)
-                                ? 'text-white nav-link--active'
-                                : 'text-[var(--soft)] hover:text-white'
+                                ? 'text-mist nav-link--active'
+                                : 'text-mauve-300 hover:text-mist'
                         }`}
                     >
                         What We Do
@@ -486,10 +515,10 @@ export default function SiteHeader() {
                     <Link
                         href="/about"
                         aria-current={isActive('/about', currentPath) ? 'page' : undefined}
-                        className={`nav-link text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] ${
+                        className={`nav-link text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist ${
                             isActive('/about', currentPath)
-                                ? 'text-white nav-link--active'
-                                : 'text-[var(--soft)] hover:text-white'
+                                ? 'text-mist nav-link--active'
+                                : 'text-mauve-300 hover:text-mist'
                         }`}
                     >
                         About
@@ -499,10 +528,10 @@ export default function SiteHeader() {
                     <Link
                         href="/demos"
                         aria-current={isActive('/demos', currentPath) ? 'page' : undefined}
-                        className={`nav-link text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] ${
+                        className={`nav-link text-[13px] xl:text-sm font-medium px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-lg transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist ${
                             isActive('/demos', currentPath)
-                                ? 'text-white nav-link--active'
-                                : 'text-[var(--soft)] hover:text-white'
+                                ? 'text-mist nav-link--active'
+                                : 'text-mauve-300 hover:text-mist'
                         }`}
                     >
                         Live Demos
@@ -513,7 +542,8 @@ export default function SiteHeader() {
                 <div className="hidden lg:flex items-center shrink-0">
                     <SectionLink
                         href={PRIMARY_CTA.href}
-                        className="inline-flex items-center gap-2 rounded-xl bg-[var(--blue)] px-4 py-2 xl:px-5 xl:py-2.5 text-xs xl:text-sm font-semibold text-white shadow-lg shadow-[rgba(47,107,255,0.25)] transition-all hover:brightness-110 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] whitespace-nowrap"
+                        data-cta="primary"
+                        className="inline-flex items-center gap-2 rounded-full bg-magenta-600 bg-gradient-to-r from-magenta-600 to-iris-600 px-4 py-2 xl:px-5 xl:py-2.5 text-xs xl:text-sm font-semibold text-white shadow-lg shadow-magenta-500/35 transition-[filter,box-shadow,transform] duration-200 hover:brightness-105 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist focus-visible:ring-offset-2 focus-visible:ring-offset-black motion-reduce:transition-none whitespace-nowrap"
                     >
                         {PRIMARY_CTA.label}
                     </SectionLink>
@@ -522,7 +552,7 @@ export default function SiteHeader() {
                 {/* Mobile / Tablet Hamburger Button */}
                 <button
                     type="button"
-                    className="lg:hidden p-2 rounded-lg text-[var(--soft)] hover:text-white hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)]"
+                    className="lg:hidden p-2 rounded-lg text-mauve-300 hover:text-mist hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist"
                     onClick={() => setDrawerOpen(true)}
                     aria-label="Open navigation menu"
                 >
@@ -552,9 +582,9 @@ export default function SiteHeader() {
                     <div className="absolute -top-3 inset-x-0 h-3" />
 
                     <div
-                        className="border-t border-b border-[var(--border)] rounded-b-2xl shadow-2xl shadow-black/80"
+                        className="border-t border-b border-plum-800/60 rounded-b-2xl shadow-2xl shadow-black/80"
                         style={{
-                            background: 'rgba(10, 18, 36, 0.94)',
+                            background: '#000',
                             backdropFilter: 'blur(24px)',
                             WebkitBackdropFilter: 'blur(24px)',
                         }}
@@ -567,7 +597,7 @@ export default function SiteHeader() {
                             >
                                 {menu.columns.map((col) => (
                                     <div key={col.heading}>
-                                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--cyan)] mb-4">
+                                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-mauve-300 mb-4">
                                             {col.heading}
                                         </p>
                                         <ul className="space-y-1.5">
@@ -576,23 +606,19 @@ export default function SiteHeader() {
                                                     <MenuItemLink
                                                         item={item}
                                                         onClick={handleItemClick}
-                                                        className={`mega-item group flex items-start gap-3.5 rounded-xl p-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] ${
+                                                        className={`mega-item group flex items-start gap-3.5 rounded-xl p-2.5 transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist ${
                                                             item.href ? 'hover:bg-white/[0.04] cursor-pointer' : 'opacity-70'
                                                         }`}
                                                     >
-                                                        <span className="mt-0.5 flex-shrink-0 w-8 h-8 rounded-lg bg-[var(--cyan)]/10 text-[var(--cyan)] flex items-center justify-center transition-all group-hover:shadow-[0_0_12px_rgba(0,229,255,0.35)] group-hover:bg-[var(--cyan)]/20">
+                                                        <span className="mt-0.5 flex-shrink-0 w-8 h-8 rounded-lg bg-plum-900/50 text-mauve-300 flex items-center justify-center transition-[color,box-shadow] duration-200 motion-reduce:transition-none">
                                                             <item.icon className="w-4 h-4" aria-hidden="true" />
                                                         </span>
                                                         <span className="min-w-0 flex-1">
-                                                            <span
-                                                                className={`block text-sm font-semibold text-white transition-colors ${
-                                                                    item.href ? 'group-hover:text-[var(--cyan)]' : ''
-                                                                }`}
-                                                            >
+                                                            <span className="block text-sm font-semibold text-mist">
                                                                 {item.title}
                                                                 <ItemBadge item={item} />
                                                             </span>
-                                                            <span className="block text-xs text-[var(--muted)] mt-0.5 leading-relaxed">
+                                                            <span className="block text-xs text-mauve-300 mt-0.5 leading-relaxed">
                                                                 {item.desc}
                                                             </span>
                                                         </span>
@@ -605,15 +631,15 @@ export default function SiteHeader() {
                             </div>
 
                             {/* Utility Bar */}
-                            <div className="mt-7 pt-5 border-t border-[var(--border)] flex items-center justify-between gap-4">
+                            <div className="mt-7 pt-5 border-t border-plum-800/60 flex items-center justify-between gap-4">
                                 <div className="flex flex-wrap items-center gap-2">
-                                    <span className="text-xs text-[var(--muted)] font-medium">
+                                    <span className="text-xs text-mauve-300 font-medium">
                                         {menu.utilityBar.label}
                                     </span>
                                     {menu.utilityBar.chips.map((chip) => (
                                         <span
                                             key={chip}
-                                            className="inline-flex items-center rounded-full border border-[var(--border)] bg-white/[0.03] px-2.5 py-0.5 text-[11px] font-medium text-[var(--soft)]"
+                                            className="inline-flex items-center rounded-full border border-plum-800/60 bg-white/[0.03] px-2.5 py-0.5 text-[11px] font-medium text-mauve-300"
                                         >
                                             {chip}
                                         </span>
@@ -622,7 +648,7 @@ export default function SiteHeader() {
                                 <SectionLink
                                     href={menu.utilityBar.cta.href}
                                     onClick={handleItemClick}
-                                    className="group inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--cyan)] hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyan)] rounded-lg py-1 px-2 whitespace-nowrap"
+                                    className="group inline-flex items-center gap-1.5 text-sm font-semibold text-magenta-400 hover:text-mist transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist rounded-lg py-1 px-2 whitespace-nowrap"
                                 >
                                     {menu.utilityBar.cta.label}
                                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />

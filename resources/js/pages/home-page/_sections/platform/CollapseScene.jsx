@@ -19,8 +19,10 @@ import {
     WebGLRenderer,
 } from 'three';
 
-const ACCENT = new Color('#818cf8');
-const PULSE = new Color('#22d3ee');
+// Plum & Mist: plum-600 plate glow/edges, mauve-300 pulses; core glows magenta like the hero (still mixes to white). Decorative only.
+const ACCENT = new Color('#6A3497');
+const CORE = new Color('#FF2E7E');
+const PULSE = new Color('#C9C1CF');
 const PAD = 28; // glow margin around each plate, in CSS px
 
 const plateVertex = /* glsl */ `
@@ -151,7 +153,7 @@ export default function CollapseScene({ count, onReady, onError }) {
         const coreMaterial = new ShaderMaterial({
             vertexShader: basicVertex,
             fragmentShader: coreFragment,
-            uniforms: { uAccent: { value: ACCENT }, uIntensity: { value: 0.2 }, uTime: { value: 0 }, uSize: { value: CORE_SIZE } },
+            uniforms: { uAccent: { value: CORE }, uIntensity: { value: 0.2 }, uTime: { value: 0 }, uSize: { value: CORE_SIZE } },
             transparent: true,
             depthWrite: false,
             depthTest: false,
@@ -195,7 +197,7 @@ export default function CollapseScene({ count, onReady, onError }) {
         plates.renderOrder = 2;
         scene.add(plates);
 
-        // Cyan pulses travelling along the lines into the core
+        // Mauve pulses travelling along the lines into the core
         const pulsePositions = new Float32Array(count * 3);
         const pulseAlphas = new Float32Array(count);
         const pulseGeometry = new BufferGeometry();

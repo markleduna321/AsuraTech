@@ -12,7 +12,7 @@ function zoneState(zone, focus) {
 function Zone({ zone, focus, children }) {
     const state = zoneState(zone, focus);
     return (
-        <g className={`arch-zone ${state === 'on' ? 'text-indigo-300' : 'text-slate-400'}`} data-state={state}>
+        <g className={`arch-zone ${state === 'on' ? 'text-magenta-500' : 'text-mauve-500'}`} data-state={state}>
             {children}
         </g>
     );
@@ -25,7 +25,7 @@ export default function ArchitectureIllustration({ focus }) {
         <svg viewBox="0 0 640 500" className="h-full w-full" fill="none" aria-hidden="true">
             <defs>
                 <pattern id="arch-grid" width="24" height="24" patternUnits="userSpaceOnUse">
-                    <path d="M24 0H0V24" stroke="rgb(148 163 184 / 0.09)" strokeWidth="1" />
+                    <path d="M24 0H0V24" stroke="rgb(201 193 207 / 0.08)" strokeWidth="1" />
                 </pattern>
                 <radialGradient id="arch-grid-fade" cx="50%" cy="60%" r="60%">
                     <stop offset="0%" stopColor="white" stopOpacity="1" />
@@ -35,9 +35,9 @@ export default function ArchitectureIllustration({ focus }) {
                     <rect width="640" height="500" fill="url(#arch-grid-fade)" />
                 </mask>
                 <radialGradient id="arch-orb">
-                    <stop offset="0%" stopColor="rgb(165 180 252)" stopOpacity="0.9" />
-                    <stop offset="35%" stopColor="rgb(129 140 248)" stopOpacity="0.35" />
-                    <stop offset="100%" stopColor="rgb(129 140 248)" stopOpacity="0" />
+                    <stop offset="0%" stopColor="rgb(247 247 247)" stopOpacity="0.9" />
+                    <stop offset="35%" stopColor="rgb(131 80 174)" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="rgb(106 52 151)" stopOpacity="0" />
                 </radialGradient>
             </defs>
 
@@ -53,8 +53,8 @@ export default function ArchitectureIllustration({ focus }) {
 
             <Zone zone="erp" focus={focus}>
                 {/* Database cylinder */}
-                <path d="M222 380v44c0 16 48 30 108 30s108-14 108-30v-44" stroke="currentColor" strokeOpacity="0.7" fill="rgb(129 140 248 / 0.04)" />
-                <ellipse cx="330" cy="380" rx="108" ry="28" stroke="currentColor" strokeOpacity="0.7" fill="rgb(129 140 248 / 0.05)" />
+                <path d="M222 380v44c0 16 48 30 108 30s108-14 108-30v-44" stroke="currentColor" strokeOpacity="0.7" fill="rgb(131 80 174 / 0.06)" />
+                <ellipse cx="330" cy="380" rx="108" ry="28" stroke="currentColor" strokeOpacity="0.7" fill="rgb(131 80 174 / 0.08)" />
                 <path d="M222 402c0 16 48 30 108 30s108-14 108-30" stroke="currentColor" strokeOpacity="0.35" />
                 <text x="452" y="430" className="arch-svg-label" fill="currentColor">
                     DATABASE
@@ -68,7 +68,7 @@ export default function ArchitectureIllustration({ focus }) {
                             d={`M200 ${y}L330 ${y - 38}L460 ${y}L330 ${y + 38}Z`}
                             stroke="currentColor"
                             strokeOpacity="0.75"
-                            fill="rgb(129 140 248 / 0.05)"
+                            fill="rgb(131 80 174 / 0.08)"
                         />
                         <path d={`M200 ${y}v8L330 ${y + 46}L460 ${y + 8}v-8`} stroke="currentColor" strokeOpacity="0.35" />
                         <text x="474" y={y + 4} className="arch-svg-label" fill="currentColor">
@@ -82,7 +82,7 @@ export default function ArchitectureIllustration({ focus }) {
             </Zone>
 
             <Zone zone="apps" focus={focus}>
-                <rect x="56" y="62" width="196" height="124" rx="8" stroke="currentColor" strokeOpacity="0.75" fill="rgb(129 140 248 / 0.04)" />
+                <rect x="56" y="62" width="196" height="124" rx="8" stroke="currentColor" strokeOpacity="0.75" fill="rgb(106 52 151 / 0.08)" />
                 <path d="M56 84h196M104 84v102" stroke="currentColor" strokeOpacity="0.4" />
                 <circle cx="68" cy="73" r="2.5" fill="currentColor" fillOpacity="0.6" />
                 <circle cx="77" cy="73" r="2.5" fill="currentColor" fillOpacity="0.6" />
@@ -91,7 +91,7 @@ export default function ArchitectureIllustration({ focus }) {
                 <text x="154" y="50" textAnchor="middle" className="arch-svg-label" fill="currentColor">
                     WEB APP
                 </text>
-                <rect x="400" y="40" width="64" height="118" rx="12" stroke="currentColor" strokeOpacity="0.75" fill="rgb(129 140 248 / 0.04)" />
+                <rect x="400" y="40" width="64" height="118" rx="12" stroke="currentColor" strokeOpacity="0.75" fill="rgb(106 52 151 / 0.08)" />
                 <path d="M424 50h16M412 70h34M412 80h40M412 98h40v26h-40zM424 146h16" stroke="currentColor" strokeOpacity="0.45" />
                 <text x="432" y="28" textAnchor="middle" className="arch-svg-label" fill="currentColor">
                     MOBILE

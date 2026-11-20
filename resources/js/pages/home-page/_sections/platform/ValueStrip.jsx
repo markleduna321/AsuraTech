@@ -16,18 +16,18 @@ export default function ValueStrip() {
                 data-active={inView ? 'true' : 'false'}
             >
                 <div className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.2fr)_auto] lg:gap-12">
-                    <h3 className="stage-in text-2xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-3xl" style={{ '--d': '0s' }}>
+                    <h3 className="stage-in text-2xl font-semibold leading-tight tracking-[-0.03em] text-black sm:text-3xl" style={{ '--d': '0s' }}>
                         <span className="whitespace-nowrap">One login.</span> <span className="whitespace-nowrap">One inbox.</span>{' '}
-                        <span className="whitespace-nowrap text-slate-400">One bill.</span>
+                        <span className="whitespace-nowrap text-mauve-700">One bill.</span>
                     </h3>
 
                     <dl className="grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
                         {VALUE_POINTS.map((point, i) => (
-                            <div key={point.label} className="stage-in flex flex-col-reverse border-l border-white/10 pl-4" style={{ '--d': `${0.08 + i * 0.07}s` }}>
-                                <dt className="mt-1 text-xs leading-snug text-slate-400">{point.label}</dt>
-                                <dd className="font-mono text-2xl font-semibold tabular-nums tracking-tight text-white">
-                                    {point.value}
-                                    {point.unit && <span className="ml-1 text-sm font-normal text-slate-500">{point.unit}</span>}
+                            <div key={point.label} className="stage-in flex flex-col-reverse border-l border-plum-900/15 pl-4" style={{ '--d': `${0.08 + i * 0.07}s` }}>
+                                <dt className="mt-1 text-xs leading-snug text-plum-900">{point.label}</dt>
+                                <dd className="font-mono text-2xl font-semibold tabular-nums tracking-tight text-black">
+                                    <span className="aurora-text-deep">{point.value}</span>
+                                    {point.unit && <span className="ml-1 text-sm font-normal text-mauve-700">{point.unit}</span>}
                                 </dd>
                             </div>
                         ))}
@@ -35,7 +35,7 @@ export default function ValueStrip() {
 
                     <a
                         href="#get-started"
-                        className="stage-in group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-indigo-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-colors hover:bg-indigo-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060a18]"
+                        className="aurora-btn stage-in group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 py-3 text-sm font-semibold text-white"
                         style={{ '--d': '0.4s' }}
                     >
                         Start Automating

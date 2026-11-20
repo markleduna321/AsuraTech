@@ -312,6 +312,32 @@
     box-shadow: 0 0 0 2px #000000, 0 0 0 4px #F7F7F7;
 }
 
+@keyframes solution-section-highlight {
+    0%,
+    15% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+[data-theme="plum"] .solution-section--highlight::after {
+    content: '';
+    position: absolute;
+    inset: 1rem;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    border: 1px solid rgb(255 46 126 / 0.65);
+    border-radius: 1.5rem;
+    background: radial-gradient(ellipse at center, rgb(167 139 250 / 0.16), transparent 75%);
+}
+@media (prefers-reduced-motion: no-preference) {
+    [data-theme="plum"] .solution-section--highlight::after {
+        animation: solution-section-highlight 1.8s ease-out;
+    }
+}
+
 @media (prefers-reduced-motion: no-preference) {
     .mega-panel {
         transition: opacity 200ms var(--ease-expo), transform 200ms var(--ease-expo);

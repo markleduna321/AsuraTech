@@ -326,8 +326,8 @@ export default function WhatWeDo() {
                                                 </div>
 
                                                 {/* Card-specific Links / CTAs */}
-                                                {(card.demoUrl || card.externalUrl) && (
-                                                    <div className={`mt-6 pt-4 border-t ${t.divider}`}>
+                                                {(card.solutionHref || card.demoUrl || card.externalUrl) && (
+                                                    <div className={`mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t pt-4 ${t.divider}`}>
                                                         {card.demoUrl && (
                                                             <a
                                                                 href={card.demoUrl}
@@ -351,6 +351,15 @@ export default function WhatWeDo() {
                                                                 {card.externalLabel}
                                                                 <ArrowUpRight className="w-4 h-4" />
                                                             </a>
+                                                        )}
+                                                        {card.solutionHref && (
+                                                            <SectionLink
+                                                                href={card.solutionHref}
+                                                                className={`inline-flex items-center gap-1.5 text-sm font-semibold hover:underline focus-visible:outline-none focus-visible:ring-2 rounded ${t.link}`}
+                                                            >
+                                                                Learn more
+                                                                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                                                            </SectionLink>
                                                         )}
                                                     </div>
                                                 )}

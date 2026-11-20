@@ -26,7 +26,7 @@ const MEGA_MENUS = [
     },
     {
         key: 'solutions',
-        label: 'Solutions & Engineering',
+        label: 'Solutions',
         panelId: 'mega-solutions',
         columns: SOLUTIONS_COLUMNS,
         utilityBar: SOLUTIONS_UTILITY_BAR,
@@ -188,7 +188,7 @@ function MobileDrawer({ open, onClose }) {
 
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 space-y-3">
-                {/* Accordions: Platforms + Solutions & Engineering (same structure) */}
+                {/* Accordions: Platforms + Solutions (same structure) */}
                 {MEGA_MENUS.map((menu) => (
                     <div
                         key={menu.key}
@@ -211,9 +211,19 @@ function MobileDrawer({ open, onClose }) {
                             <div className="px-4 pb-4 pt-2 border-t border-plum-800/60 space-y-5">
                                 {menu.columns.map((col) => (
                                     <div key={col.heading}>
-                                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-mauve-300 mb-2">
-                                            {col.heading}
-                                        </p>
+                                        {col.href ? (
+                                            <SectionLink
+                                                href={col.href}
+                                                onClick={onClose}
+                                                className="mb-2 inline-flex min-h-8 items-center rounded text-[11px] font-semibold uppercase tracking-[0.18em] text-mauve-300 transition-colors hover:text-mist focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist motion-reduce:transition-none"
+                                            >
+                                                {col.heading}
+                                            </SectionLink>
+                                        ) : (
+                                            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-mauve-300">
+                                                {col.heading}
+                                            </p>
+                                        )}
                                         <div className="space-y-1">
                                             {col.items.map((item) => (
                                                 <MenuItemLink
@@ -597,9 +607,19 @@ export default function SiteHeader() {
                             >
                                 {menu.columns.map((col) => (
                                     <div key={col.heading}>
-                                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-mauve-300 mb-4">
-                                            {col.heading}
-                                        </p>
+                                        {col.href ? (
+                                            <SectionLink
+                                                href={col.href}
+                                                onClick={handleItemClick}
+                                                className="mb-4 inline-flex min-h-8 items-center rounded text-[11px] font-semibold uppercase tracking-[0.18em] text-mauve-300 transition-colors hover:text-mist focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist motion-reduce:transition-none"
+                                            >
+                                                {col.heading}
+                                            </SectionLink>
+                                        ) : (
+                                            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-mauve-300">
+                                                {col.heading}
+                                            </p>
+                                        )}
                                         <ul className="space-y-1.5">
                                             {col.items.map((item) => (
                                                 <li key={item.title}>
@@ -631,7 +651,7 @@ export default function SiteHeader() {
                             </div>
 
                             {/* Utility Bar */}
-                            <div className="mt-7 pt-5 border-t border-plum-800/60 flex items-center justify-between gap-4">
+                            <div className="mt-7 flex flex-col gap-3 border-t border-plum-800/60 pt-5 xl:flex-row xl:items-center xl:justify-between">
                                 <div className="flex flex-wrap items-center gap-2">
                                     <span className="text-xs text-mauve-300 font-medium">
                                         {menu.utilityBar.label}
@@ -645,14 +665,25 @@ export default function SiteHeader() {
                                         </span>
                                     ))}
                                 </div>
-                                <SectionLink
-                                    href={menu.utilityBar.cta.href}
-                                    onClick={handleItemClick}
-                                    className="group inline-flex items-center gap-1.5 text-sm font-semibold text-magenta-400 hover:text-mist transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist rounded-lg py-1 px-2 whitespace-nowrap"
-                                >
-                                    {menu.utilityBar.cta.label}
-                                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
-                                </SectionLink>
+                                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 xl:justify-end">
+                                    <SectionLink
+                                        href={menu.utilityBar.cta.href}
+                                        onClick={handleItemClick}
+                                        className="group inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-semibold text-magenta-400 transition-colors hover:text-mist motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist"
+                                    >
+                                        {menu.utilityBar.cta.label}
+                                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
+                                    </SectionLink>
+                                    {menu.utilityBar.secondaryCta && (
+                                        <SectionLink
+                                            href={menu.utilityBar.secondaryCta.href}
+                                            onClick={handleItemClick}
+                                            className="inline-flex items-center rounded-lg px-2 py-1 text-sm font-semibold text-mauve-300 transition-colors hover:text-mist motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist"
+                                        >
+                                            {menu.utilityBar.secondaryCta.label}
+                                        </SectionLink>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>

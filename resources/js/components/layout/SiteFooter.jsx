@@ -69,6 +69,10 @@ export default function SiteFooter() {
                                         <SectionLink href={`/${link.href}`} className={t.link}>
                                             {link.label}
                                         </SectionLink>
+                                    ) : link.href.startsWith('/') ? (
+                                        <Link href={link.href} className={t.link}>
+                                            {link.label}
+                                        </Link>
                                     ) : (
                                         <a
                                             href={link.href}

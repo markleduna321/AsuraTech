@@ -14,10 +14,10 @@ export const FOOTER_COLUMNS = [
         title: 'Solutions',
         links: [
             { label: 'Business Automation', href: '#platform' },
-            { label: 'HRIS & Payroll', href: '#demos' },
-            { label: 'Gym Management', href: '#demos' },
-            { label: 'Clinic Management', href: '#demos' },
-            { label: 'Custom Engineering', href: '#engineering' },
+            { label: 'HRIS & Payroll', href: '/demos' },
+            { label: 'Gym Management', href: '/demos' },
+            { label: 'Clinic Management', href: '/demos' },
+            { label: 'Custom Engineering', href: '/solutions/custom-engineering' },
         ],
     },
     {
@@ -30,7 +30,7 @@ export const FOOTER_COLUMNS = [
     {
         title: 'Company',
         links: [
-            { label: 'About', href: '#connected' },
+            { label: 'About', href: '/about' },
             { label: 'Contact', href: `mailto:${CONTACT.email}` },
             { label: 'Book a Systems Audit', href: '#get-started' },
         ],

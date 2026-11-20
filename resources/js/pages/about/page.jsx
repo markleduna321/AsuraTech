@@ -162,7 +162,7 @@ export default function About() {
                         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             {TEAM_MEMBERS.map((member, idx) => {
                                 const socialItems = [
-                                    { key: 'repo', label: 'Repo', icon: FolderGit2, href: member.links?.repo },
+                                    { key: 'repo', label: 'Portfolio', icon: FolderGit2, href: member.links?.repo },
                                     { key: 'github', label: 'GitHub', icon: GithubIcon, href: member.links?.github },
                                     { key: 'linkedin', label: 'LinkedIn', icon: LinkedinIcon, href: member.links?.linkedin },
                                 ];

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from '@inertiajs/react';
 import { ArrowRight, ArrowUpRight, Boxes, CloudCog, Code2, Megaphone } from 'lucide-react';
 
 const PATHS = [
@@ -9,7 +10,7 @@ const PATHS = [
         title: 'Automate Sales & Marketing',
         benefit: 'Capture, nurture and close leads from one platform, with follow-ups that run themselves.',
         chips: ['Funnels', 'Automated Follow-ups', 'Unified Inbox', 'CRM'],
-        links: [{ label: 'Explore', href: '#platform' }],
+        links: [{ label: 'Explore', href: '#inside-platform' }],
         layout: 'md:col-span-2 lg:col-span-1 lg:row-span-2',
         large: true,
     },
@@ -20,7 +21,7 @@ const PATHS = [
         title: 'Launch Turnkey Industry Software',
         benefit: 'Deploy a proven system for your business this week instead of building from scratch.',
         chips: ['Gym', 'HRIS', 'Clinic'],
-        links: [{ label: 'Explore', href: '#demos' }],
+        links: [{ label: 'Explore', href: '/demos' }],
         layout: '',
     },
     {
@@ -151,27 +152,30 @@ function PathCard({ path, index }) {
                     {large && <FlowVisual />}
 
                     <div className="bento-reveal mt-auto flex flex-wrap gap-x-6 gap-y-2 pt-8 lg:pt-5">
-                        {links.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                                className="group/link inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-pink-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plum-900 focus-visible:ring-offset-4 focus-visible:ring-offset-transparent"
-                            >
-                                <span className="relative after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-gradient-to-r after:from-magenta-600 after:to-iris-600 after:transition-transform after:duration-300 after:ease-out group-hover/link:after:scale-x-100 group-focus-visible/link:after:scale-x-100 motion-reduce:after:transition-none">
-                                    {link.label}
-                                </span>
-                                {link.external ? (
-                                    <>
-                                        <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
-                                        <span className="sr-only">(opens in a new tab)</span>
-                                    </>
-                                ) : (
-                                    <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
-                                )}
-                                {!link.external && <span className="sr-only">{title}</span>}
-                            </a>
-                        ))}
+                        {links.map((link) => {
+                            const Tag = !link.external && link.href.startsWith('/') ? Link : 'a';
+                            return (
+                                <Tag
+                                    key={link.label}
+                                    href={link.href}
+                                    {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                    className="group/link inline-flex items-center gap-1.5 rounded-md text-sm font-semibold text-pink-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plum-900 focus-visible:ring-offset-4 focus-visible:ring-offset-transparent"
+                                >
+                                    <span className="relative after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-gradient-to-r after:from-magenta-600 after:to-iris-600 after:transition-transform after:duration-300 after:ease-out group-hover/link:after:scale-x-100 group-focus-visible/link:after:scale-x-100 motion-reduce:after:transition-none">
+                                        {link.label}
+                                    </span>
+                                    {link.external ? (
+                                        <>
+                                            <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
+                                            <span className="sr-only">(opens in a new tab)</span>
+                                        </>
+                                    ) : (
+                                        <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
+                                    )}
+                                    {!link.external && <span className="sr-only">{title}</span>}
+                                </Tag>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

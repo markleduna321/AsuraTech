@@ -38,7 +38,7 @@ export const DEMOS_URL = '/demos';
 
 export const NAV_ITEMS = [
     { key: 'platforms', label: 'Platforms', megaMenu: 'platforms' },
-    { key: 'solutions', label: 'Solutions & Engineering', megaMenu: 'solutions' },
+    { key: 'solutions', label: 'Solutions', megaMenu: 'solutions' },
     { key: 'what-we-do', label: 'What We Do', href: '/what-we-do' },
     { key: 'about', label: 'About', href: '/about' },
     { key: 'demos', label: 'Live Demos', href: DEMOS_URL },
@@ -116,70 +116,73 @@ export const PLATFORMS_UTILITY_BAR = {
 export const SOLUTIONS_COLUMNS = [
     {
         heading: 'Tailored Automation & AI',
+        href: '/solutions/automation-ai',
         items: [
             {
                 icon: Bot,
                 title: 'Tailored CRM & Sales Pipelines',
                 desc: 'Unified inbox (SMS, email, chat), automated follow-ups and funnels mapped to your sales cycle.',
-                href: '/what-we-do#crm-pipeline-automation',
+                href: '/solutions/automation-ai#crm-sales-pipelines',
             },
             {
                 icon: Workflow,
                 title: 'Practical AI Integration',
                 desc: 'Bots and LLM pipelines inside your systems that qualify leads, book appointments and handle routine data.',
-                href: '/what-we-do#ai-integration',
+                href: '/solutions/automation-ai#ai-integration',
             },
             {
                 icon: Plug,
                 title: 'Tool Syncing',
                 desc: 'Your CRM, accounting, POS and databases connected by custom webhooks, so you enter data once.',
-                href: '/what-we-do#workflow-orchestration',
+                href: '/solutions/automation-ai#tool-syncing',
             },
         ],
     },
     {
         heading: 'Custom Engineering',
+        href: '/solutions/custom-engineering',
         items: [
             {
                 icon: Database,
                 title: 'Custom ERP & Operational Systems',
                 desc: 'Inventory, supply chain, accounting and operations built around your rules.',
-                href: '/what-we-do#custom-erp',
+                href: '/solutions/custom-engineering#custom-erp',
             },
             {
                 icon: Users,
                 title: 'Custom CRM Architecture',
                 desc: 'A lightweight, fast CRM when standard ones don’t fit.',
-                href: '/what-we-do#custom-crm',
+                href: '/solutions/custom-engineering#custom-crm',
             },
             {
                 icon: Globe,
                 title: 'Full-Stack Web Apps',
                 desc: 'Customer portals, dashboards and SaaS built for speed and clarity.',
-                href: '/what-we-do#custom-web-apps',
+                href: '/solutions/custom-engineering#web-apps',
             },
         ],
     },
     {
         heading: 'Apps, Modernization & IT',
+        href: '/solutions/apps-modernization-it',
         items: [
             {
                 icon: Smartphone,
                 title: 'Mobile & Cross-Platform Apps',
                 desc: 'Android, iOS and local-network apps for field teams and customers.',
-                href: '/what-we-do#mobile-desktop-apps',
+                href: '/solutions/apps-modernization-it#mobile-apps',
             },
             {
                 icon: RefreshCw,
                 title: 'Legacy Modernization',
                 desc: 'Spreadsheets and old software replaced by clean cloud databases, without disrupting your day.',
-                href: '/what-we-do#legacy-modernization',
+                href: '/solutions/apps-modernization-it#legacy-modernization',
             },
             {
                 icon: Lightbulb,
                 title: 'IT Consultancy & Network Architecture',
                 desc: 'Honest advice, process audits and secure network design, including what to skip.',
-                href: '/what-we-do#it-consultancy',
+                href: '/solutions/apps-modernization-it#it-consultancy',
             },
         ],
     },
@@ -196,5 +199,9 @@ export const SOLUTIONS_UTILITY_BAR = {
     cta: {
         label: 'Book a Free Workflow Audit',
         href: AUDIT_URL,
+    },
+    secondaryCta: {
+        label: 'See all solutions',
+        href: '/what-we-do',
     },
 };

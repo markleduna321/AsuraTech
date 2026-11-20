@@ -162,7 +162,7 @@ function SectionIntro() {
     const ref = useRef(null);
     const inView = useInViewOnce(ref);
     return (
-        <div ref={ref} className="stage max-w-[60ch]" data-active={inView ? 'true' : 'false'}>
+        <div ref={ref} id="inside-platform" className="stage max-w-[60ch] scroll-mt-24" data-active={inView ? 'true' : 'false'}>
             <p className="stage-in text-xs font-medium uppercase tracking-[0.18em] text-plum-900" style={{ '--d': '0s' }}>
                 Inside the platform
             </p>

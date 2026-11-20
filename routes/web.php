@@ -39,6 +39,16 @@ Route::get('/what-we-do', function () {
     return Inertia::render('what-we-do/page');
 })->name('what-we-do');
 
+Route::get('/solutions/{group}', function (string $group) {
+    return Inertia::render('solutions/page', [
+        'group' => $group,
+    ]);
+})->whereIn('group', [
+    'automation-ai',
+    'custom-engineering',
+    'apps-modernization-it',
+])->name('solutions.show');
+
 Route::get('/about', function () {
     return Inertia::render('about/page');
 })->name('about');

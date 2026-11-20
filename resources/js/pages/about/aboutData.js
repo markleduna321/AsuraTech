@@ -32,37 +32,37 @@ export const STORY_PARAGRAPHS = STORY.paragraphs;
 // Leave links as '' (blank) for now — they render as disabled/placeholder pills until filled in.
 // ---------------------------------------------------------------------------
 export const TEAM_MEMBERS = [
-    {
-        name: 'Mark Harvey Leduna',
-        role: 'Founder / Solutions Architect',
-        oneLiner: 'Architects custom ERPs, cloud infrastructure, and end-to-end systems. Cares about eliminating busywork.',
-        photo: null,
-        links: {
-            repo: '',
-            github: '',
-            linkedin: '',
-        },
-    },
+   // {
+    //    name: 'Mark Harvey Leduna',
+      //  role: 'Founder / Solutions Architect',
+        //oneLiner: 'Architects custom ERPs, cloud infrastructure, and end-to-end systems. Cares about eliminating busywork.',
+        //photo: null,
+        //links: {
+          //  repo: '',
+           // github: '',
+           // linkedin: '',
+    //    },
+    //},
     {
         name: 'CV Kyle',
-        role: 'Co-Founder / Marketing',
+        role: 'Founder / UX/UI Designer',
         oneLiner: 'Builds lead generation pipelines and growth campaigns. Cares about turning cold traffic into booked calls.',
-        photo: null,
+        photo: '/./images/kyle.jpg',
         links: {
-            repo: '',
-            github: '',
-            linkedin: '',
+            repo: 'https://kyledes.caleho.cloud/',
+            github: 'https://github.com/ccvk-coder',
+            linkedin: 'https://www.linkedin.com/in/christ-vein-cabalida-258562291/',
         },
     },
     {
         name: 'Wacky',
-        role: 'AI & Automation Engineer',
+        role: 'Co-Founder / AI & Automation Engineer',
         oneLiner: 'Builds AI agents, LLM pipelines, and webhook automations. Cares about making tools talk to each other.',
-        photo: null,
+        photo: '/./images/wacky.png',
         links: {
-            repo: '',
-            github: '',
-            linkedin: '',
+            repo: 'https://wakinhojilla.vercel.app/',
+            github: 'https://github.com/smalpray',
+            linkedin: 'https://www.linkedin.com/in/wacky-hojilla/',
         },
     },
 ];

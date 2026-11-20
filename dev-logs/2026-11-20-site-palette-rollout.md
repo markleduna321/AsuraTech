@@ -218,3 +218,25 @@ Applies the home page design (black / mauve / plum backgrounds, mist text, magen
   - Rule for future pages: any page using `LandingLayout` must start with a dark section, or the mist nav text will be unreadable at the top.
   - Hero content offset is unchanged by construction (spacer 72px = main pull-up 72px). It was not pixel-compared against pre-change screenshots.
 - **Next Steps:** Awaiting your direction.
+
+
+### Choose your path: Explore link destinations
+
+- **Timestamp:** 2026-11-20 20:00
+- **Mode:** Edit access yes ? Terminal yes
+  - Commands run: `npm run build` and a browser check. No git commands.
+- **Persona(s) Active:** ??? Architect ? ??? Frontend ? QA by the orchestrator (token-light)
+- **Files Modified/Created:**
+  - `home-page/_sections/platform/FeatureShowcase.jsx` ? The `SectionIntro` wrapper gets `id="inside-platform"` and `scroll-mt-24`.
+  - `home-page/_sections/ChoosePath.jsx` ? Link changes:
+    - "Automate Sales & Marketing" ? Explore now goes to `#inside-platform` (was `#platform`, the top of the stack-collapse animation).
+    - "Launch Turnkey Industry Software" ? Explore now goes to `/demos` (was `#demos`, a dead link because DemoShowcase is commented out on the home page).
+    - Internal page links render as Inertia `<Link>` through a `Tag` switch. Hash and external links stay `<a>`.
+- **Issues Encountered:** The console logged one Vite HMR 500 for `ChoosePath.jsx?t=?` while the file was being edited.
+- **Resolution:** It was an HMR artifact. Test runs after the build had 0 page errors.
+- **QA Checklist Result:** ? Token-light QA by the orchestrator.
+  - `npm run build` passes.
+  - Clicking Explore on card 1 lands `#inside-platform` at 96px from the top (below the 72px header), with the heading fully visible at both 1440 and 390.
+  - Clicking Explore on card 2 navigates to `/demos`. A window marker survived, which confirms Inertia client-side navigation with no full reload.
+  - The other card links are unchanged: Diskobre, Caleho and `#engineering`.
+- **Next Steps:** Awaiting your direction.
